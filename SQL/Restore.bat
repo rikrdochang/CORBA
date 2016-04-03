@@ -1,0 +1,1 @@
+start mysqldump PDB -u root -p < D:\Repo\MuertePorPresedo\SQL\PDB.sql

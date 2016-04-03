@@ -16,6 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `amigos`
+--
+
+DROP TABLE IF EXISTS `amigos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `amigos` (
+  `correo1` varchar(100) NOT NULL,
+  `correo2` varchar(100) DEFAULT NULL,
+  KEY `correo1` (`correo1`),
+  KEY `correo2` (`correo2`),
+  CONSTRAINT `amigos_ibfk_1` FOREIGN KEY (`correo1`) REFERENCES `usuarios` (`correo`) ON UPDATE CASCADE,
+  CONSTRAINT `amigos_ibfk_2` FOREIGN KEY (`correo2`) REFERENCES `usuarios` (`correo`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `amigos`
+--
+
+LOCK TABLES `amigos` WRITE;
+/*!40000 ALTER TABLE `amigos` DISABLE KEYS */;
+INSERT INTO `amigos` VALUES ('primero@correo.com','segundo@correo.com'),('primero@correo.com','tercero@correo.com');
+/*!40000 ALTER TABLE `amigos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuarios`
 --
 
@@ -36,6 +63,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES ('primero@correo.com','primero','primero'),('segundo@correo.com','segundo','segundo'),('tercero@correo.com','tercero','tercero');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +76,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-03 20:12:15
+-- Dump completed on 2016-04-03 21:42:52

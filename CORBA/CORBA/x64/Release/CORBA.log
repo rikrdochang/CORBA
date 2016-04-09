@@ -1,0 +1,2 @@
+﻿  DB.cpp
+C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(30): fatal error C1083: No se puede abrir el archivo incluir: 'cppconn/connection.h': No such file or directory

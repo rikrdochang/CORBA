@@ -1,1 +1,6 @@
-﻿
+﻿DB.obj : error LNK2019: símbolo externo "__declspec(dllimport) public: __thiscall sql::SQLString::~SQLString(void)" (__imp_??1SQLString@sql@@QAE@XZ) sin resolver al que se hace referencia en la función _main
+DB.obj : error LNK2019: símbolo externo "__declspec(dllimport) public: __thiscall sql::SQLString::SQLString(char const * const)" (__imp_??0SQLString@sql@@QAE@QBD@Z) sin resolver al que se hace referencia en la función _main
+DB.obj : error LNK2019: símbolo externo "__declspec(dllimport) public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const & __thiscall sql::SQLString::asStdString(void)const " (__imp_?asStdString@SQLString@sql@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ) sin resolver al que se hace referencia en la función "class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::operator<<(class std::basic_ostream<char,struct std::char_traits<char> > &,class sql::SQLString const &)" (??6std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@ABVSQLString@sql@@@Z)
+DB.obj : error LNK2019: símbolo externo __imp__get_driver_instance sin resolver al que se hace referencia en la función _main
+mysqlcppconn.lib : warning LNK4272: el tipo de máquina de biblioteca 'x64' está en conflicto con el tipo de máquina de destino 'X86'
+D:\Repo\MuertePorPresedo\CORBA\Debug\CORBA.exe : fatal error LNK1120: 4 externos sin resolver

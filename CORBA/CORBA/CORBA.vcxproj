@@ -74,10 +74,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\BoostC++;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\BoostC++;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\include;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib\opt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\BoostC++\;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\BoostC++\;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\include;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -85,7 +86,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\BoostC++;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib\opt;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>mysqlcppconn_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib\opt;C:\BoostC++;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -94,12 +101,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalUsingDirectories>C:\BoostC++;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\lib</AdditionalUsingDirectories>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>C:\BoostC++;C:\MySQL\include;C:\MySQL\lib\opt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\BoostC++;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\BoostC++;C:\MySQL\include;C:\MySQL\lib\opt;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -110,17 +119,21 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalUsingDirectories>C:\BoostC++;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>C:\BoostC++;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\include;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib\opt</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>mysqlcppconn_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\BoostC++;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\lib\opt</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\BoostC++;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib\opt;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib;C:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\include</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DB.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\BoostC++;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\lib</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="AccessDB.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

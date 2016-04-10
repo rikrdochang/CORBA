@@ -1,19 +1,2 @@
 ﻿  DB.cpp
-c:\program files\mysql\mysql connector c++ 1.1.7\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLString'
-  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2628): note: vea la declaración de 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-c:\program files\mysql\mysql connector c++ 1.1.7\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLException'
-  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2628): note: vea la declaración de 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-c:\program files\mysql\mysql connector c++ 1.1.7\include\cppconn\exception.h(145): warning C4251: 'sql::SQLUnsupportedOptionException::option': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de struct 'sql::SQLUnsupportedOptionException'
-  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2628): note: vea la declaración de 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(175): warning C4251: 'sql::mysql::MySQL_Connection::proxy': class 'boost::shared_ptr<sql::mysql::NativeAPI::NativeConnectionWrapper>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
-  C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(175): note: vea la declaración de 'boost::shared_ptr<sql::mysql::NativeAPI::NativeConnectionWrapper>'
-C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(179): warning C4251: 'sql::mysql::MySQL_Connection::service': class 'boost::scoped_ptr<sql::mysql::MySQL_Statement>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
-  C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(179): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::MySQL_Statement>'
-C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(181): warning C4251: 'sql::mysql::MySQL_Connection::intern': class 'boost::scoped_ptr<sql::mysql::MySQL_ConnectionData>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
-  C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(181): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::MySQL_ConnectionData>'
-DB.cpp(36): warning C4101: 'e': variable local sin referencia
-DB.obj : error LNK2001: símbolo externo __imp__get_driver_instance sin resolver
-DB.obj : error LNK2001: símbolo externo "__declspec(dllimport) public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const & __thiscall sql::SQLString::asStdString(void)const " (__imp_?asStdString@SQLString@sql@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ) sin resolver
-DB.obj : error LNK2001: símbolo externo "__declspec(dllimport) public: __thiscall sql::SQLString::SQLString(char const * const)" (__imp_??0SQLString@sql@@QAE@QBD@Z) sin resolver
-DB.obj : error LNK2001: símbolo externo "__declspec(dllimport) public: __thiscall sql::SQLString::~SQLString(void)" (__imp_??1SQLString@sql@@QAE@XZ) sin resolver
-D:\Repos\MuertePorPresedo\CORBA\Release\CORBA.exe : fatal error LNK1120: 4 externos sin resolver
+C:\MySQL\include\mysql_connection.h(30): fatal error C1083: No se puede abrir el archivo incluir: 'cppconn/connection.h': No such file or directory

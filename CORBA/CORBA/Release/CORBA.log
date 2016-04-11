@@ -1,2 +1,2 @@
 ﻿  DB.cpp
-C:\MySQL\include\mysql_connection.h(30): fatal error C1083: No se puede abrir el archivo incluir: 'cppconn/connection.h': No such file or directory
+d:\repos\muerteporpresedo\corba\corba\AccessDB.h(2): fatal error C1083: No se puede abrir el archivo incluir: 'mysql_connection.h': No such file or directory

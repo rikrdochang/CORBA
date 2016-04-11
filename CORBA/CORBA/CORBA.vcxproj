@@ -135,6 +135,9 @@
     </ClCompile>
     <ClCompile Include="AccessDB.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AccessDB.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

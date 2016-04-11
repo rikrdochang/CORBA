@@ -1,10 +1,4 @@
-#include "mysql_connection.h"
-#include "mysql_driver.h"
-#include "mysql_error.h"
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
-#include <cppconn/exception.h>
-#include <string.h>
+#include "AccessDB.h"
 
 sql::Connection* getConexion() {
 	sql::mysql::MySQL_Driver *driver;
@@ -21,7 +15,7 @@ void setUser(sql::Connection* conexion, std::string nombre, std::string correo, 
 	statement = conexion->createStatement();
 
 	std::string aux;
-	aux = "INSERT INTO usuarios VALUES('" + nombre + "','" + correo + "','" + pass + "');";
+	aux = "INSERT INTO usuarios VALUES('" + correo + "','" + nombre + "','" + pass + "');";
 	try {
 		statement->executeQuery(aux);
 	}catch (sql::SQLException &e) {}
@@ -74,7 +68,7 @@ std::string* getAmigos(sql::Connection* conexion, std::string correo) {
 		return amigo;
 	}
 
-	std::string amigos[size];
+	std::string *amigos = new std::string[3];
 	aux = "SELECT correo2 FROM amigos WHERE correo1='" + correo + "';";
 	resultset = statement->executeQuery(aux);
 

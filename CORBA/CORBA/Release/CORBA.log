@@ -13,26 +13,11 @@ C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.
   C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(181): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::MySQL_ConnectionData>'
 C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy': class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Driver'
   C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_driver.h(52): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>'
-  AccessDB.cpp
-c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLString'
-  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2628): note: vea la declaración de 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLException'
-  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2628): note: vea la declaración de 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\exception.h(145): warning C4251: 'sql::SQLUnsupportedOptionException::option': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de struct 'sql::SQLUnsupportedOptionException'
-  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2628): note: vea la declaración de 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(175): warning C4251: 'sql::mysql::MySQL_Connection::proxy': class 'boost::shared_ptr<sql::mysql::NativeAPI::NativeConnectionWrapper>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
-  C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(175): note: vea la declaración de 'boost::shared_ptr<sql::mysql::NativeAPI::NativeConnectionWrapper>'
-C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(179): warning C4251: 'sql::mysql::MySQL_Connection::service': class 'boost::scoped_ptr<sql::mysql::MySQL_Statement>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
-  C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(179): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::MySQL_Statement>'
-C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(181): warning C4251: 'sql::mysql::MySQL_Connection::intern': class 'boost::scoped_ptr<sql::mysql::MySQL_ConnectionData>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
-  C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(181): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::MySQL_ConnectionData>'
-C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy': class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Driver'
-  C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_driver.h(52): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>'
-AccessDB.cpp(21): warning C4101: 'e': variable local sin referencia
-AccessDB.cpp(49): warning C4101: 'e': variable local sin referencia
      Creando biblioteca D:\Repos\MuertePorPresedo\CORBA\Release\CORBA.lib y objeto D:\Repos\MuertePorPresedo\CORBA\Release\CORBA.exp
   Generando código
-  All 986 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  10 of 993 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
+    7 functions were new in current compilation
+    6 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   CORBA.vcxproj -> D:\Repos\MuertePorPresedo\CORBA\Release\CORBA.exe
   CORBA.vcxproj -> D:\Repos\MuertePorPresedo\CORBA\Release\CORBA.pdb (Full PDB)

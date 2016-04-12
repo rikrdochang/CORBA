@@ -67,5 +67,7 @@ void main(int argc,char **argv){
 	
 	delete connection;
 	*/
+	char c;
+	cin >> c;
 	//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }

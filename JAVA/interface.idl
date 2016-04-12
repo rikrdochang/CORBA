@@ -1,0 +1,10 @@
+#ifndef __ECHO_CALLBACK_IDL__
+#define __ECHO_CALLBACK_IDL__
+
+module test{
+	interface test2{
+		void say_hello();
+	};
+};
+
+#endif

@@ -11,7 +11,7 @@ P2P::amigos* Servidor::logueo(string correo, string pass, P2P::sc interfaz) {
 	this->conexion = getConexion();
 	bool user;
 	user = getUser(this->conexion, correo, pass);
-	P2P::amigos *lista;
+	P2P::amigos lista;
 	if (user = true) {
 		
 	}
@@ -19,6 +19,7 @@ P2P::amigos* Servidor::logueo(string correo, string pass, P2P::sc interfaz) {
 		P2P::amigo aux;
 		aux.correo = "fallo@fallo.com";
 		aux.estado = false;
+		lista[0] = aux;
 	}
-	return 
+	return &lista;
 }

@@ -1,6 +1,12 @@
 package cliente;
 
+import P2P.cc;
+import P2P.ccHelper;
 import P2P.cs;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -9,18 +15,30 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import org.omg.CORBA.ORBPackage.InvalidName;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 public class Principal extends javax.swing.JFrame {
 
     private cs server;
     private String correo;
     private org.omg.CORBA.ORB orb;
+    private org.omg.CosNaming.NamingContext nc;
+    private ArrayList<Chat> ventanasAbiertas;
 
     public Principal(cs serv, String mail, org.omg.CORBA.ORB orb2) {
-        initComponents();
-        server = serv;
-        correo = mail;
-        orb = orb2;
+        try {
+            initComponents();
+            orb = orb2;
+            org.omg.CORBA.Object ns_obj = orb.resolve_initial_references("NameService");
+            nc = org.omg.CosNaming.NamingContextHelper.narrow(ns_obj);
+            server = serv;
+            correo = mail;
+            ventanasAbiertas = new ArrayList<>();
+        } catch (InvalidName ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Principal() {
@@ -147,6 +165,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cerrarSesion = new javax.swing.JButton();
         anadirAmigos = new javax.swing.JButton();
+        chatear = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         opciones = new javax.swing.JMenu();
         borrarCuenta = new javax.swing.JMenuItem();
@@ -163,21 +182,29 @@ public class Principal extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        amigos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(amigos);
 
         jLabel2.setText("Lista de amigos");
 
-        cerrarSesion.setText("Cerrar sesión");
+        cerrarSesion.setText("Cerrar sesion");
         cerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cerrarSesionActionPerformed(evt);
             }
         });
 
-        anadirAmigos.setText("Añadir amigos");
+        anadirAmigos.setText("Anadir amigos");
         anadirAmigos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 anadirAmigosActionPerformed(evt);
+            }
+        });
+
+        chatear.setText("Chatear");
+        chatear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chatearActionPerformed(evt);
             }
         });
 
@@ -191,7 +218,7 @@ public class Principal extends javax.swing.JFrame {
         });
         opciones.add(borrarCuenta);
 
-        cambiarContrasena.setText("Cambiar contraseña");
+        cambiarContrasena.setText("Cambiar contrasena");
         opciones.add(cambiarContrasena);
 
         jMenuBar1.add(opciones);
@@ -203,25 +230,26 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel1)
-                                        .addGap(222, 222, 222)))
-                                .addComponent(cerrarSesion))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(anadirAmigos)))
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addGap(222, 222, 222)))
+                        .addComponent(cerrarSesion))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(anadirAmigos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(chatear)
+                .addGap(89, 89, 89))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,7 +266,9 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(anadirAmigos)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(anadirAmigos)
+                    .addComponent(chatear))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -275,6 +305,36 @@ public class Principal extends javax.swing.JFrame {
     private void anadirAmigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirAmigosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_anadirAmigosActionPerformed
+
+    private void chatearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatearActionPerformed
+        // TODO add your handling code here:
+        if (amigos.getSelectedValue() != null) {
+            try {
+                System.out.println((amigos.getSelectedValue().toString()));
+                System.out.println(amigos.getSelectedIndex());
+                String correoAmigo = amigos.getSelectedValue().toString().split(" ")[0];
+                Chat ventana = ventanasAbiertas.get(amigos.getSelectedIndex());
+                if (ventana == null) {
+                    org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent(correoAmigo + "cc", "")};
+                    org.omg.CORBA.Object obj = nc.resolve(path);
+                    cc cliente = ccHelper.narrow(obj);
+
+                    ventana = new Chat(cliente, correo);
+                    ventana.setVisible(true);
+                } else {
+                    ventana.setVisible(true);
+                }
+
+            } catch (NotFound ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CannotProceed ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }//GEN-LAST:event_chatearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,6 +377,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem borrarCuenta;
     private javax.swing.JMenuItem cambiarContrasena;
     private javax.swing.JButton cerrarSesion;
+    private javax.swing.JButton chatear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;

@@ -8,8 +8,8 @@
 #include <string.h>
 
 sql::Connection* getConexion();
-int setUser(sql::Connection* conexion, std::string nombre, std::string correo, std::string pass);
-int getUser(sql::Connection* conexion, std::string nombre, std::string pass);
+bool setUser(sql::Connection* conexion, std::string nombre, std::string correo, std::string pass);
+bool getUser(sql::Connection* conexion, std::string nombre, std::string pass);
 void modPass(sql::Connection* conexion, std::string nombre, std::string pass);
 P2P::amigos getAmigos(sql::Connection* conexion, std::string correo, P2P::amigos);
 void preAmistad(sql::Connection* conexion, std::string correo1, std::string correo2);

@@ -11,7 +11,7 @@ sql::Connection* getConexion() {
 	return connection;
 }
 
-int setUser(sql::Connection* conexion, std::string nombre, std::string correo, std::string pass) {
+bool setUser(sql::Connection* conexion, std::string nombre, std::string correo, std::string pass) {
 	sql::Statement *statement;
 	sql::ResultSet *resultset;
 	statement = conexion->createStatement();
@@ -20,7 +20,7 @@ int setUser(sql::Connection* conexion, std::string nombre, std::string correo, s
 	aux = "SELECT * FROM usuarios WHERE correo='" + correo + "';";
 	resultset = statement->executeQuery(aux);
 	if (resultset->next()) {
-		return 0;
+		return false;
 	}
 	else {
 		aux = "INSERT INTO usuarios VALUES('" + correo + "','" + nombre + "','" + pass + "');";
@@ -28,11 +28,11 @@ int setUser(sql::Connection* conexion, std::string nombre, std::string correo, s
 			statement->executeQuery(aux);
 		}
 		catch (sql::SQLException &e) {}
-		return 1;
+		return true;
 	}
 }
 
-int getUser(sql::Connection* conexion, std::string nombre, std::string pass) {
+bool getUser(sql::Connection* conexion, std::string nombre, std::string pass) {
 	sql::Statement *statement;
 	sql::ResultSet *resultset;
 
@@ -43,9 +43,30 @@ int getUser(sql::Connection* conexion, std::string nombre, std::string pass) {
 	resultset = statement->executeQuery(aux);
 
 	while (resultset->next()) {
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
+}
+
+bool delUser(sql::Connection* conexion, std::string correo) {
+	sql::Statement *statement;
+	sql::ResultSet *resultset;
+	statement = conexion->createStatement();
+
+	std::string aux;
+	aux = "DELETE FROM usuarios WHERE correo='"+correo+"';";
+	try {
+		statement->executeQuery(aux);
+	}
+	catch (sql::SQLException &e) {}
+
+	aux = "SELECT * FROM usuarios WHERE correo'" + correo + "';";
+	resultset = statement->executeQuery(aux);
+
+	while (resultset->next()) {
+		return false;
+	}
+	return true;
 }
 
 void modPass(sql::Connection* conexion, std::string nombre, std::string pass) {
@@ -73,7 +94,7 @@ P2P::amigos getAmigos(sql::Connection* conexion, std::string correo, P2P::amigos
 	P2P::amigos amigos;
 	int i = 0, j = 0;
 	for (i = 0; resultset->next(); i++) {
-		amigos[i].correo = resultset->getString(1);
+		amigos[i].correo = resultset->getString(1).c_str();
 		for (j = 0; j < lista.length(); j++) {
 			if (amigos[i].correo == lista[j].correo) {
 				amigos[i].estado = true;

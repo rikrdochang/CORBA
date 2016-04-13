@@ -1,13 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cliente;
 
+import P2P.amigo;
+import P2P.cc;
+import P2P.cs;
+import P2P.sc;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -15,11 +20,180 @@ import javax.swing.JOptionPane;
  */
 public class PanelLogueo extends javax.swing.JFrame {
 
+    private cs server;
+    private sc servidorCliente;
+    private cc cliente;
+
     /**
      * Creates new form PanelLogueo
      */
+    public PanelLogueo(cs aux) {
+        initComponents();
+        server = aux;
+    }
+
     public PanelLogueo() {
         initComponents();
+    }
+
+    public cs getServer() {
+        return server;
+    }
+
+    public void setServer(cs server) {
+        this.server = server;
+    }
+
+    public sc getServidorCliente() {
+        return servidorCliente;
+    }
+
+    public void setServidorCliente(sc servidorCliente) {
+        this.servidorCliente = servidorCliente;
+    }
+
+    public cc getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(cc cliente) {
+        this.cliente = cliente;
+    }
+
+    public JButton getAcceder() {
+        return acceder;
+    }
+
+    public void setAcceder(JButton acceder) {
+        this.acceder = acceder;
+    }
+
+    public JPasswordField getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(JPasswordField contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public JPasswordField getContrasena1() {
+        return contrasena1;
+    }
+
+    public void setContrasena1(JPasswordField contrasena1) {
+        this.contrasena1 = contrasena1;
+    }
+
+    public JTextField getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(JTextField correo) {
+        this.correo = correo;
+    }
+
+    public JTextField getCorreo1() {
+        return correo1;
+    }
+
+    public void setCorreo1(JTextField correo1) {
+        this.correo1 = correo1;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JLabel getjLabel3() {
+        return jLabel3;
+    }
+
+    public void setjLabel3(JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
+    }
+
+    public JLabel getjLabel4() {
+        return jLabel4;
+    }
+
+    public void setjLabel4(JLabel jLabel4) {
+        this.jLabel4 = jLabel4;
+    }
+
+    public JLabel getjLabel5() {
+        return jLabel5;
+    }
+
+    public void setjLabel5(JLabel jLabel5) {
+        this.jLabel5 = jLabel5;
+    }
+
+    public JLabel getjLabel6() {
+        return jLabel6;
+    }
+
+    public void setjLabel6(JLabel jLabel6) {
+        this.jLabel6 = jLabel6;
+    }
+
+    public JLabel getjLabel7() {
+        return jLabel7;
+    }
+
+    public void setjLabel7(JLabel jLabel7) {
+        this.jLabel7 = jLabel7;
+    }
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    public void setjPanel1(JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
+    }
+
+    public JPanel getjPanel2() {
+        return jPanel2;
+    }
+
+    public void setjPanel2(JPanel jPanel2) {
+        this.jPanel2 = jPanel2;
+    }
+
+    public JTabbedPane getjTabbedPane1() {
+        return jTabbedPane1;
+    }
+
+    public void setjTabbedPane1(JTabbedPane jTabbedPane1) {
+        this.jTabbedPane1 = jTabbedPane1;
+    }
+
+    public JTextField getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(JTextField nombre) {
+        this.nombre = nombre;
+    }
+
+    public JButton getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(JButton registro) {
+        this.registro = registro;
     }
 
     /**
@@ -222,20 +396,24 @@ public class PanelLogueo extends javax.swing.JFrame {
 
         Matcher m = p.matcher(correo1.getText());
 
-        // CONTRASEÑA
         if (this.contrasena.getText().length() < 8 || this.contrasena.getText().length() > 20) {
             JOptionPane.showMessageDialog(this,
                     "La contraseña introducida debe poseer entre 8 y 20 caracteres");
         } else {
             if (!m.matches()) {
                 JOptionPane.showMessageDialog(this,
-                        "Bad mail !");
+                        "El correo introducido no posee el formato adecuado");
             } else {
-                //TODO añadir llamada a server para comprobar que existe dicho usuario
-                Principal pr = new Principal();
-                pr.setVisible(true);
-                this.setVisible(false);
-                this.dispose();
+                amigo[] amigos = server.logueo(this.getCorreo().getText(), this.getContrasena().getText());
+                if (amigos[0].correo.equals("fallo@fallo.com")) {
+                    JOptionPane.showMessageDialog(this,
+                            "El usuario o contraseña introducidos no son válidos");
+                } else {
+                    Principal pr = new Principal();
+                    pr.setVisible(true);
+                    this.setVisible(false);
+                    this.dispose();
+                }
             }
         }
 
@@ -257,17 +435,21 @@ public class PanelLogueo extends javax.swing.JFrame {
         } else {
             if (!m.matches()) {
                 JOptionPane.showMessageDialog(this,
-                        "Bad mail !");
+                        "El correo introducido no posee el formato adecuado");
             } else {
                 if (this.nombre.getText().length() < 2) {
                     JOptionPane.showMessageDialog(this,
-                            "Eso no es un nombre correcto");
+                            "El nombre introducido no posee el formato adecuado");
                 } else {
-                    //TODO añadir llamada a server para comprobar que existe dicho usuario || SI FALLA ME VA A MANDAR EL MENSAJE DE ERROR
-                    Principal pr = new Principal();
-                    pr.setVisible(true);
-                    this.setVisible(false);
-                    this.dispose();
+                    if (server.registro(this.getCorreo1().getText(), this.getContrasena1().getText(), this.getNombre().getText())) {
+                        Principal pr = new Principal();
+                        pr.setVisible(true);
+                        this.setVisible(false);
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this,
+                                "Fallo con el registro");
+                    }
                 }
             }
         }

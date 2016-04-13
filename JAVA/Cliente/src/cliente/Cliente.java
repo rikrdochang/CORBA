@@ -1,8 +1,8 @@
 package cliente;
 
-import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import P2P.cs;
+import P2P.csHelper;
+import java.util.*;
 
 public class Cliente {
 
@@ -10,30 +10,54 @@ public class Cliente {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        PanelLogueo p = new PanelLogueo();
-        p.setVisible(true);
-        
-        
-         Thread t = new Thread(new Runnable() {
-            public void run() {
+
+        org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args, null);
+        if (orb == null) {
+            System.exit(-1);
+        }
+        try {
+// obtain service from naming server
+            org.omg.CORBA.Object ns_obj = orb.resolve_initial_references("NameService");
+            org.omg.CosNaming.NamingContext nc = org.omg.CosNaming.NamingContextHelper.narrow(ns_obj);
+            org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent("Server", "")};
+            org.omg.CORBA.Object obj = nc.resolve(path);
+            cs clienteServidor = csHelper.narrow(obj);
+
+            PanelLogueo p = new PanelLogueo(clienteServidor);
+
+            p.setVisible(true);
+
+            Thread t = new Thread(new Runnable() {
+                public void run() {
                     // ESPERA POR NUEVOS MENSAJES Y CREA VENTANAS SI NO ESTÁN CREADAS PARA DICHOS MENSAJES
-            }
-        });
+                }
+            });
 
-        t.start();
-        
-        Thread x = new Thread(new Runnable() {
-            public void run() {
+            t.start();
+
+            Thread x = new Thread(new Runnable() {
+                public void run() {
                     // PETICIONES DE AMISTAD
-            }
-        });
+                }
+            });
 
-        x.start();
-        
-        
-        
-        
+            x.start();
+
+// destroy
+            orb.destroy();
+        } catch (org.omg.CORBA.ORBPackage.InvalidName exception) {
+            exception.printStackTrace(System.out);
+        } catch (org.omg.CosNaming.NamingContextPackage.NotFound exception) {
+            exception.printStackTrace(System.out);
+        } catch (org.omg.CosNaming.NamingContextPackage.CannotProceed exception) {
+            exception.printStackTrace(System.out);
+        } catch (org.omg.CosNaming.NamingContextPackage.InvalidName exception) {
+            exception.printStackTrace(System.out);
+        } catch (org.omg.CORBA.COMM_FAILURE exception) {
+            exception.printStackTrace(System.out);
+        } catch (Exception exception) {
+            exception.printStackTrace(System.out);
+        }
+
     }
-    
 }

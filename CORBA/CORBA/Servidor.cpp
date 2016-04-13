@@ -13,7 +13,10 @@ P2P::amigos* Servidor::logueo(string correo, string pass, P2P::sc interfaz) {
 	user = getUser(this->conexion, correo, pass);
 	P2P::amigos lista;
 	if (user = true) {
-		
+		lista = getAmigos(this->conexion, correo, this->conectados);
+		int tam = this->conectados.length();
+		this->conectados[tam].correo = correo;
+		this->conectados[tam].estado = true;
 	}
 	else {
 		P2P::amigo aux;
@@ -22,4 +25,16 @@ P2P::amigos* Servidor::logueo(string correo, string pass, P2P::sc interfaz) {
 		lista[0] = aux;
 	}
 	return &lista;
+}
+
+bool Servidor::registro(string correo, string pass, string nombre) {
+	this->conexion = getConexion();
+	int res;
+	res=setUser(conexion, nombre, correo, pass);
+	if (res == 1) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }

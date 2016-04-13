@@ -232,6 +232,10 @@ public class PanelLogueo extends javax.swing.JFrame {
                         "Bad mail !");
             } else {
                 //TODO añadir llamada a server para comprobar que existe dicho usuario
+                Principal pr = new Principal();
+                pr.setVisible(true);
+                this.setVisible(false);
+                this.dispose();
             }
         }
 
@@ -255,11 +259,19 @@ public class PanelLogueo extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,
                         "Bad mail !");
             } else {
-                //TODO añadir llamada a server para comprobar que existe dicho usuario || SI FALLA ME VA A MANDAR EL MENSAJE DE ERROR
-                
+                if (this.nombre.getText().length() < 2) {
+                    JOptionPane.showMessageDialog(this,
+                            "Eso no es un nombre correcto");
+                } else {
+                    //TODO añadir llamada a server para comprobar que existe dicho usuario || SI FALLA ME VA A MANDAR EL MENSAJE DE ERROR
+                    Principal pr = new Principal();
+                    pr.setVisible(true);
+                    this.setVisible(false);
+                    this.dispose();
+                }
             }
         }
-        
+
     }//GEN-LAST:event_registroActionPerformed
 
     /**

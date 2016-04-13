@@ -15,6 +15,7 @@ module P2P{
 		void pedirAmistad(in string correo);
 		amigos logueo(in string correo, in string pass, in sc tmp);
 		boolean registro(in string correo, in string pass, in string nombre);
+		boolean desregistro(in string correo);
 		boolean modPass( in string correo, in string pass1, in string pass2);
 		boolean deslogueo(in string correo, in sc aux);
 		boolean aceptarAmistad(in string correo);

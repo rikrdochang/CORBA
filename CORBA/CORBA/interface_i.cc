@@ -69,6 +69,7 @@ public:
   void pedirAmistad(const char* correo);
   P2P::amigos* logueo(const char* correo, const char* pass, P2P::sc_ptr tmp);
   ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre);
+  ::CORBA::Boolean desregistro(const char* correo);
   ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2);
   ::CORBA::Boolean deslogueo(const char* correo, P2P::sc_ptr aux);
   ::CORBA::Boolean aceptarAmistad(const char* correo);
@@ -101,6 +102,12 @@ P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass, P2P::sc_ptr 
 {
   // insert code here and remove the warning
   #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::registro(const char* correo, const char* pass, const char* nombre)>"
+}
+
+::CORBA::Boolean P2P_cs_i::desregistro(const char* correo)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::desregistro(const char* correo)>"
 }
 
 ::CORBA::Boolean P2P_cs_i::modPass(const char* correo, const char* pass1, const char* pass2)

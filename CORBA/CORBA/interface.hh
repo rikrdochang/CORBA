@@ -374,6 +374,7 @@ _CORBA_MODULE_BEG
     void pedirAmistad(const char* correo);
     amigos* logueo(const char* correo, const char* pass, ::P2P::sc_ptr tmp);
     ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre);
+    ::CORBA::Boolean desregistro(const char* correo);
     ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2);
     ::CORBA::Boolean deslogueo(const char* correo, ::P2P::sc_ptr aux);
     ::CORBA::Boolean aceptarAmistad(const char* correo);
@@ -414,6 +415,7 @@ _CORBA_MODULE_BEG
     virtual void pedirAmistad(const char* correo) = 0;
     virtual amigos* logueo(const char* correo, const char* pass, ::P2P::sc_ptr tmp) = 0;
     virtual ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre) = 0;
+    virtual ::CORBA::Boolean desregistro(const char* correo) = 0;
     virtual ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2) = 0;
     virtual ::CORBA::Boolean deslogueo(const char* correo, ::P2P::sc_ptr aux) = 0;
     virtual ::CORBA::Boolean aceptarAmistad(const char* correo) = 0;

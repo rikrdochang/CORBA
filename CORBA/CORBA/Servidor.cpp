@@ -13,13 +13,12 @@ P2P::amigos* Servidor::logueo(string correo, string pass, P2P::sc interfaz) {
 	user = getUser(this->conexion, correo, pass);
 	P2P::amigos *lista;
 	if (user = true) {
-
+		
 	}
 	else {
 		P2P::amigo aux;
 		aux.correo = "fallo@fallo.com";
 		aux.estado = false;
-		aux.instancia = NULL;
 	}
 	return 
 }

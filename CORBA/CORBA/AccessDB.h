@@ -9,7 +9,7 @@
 
 sql::Connection* getConexion();
 void setUser(sql::Connection* conexion, std::string nombre, std::string correo, std::string pass);
-int getUser(sql::Connection* conexion, std::string nombre);
+int getUser(sql::Connection* conexion, std::string nombre, std::string pass);
 void modPass(sql::Connection* conexion, std::string nombre, std::string pass);
 std::string* getAmigos(sql::Connection* conexion, std::string correo);
 void preAmistad(sql::Connection* conexion, std::string correo1, std::string correo2);

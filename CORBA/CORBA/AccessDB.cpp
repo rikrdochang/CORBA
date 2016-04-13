@@ -21,14 +21,14 @@ void setUser(sql::Connection* conexion, std::string nombre, std::string correo, 
 	}catch (sql::SQLException &e) {}
 }
 
-int getUser(sql::Connection* conexion, std::string nombre) {
+int getUser(sql::Connection* conexion, std::string nombre, std::string pass) {
 	sql::Statement *statement;
 	sql::ResultSet *resultset;
 
 	statement = conexion->createStatement();
 
 	std::string aux;
-	aux = "SELECT * FROM usuarios WHERE nombre='" + nombre + "';";
+	aux = "SELECT * FROM usuarios WHERE nombre='" + nombre + "' AND pass='" + pass + "';";
 	resultset = statement->executeQuery(aux);
 
 	while (resultset->next()) {
@@ -90,4 +90,12 @@ void preAmistad(sql::Connection* conexion, std::string correo1, std::string corr
 		statement->executeQuery(aux);
 	}
 	catch (sql::SQLException &e) {}
+
+	aux = "INSERT INTO pendiente VALUES('" + correo2 + "','" + correo1 + "');";
+	try {
+		statement->executeQuery(aux);
+	}
+	catch (sql::SQLException &e) {}
+
+	delete statement;
 }

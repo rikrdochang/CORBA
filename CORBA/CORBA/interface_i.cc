@@ -106,11 +106,11 @@ public:
 
   // methods corresponding to defined IDL attributes and operations
   void pedirAmistad(const char* correo1, const char* correo2);
-  P2P::amigos* logueo(const char* correo, const char* pass, P2P::sc_ptr tmp, P2P::cc_ptr aux);
+  P2P::amigos* logueo(const char* correo, const char* pass);
   ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre);
   ::CORBA::Boolean desregistro(const char* correo);
   ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2);
-  ::CORBA::Boolean deslogueo(const char* correo, P2P::sc_ptr aux);
+  ::CORBA::Boolean deslogueo(const char* correo);
   ::CORBA::Boolean aceptarAmistad(const char* correo1, const char* correo2);
   P2P::buscar* buscaAmigos(const char* nombre);
 };
@@ -132,10 +132,10 @@ void P2P_cs_i::pedirAmistad(const char* correo1, const char* correo2)
   #warning "Code missing in function <void P2P_cs_i::pedirAmistad(const char* correo1, const char* correo2)>"
 }
 
-P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass, P2P::sc_ptr tmp, P2P::cc_ptr aux)
+P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass)
 {
   // insert code here and remove the warning
-  #warning "Code missing in function <P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass, P2P::sc_ptr tmp, P2P::cc_ptr aux)>"
+  #warning "Code missing in function <P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass)>"
 }
 
 ::CORBA::Boolean P2P_cs_i::registro(const char* correo, const char* pass, const char* nombre)
@@ -156,10 +156,10 @@ P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass, P2P::sc_ptr 
   #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::modPass(const char* correo, const char* pass1, const char* pass2)>"
 }
 
-::CORBA::Boolean P2P_cs_i::deslogueo(const char* correo, P2P::sc_ptr aux)
+::CORBA::Boolean P2P_cs_i::deslogueo(const char* correo)
 {
   // insert code here and remove the warning
-  #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::deslogueo(const char* correo, P2P::sc_ptr aux)>"
+  #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::deslogueo(const char* correo)>"
 }
 
 ::CORBA::Boolean P2P_cs_i::aceptarAmistad(const char* correo1, const char* correo2)

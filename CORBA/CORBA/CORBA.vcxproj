@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AccessDB.h" />
+    <ClInclude Include="DataContainer.h" />
     <ClInclude Include="Servidor.h" />
     <ClInclude Include="interface.hh" />
   </ItemGroup>

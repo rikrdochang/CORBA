@@ -7,7 +7,6 @@ module P2P{
 	};
 	struct amigo{
 		string correo;
-		cc instancia;
 		boolean estado;
 	};
 	typedef sequence<amigo> amigos;
@@ -18,11 +17,11 @@ module P2P{
 	};
 	interface cs{
 		void pedirAmistad(in string correo1, in string correo2);
-		amigos logueo(in string correo, in string pass, in sc tmp, in cc aux);
+		amigos logueo(in string correo, in string pass);
 		boolean registro(in string correo, in string pass, in string nombre);
 		boolean desregistro(in string correo);
 		boolean modPass(in string correo, in string pass1, in string pass2);
-		boolean deslogueo(in string correo, in sc aux);
+		boolean deslogueo(in string correo);
 		boolean aceptarAmistad(in string correo1, in string correo2);
 		buscar buscaAmigos(in string nombre);
 	};

@@ -79,3 +79,15 @@ std::string* getAmigos(sql::Connection* conexion, std::string correo) {
 	}
 	return amigos;
 }
+
+void preAmistad(sql::Connection* conexion, std::string correo1, std::string correo2) {
+	sql::Statement *statement;
+	statement = conexion->createStatement();
+
+	std::string aux;
+	aux = "INSERT INTO pendiente VALUES('" + correo1 + "','" + correo2 + "');";
+	try {
+		statement->executeQuery(aux);
+	}
+	catch (sql::SQLException &e) {}
+}

@@ -142,7 +142,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\BoostC++;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\include;C:\Program Files\MySQL\MySQL Connector C++ 1.1.7\lib</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="AccessDB.cpp" />
-    <ClCompile Include="Hello_Impl.cpp" />
+    <ClCompile Include="Servidor.cpp" />
     <ClCompile Include="interfaceSK.cc" />
   </ItemGroup>
   <ItemGroup>

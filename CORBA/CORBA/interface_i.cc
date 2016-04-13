@@ -6,38 +6,119 @@
 #include <interface.hh>
 
 //
-// Example class implementing IDL interface test::test2
+// Example class implementing IDL interface P2P::sc
 //
-class test_test2_i : public POA_test::test2 {
+class P2P_sc_i : public POA_P2P::sc {
 private:
   // Make sure all instances are built on the heap by making the
   // destructor non-public
-  //virtual ~test_test2_i();
+  //virtual ~P2P_sc_i();
 
 public:
   // standard constructor
-  test_test2_i();
-  virtual ~test_test2_i();
+  P2P_sc_i();
+  virtual ~P2P_sc_i();
 
   // methods corresponding to defined IDL attributes and operations
-  void say_hello();
+  void sendAmistad(const char* correo);
+  void notificar(const char* correo, ::CORBA::Boolean estado);
 };
 
 //
-// Example implementation code for IDL interface 'test::test2'
+// Example implementation code for IDL interface 'P2P::sc'
 //
-test_test2_i::test_test2_i(){
+P2P_sc_i::P2P_sc_i(){
   // add extra constructor code here
 }
-test_test2_i::~test_test2_i(){
+P2P_sc_i::~P2P_sc_i(){
   // add extra destructor code here
 }
 
 // Methods corresponding to IDL attributes and operations
-void test_test2_i::say_hello()
+void P2P_sc_i::sendAmistad(const char* correo)
 {
   // insert code here and remove the warning
-  #warning "Code missing in function <void test_test2_i::say_hello()>"
+  #warning "Code missing in function <void P2P_sc_i::sendAmistad(const char* correo)>"
+}
+
+void P2P_sc_i::notificar(const char* correo, ::CORBA::Boolean estado)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <void P2P_sc_i::notificar(const char* correo, ::CORBA::Boolean estado)>"
+}
+
+
+
+// End of example implementation code
+
+//
+// Example class implementing IDL interface P2P::cs
+//
+class P2P_cs_i : public POA_P2P::cs {
+private:
+  // Make sure all instances are built on the heap by making the
+  // destructor non-public
+  //virtual ~P2P_cs_i();
+
+public:
+  // standard constructor
+  P2P_cs_i();
+  virtual ~P2P_cs_i();
+
+  // methods corresponding to defined IDL attributes and operations
+  void pedirAmistad(const char* correo);
+  P2P::amigos* logueo(const char* correo, const char* pass, P2P::sc_ptr tmp);
+  ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre);
+  ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2);
+  ::CORBA::Boolean deslogueo(const char* correo, P2P::sc_ptr aux);
+  ::CORBA::Boolean aceptarAmistad(const char* correo);
+};
+
+//
+// Example implementation code for IDL interface 'P2P::cs'
+//
+P2P_cs_i::P2P_cs_i(){
+  // add extra constructor code here
+}
+P2P_cs_i::~P2P_cs_i(){
+  // add extra destructor code here
+}
+
+// Methods corresponding to IDL attributes and operations
+void P2P_cs_i::pedirAmistad(const char* correo)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <void P2P_cs_i::pedirAmistad(const char* correo)>"
+}
+
+P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass, P2P::sc_ptr tmp)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass, P2P::sc_ptr tmp)>"
+}
+
+::CORBA::Boolean P2P_cs_i::registro(const char* correo, const char* pass, const char* nombre)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::registro(const char* correo, const char* pass, const char* nombre)>"
+}
+
+::CORBA::Boolean P2P_cs_i::modPass(const char* correo, const char* pass1, const char* pass2)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::modPass(const char* correo, const char* pass1, const char* pass2)>"
+}
+
+::CORBA::Boolean P2P_cs_i::deslogueo(const char* correo, P2P::sc_ptr aux)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::deslogueo(const char* correo, P2P::sc_ptr aux)>"
+}
+
+::CORBA::Boolean P2P_cs_i::aceptarAmistad(const char* correo)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::aceptarAmistad(const char* correo)>"
 }
 
 
@@ -59,21 +140,30 @@ int main(int argc, char** argv)
     // We allocate the objects on the heap.  Since these are reference
     // counted objects, they will be deleted by the POA when they are no
     // longer needed.
-    test_test2_i* mytest_test2_i = new test_test2_i();
+    P2P_sc_i* myP2P_sc_i = new P2P_sc_i();
+    P2P_cs_i* myP2P_cs_i = new P2P_cs_i();
 
 
     // Activate the objects.  This tells the POA that the objects are
     // ready to accept requests.
-    PortableServer::ObjectId_var mytest_test2_iid = poa->activate_object(mytest_test2_i);
+    PortableServer::ObjectId_var myP2P_sc_iid = poa->activate_object(myP2P_sc_i);
+    PortableServer::ObjectId_var myP2P_cs_iid = poa->activate_object(myP2P_cs_i);
 
 
     // Obtain a reference to each object and output the stringified
     // IOR to stdout
     {
-      // IDL interface: test::test2
-      CORBA::Object_var ref = mytest_test2_i->_this();
+      // IDL interface: P2P::sc
+      CORBA::Object_var ref = myP2P_sc_i->_this();
       CORBA::String_var sior(orb->object_to_string(ref));
-      std::cout << "IDL object test::test2 IOR = '" << (char*)sior << "'" << std::endl;
+      std::cout << "IDL object P2P::sc IOR = '" << (char*)sior << "'" << std::endl;
+    }
+
+    {
+      // IDL interface: P2P::cs
+      CORBA::Object_var ref = myP2P_cs_i->_this();
+      CORBA::String_var sior(orb->object_to_string(ref));
+      std::cout << "IDL object P2P::cs IOR = '" << (char*)sior << "'" << std::endl;
     }
 
 

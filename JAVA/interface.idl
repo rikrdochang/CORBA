@@ -1,9 +1,23 @@
 #ifndef __ECHO_CALLBACK_IDL__
 #define __ECHO_CALLBACK_IDL__
 
-module test{
-	interface test2{
-		void say_hello();
+module P2P{
+	struct amigo{
+		string correo;
+		string ip;
+	};
+	typedef sequence<amigo> amigos;
+	interface sc{
+		void sendAmistad(in string correo);
+		void notificar(in string correo, in boolean estado);
+	};
+	interface cs{
+		void pedirAmistad(in string correo);
+		amigos logueo(in string correo, in string pass, in sc tmp);
+		boolean registro(in string correo, in string pass, in string nombre);
+		boolean modPass( in string correo, in string pass1, in string pass2);
+		boolean deslogueo(in string correo, in sc aux);
+		boolean aceptarAmistad(in string correo);
 	};
 };
 

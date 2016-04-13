@@ -125,6 +125,45 @@ P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass, P2P::sc_ptr 
 
 // End of example implementation code
 
+//
+// Example class implementing IDL interface P2P::cc
+//
+class P2P_cc_i : public POA_P2P::cc {
+private:
+  // Make sure all instances are built on the heap by making the
+  // destructor non-public
+  //virtual ~P2P_cc_i();
+
+public:
+  // standard constructor
+  P2P_cc_i();
+  virtual ~P2P_cc_i();
+
+  // methods corresponding to defined IDL attributes and operations
+  void talk(const char* mensaje);
+};
+
+//
+// Example implementation code for IDL interface 'P2P::cc'
+//
+P2P_cc_i::P2P_cc_i(){
+  // add extra constructor code here
+}
+P2P_cc_i::~P2P_cc_i(){
+  // add extra destructor code here
+}
+
+// Methods corresponding to IDL attributes and operations
+void P2P_cc_i::talk(const char* mensaje)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <void P2P_cc_i::talk(const char* mensaje)>"
+}
+
+
+
+// End of example implementation code
+
 
 
 int main(int argc, char** argv)
@@ -142,12 +181,14 @@ int main(int argc, char** argv)
     // longer needed.
     P2P_sc_i* myP2P_sc_i = new P2P_sc_i();
     P2P_cs_i* myP2P_cs_i = new P2P_cs_i();
+    P2P_cc_i* myP2P_cc_i = new P2P_cc_i();
 
 
     // Activate the objects.  This tells the POA that the objects are
     // ready to accept requests.
     PortableServer::ObjectId_var myP2P_sc_iid = poa->activate_object(myP2P_sc_i);
     PortableServer::ObjectId_var myP2P_cs_iid = poa->activate_object(myP2P_cs_i);
+    PortableServer::ObjectId_var myP2P_cc_iid = poa->activate_object(myP2P_cc_i);
 
 
     // Obtain a reference to each object and output the stringified
@@ -164,6 +205,13 @@ int main(int argc, char** argv)
       CORBA::Object_var ref = myP2P_cs_i->_this();
       CORBA::String_var sior(orb->object_to_string(ref));
       std::cout << "IDL object P2P::cs IOR = '" << (char*)sior << "'" << std::endl;
+    }
+
+    {
+      // IDL interface: P2P::cc
+      CORBA::Object_var ref = myP2P_cc_i->_this();
+      CORBA::String_var sior(orb->object_to_string(ref));
+      std::cout << "IDL object P2P::cc IOR = '" << (char*)sior << "'" << std::endl;
     }
 
 

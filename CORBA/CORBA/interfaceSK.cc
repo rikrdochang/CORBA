@@ -957,7 +957,202 @@ P2P::_impl_cs::_mostDerivedRepoId()
   return ::P2P::cs::_PD_repoId;
 }
 
+P2P::cc_ptr P2P::cc_Helper::_nil() {
+  return ::P2P::cc::_nil();
+}
+
+::CORBA::Boolean P2P::cc_Helper::is_nil(::P2P::cc_ptr p) {
+  return ::CORBA::is_nil(p);
+
+}
+
+void P2P::cc_Helper::release(::P2P::cc_ptr p) {
+  ::CORBA::release(p);
+}
+
+void P2P::cc_Helper::marshalObjRef(::P2P::cc_ptr obj, cdrStream& s) {
+  ::P2P::cc::_marshalObjRef(obj, s);
+}
+
+P2P::cc_ptr P2P::cc_Helper::unmarshalObjRef(cdrStream& s) {
+  return ::P2P::cc::_unmarshalObjRef(s);
+}
+
+void P2P::cc_Helper::duplicate(::P2P::cc_ptr obj) {
+  if (obj && !obj->_NP_is_nil())  omni::duplicateObjRef(obj);
+}
+
+P2P::cc_ptr
+P2P::cc::_duplicate(::P2P::cc_ptr obj)
+{
+  if (obj && !obj->_NP_is_nil())  omni::duplicateObjRef(obj);
+  return obj;
+}
+
+P2P::cc_ptr
+P2P::cc::_narrow(::CORBA::Object_ptr obj)
+{
+  if (!obj || obj->_NP_is_nil() || obj->_NP_is_pseudo()) return _nil();
+  _ptr_type e = (_ptr_type) obj->_PR_getobj()->_realNarrow(_PD_repoId);
+  return e ? e : _nil();
+}
+
+
+P2P::cc_ptr
+P2P::cc::_unchecked_narrow(::CORBA::Object_ptr obj)
+{
+  if (!obj || obj->_NP_is_nil() || obj->_NP_is_pseudo()) return _nil();
+  _ptr_type e = (_ptr_type) obj->_PR_getobj()->_uncheckedNarrow(_PD_repoId);
+  return e ? e : _nil();
+}
+
+P2P::cc_ptr
+P2P::cc::_nil()
+{
+#ifdef OMNI_UNLOADABLE_STUBS
+  static _objref_cc _the_nil_obj;
+  return &_the_nil_obj;
+#else
+  static _objref_cc* _the_nil_ptr = 0;
+  if (!_the_nil_ptr) {
+    omni::nilRefLock().lock();
+    if (!_the_nil_ptr) {
+      _the_nil_ptr = new _objref_cc;
+      registerNilCorbaObject(_the_nil_ptr);
+    }
+    omni::nilRefLock().unlock();
+  }
+  return _the_nil_ptr;
+#endif
+}
+
+const char* P2P::cc::_PD_repoId = "IDL:P2P/cc:1.0";
+
+
+P2P::_objref_cc::~_objref_cc() {
+  
+}
+
+
+P2P::_objref_cc::_objref_cc(omniIOR* ior, omniIdentity* id) :
+   omniObjRef(::P2P::cc::_PD_repoId, ior, id, 1)
+   
+   
+{
+  _PR_setobj(this);
+}
+
+void*
+P2P::_objref_cc::_ptrToObjRef(const char* id)
+{
+  if (id == ::P2P::cc::_PD_repoId)
+    return (::P2P::cc_ptr) this;
+  
+  if (id == ::CORBA::Object::_PD_repoId)
+    return (::CORBA::Object_ptr) this;
+
+  if (omni::strMatch(id, ::P2P::cc::_PD_repoId))
+    return (::P2P::cc_ptr) this;
+  
+  if (omni::strMatch(id, ::CORBA::Object::_PD_repoId))
+    return (::CORBA::Object_ptr) this;
+
+  return 0;
+}
+
+
+//
+// Code for P2P::cc::talk
+
+// Local call call-back function.
+static void
+_0RL_lcfn_1acd6964a1680838_e0000000(omniCallDescriptor* cd, omniServant* svnt)
+{
+  _0RL_cd_1acd6964a1680838_00000000* tcd = (_0RL_cd_1acd6964a1680838_00000000*)cd;
+  P2P::_impl_cc* impl = (P2P::_impl_cc*) svnt->_ptrToInterface(P2P::cc::_PD_repoId);
+  impl->talk(tcd->arg_0);
+
+
+}
+
+void P2P::_objref_cc::talk(const char* mensaje)
+{
+  _0RL_cd_1acd6964a1680838_00000000 _call_desc(_0RL_lcfn_1acd6964a1680838_e0000000, "talk", 5);
+  _call_desc.arg_0 = mensaje;
+
+  _invoke(_call_desc);
+
+
+
+}
+
+P2P::_pof_cc::~_pof_cc() {}
+
+
+omniObjRef*
+P2P::_pof_cc::newObjRef(omniIOR* ior, omniIdentity* id)
+{
+  return new ::P2P::_objref_cc(ior, id);
+}
+
+
+::CORBA::Boolean
+P2P::_pof_cc::is_a(const char* id) const
+{
+  if (omni::ptrStrMatch(id, ::P2P::cc::_PD_repoId))
+    return 1;
+  
+  return 0;
+}
+
+const P2P::_pof_cc _the_pof_P2P_mcc;
+
+P2P::_impl_cc::~_impl_cc() {}
+
+
+::CORBA::Boolean
+P2P::_impl_cc::_dispatch(omniCallHandle& _handle)
+{
+  const char* op = _handle.operation_name();
+
+  if (omni::strMatch(op, "talk")) {
+
+    _0RL_cd_1acd6964a1680838_00000000 _call_desc(_0RL_lcfn_1acd6964a1680838_e0000000, "talk", 5, 1);
+    
+    _handle.upcall(this,_call_desc);
+    return 1;
+  }
+
+
+  return 0;
+}
+
+void*
+P2P::_impl_cc::_ptrToInterface(const char* id)
+{
+  if (id == ::P2P::cc::_PD_repoId)
+    return (::P2P::_impl_cc*) this;
+  
+  if (id == ::CORBA::Object::_PD_repoId)
+    return (void*) 1;
+
+  if (omni::strMatch(id, ::P2P::cc::_PD_repoId))
+    return (::P2P::_impl_cc*) this;
+  
+  if (omni::strMatch(id, ::CORBA::Object::_PD_repoId))
+    return (void*) 1;
+  return 0;
+}
+
+const char*
+P2P::_impl_cc::_mostDerivedRepoId()
+{
+  return ::P2P::cc::_PD_repoId;
+}
+
 POA_P2P::sc::~sc() {}
 
 POA_P2P::cs::~cs() {}
+
+POA_P2P::cc::~cc() {}
 

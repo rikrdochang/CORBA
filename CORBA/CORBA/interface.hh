@@ -428,6 +428,121 @@ _CORBA_MODULE_BEG
   };
 
 
+#ifndef __P2P_mcc__
+#define __P2P_mcc__
+  class cc;
+  class _objref_cc;
+  class _impl_cc;
+  
+  typedef _objref_cc* cc_ptr;
+  typedef cc_ptr ccRef;
+
+  class cc_Helper {
+  public:
+    typedef cc_ptr _ptr_type;
+
+    static _ptr_type _nil();
+    static _CORBA_Boolean is_nil(_ptr_type);
+    static void release(_ptr_type);
+    static void duplicate(_ptr_type);
+    static void marshalObjRef(_ptr_type, cdrStream&);
+    static _ptr_type unmarshalObjRef(cdrStream&);
+  };
+
+  typedef _CORBA_ObjRef_Var<_objref_cc, cc_Helper> cc_var;
+  typedef _CORBA_ObjRef_OUT_arg<_objref_cc,cc_Helper > cc_out;
+
+#endif
+
+  // interface cc
+  class cc {
+  public:
+    // Declarations for this interface type.
+    typedef cc_ptr _ptr_type;
+    typedef cc_var _var_type;
+
+    static _ptr_type _duplicate(_ptr_type);
+    static _ptr_type _narrow(::CORBA::Object_ptr);
+    static _ptr_type _unchecked_narrow(::CORBA::Object_ptr);
+    
+    static _ptr_type _nil();
+
+    static inline void _marshalObjRef(_ptr_type, cdrStream&);
+
+    static inline _ptr_type _unmarshalObjRef(cdrStream& s) {
+      omniObjRef* o = omniObjRef::_unMarshal(_PD_repoId,s);
+      if (o)
+        return (_ptr_type) o->_ptrToObjRef(_PD_repoId);
+      else
+        return _nil();
+    }
+
+    static inline _ptr_type _fromObjRef(omniObjRef* o) {
+      if (o)
+        return (_ptr_type) o->_ptrToObjRef(_PD_repoId);
+      else
+        return _nil();
+    }
+
+    static _core_attr const char* _PD_repoId;
+
+    // Other IDL defined within this scope.
+    
+  };
+
+  class _objref_cc :
+    public virtual ::CORBA::Object,
+    public virtual omniObjRef
+  {
+  public:
+    // IDL operations
+    void talk(const char* mensaje);
+
+    // Constructors
+    inline _objref_cc()  { _PR_setobj(0); }  // nil
+    _objref_cc(omniIOR*, omniIdentity*);
+
+  protected:
+    virtual ~_objref_cc();
+
+    
+  private:
+    virtual void* _ptrToObjRef(const char*);
+
+    _objref_cc(const _objref_cc&);
+    _objref_cc& operator = (const _objref_cc&);
+    // not implemented
+
+    friend class cc;
+  };
+
+  class _pof_cc : public _OMNI_NS(proxyObjectFactory) {
+  public:
+    inline _pof_cc() : _OMNI_NS(proxyObjectFactory)(cc::_PD_repoId) {}
+    virtual ~_pof_cc();
+
+    virtual omniObjRef* newObjRef(omniIOR*,omniIdentity*);
+    virtual _CORBA_Boolean is_a(const char*) const;
+  };
+
+  class _impl_cc :
+    public virtual omniServant
+  {
+  public:
+    virtual ~_impl_cc();
+
+    virtual void talk(const char* mensaje) = 0;
+    
+  public:  // Really protected, workaround for xlC
+    virtual _CORBA_Boolean _dispatch(omniCallHandle&);
+
+  private:
+    virtual void* _ptrToInterface(const char*);
+    virtual const char* _mostDerivedRepoId();
+    
+  };
+
+
 _CORBA_MODULE_END
 
 
@@ -459,6 +574,18 @@ _CORBA_MODULE_BEG
     }
   };
 
+  class cc :
+    public virtual P2P::_impl_cc,
+    public virtual ::PortableServer::ServantBase
+  {
+  public:
+    virtual ~cc();
+
+    inline ::P2P::cc_ptr _this() {
+      return (::P2P::cc_ptr) _do_this(::P2P::cc::_PD_repoId);
+    }
+  };
+
 _CORBA_MODULE_END
 
 
@@ -484,6 +611,11 @@ P2P::sc::_marshalObjRef(::P2P::sc_ptr obj, cdrStream& s) {
 
 inline void
 P2P::cs::_marshalObjRef(::P2P::cs_ptr obj, cdrStream& s) {
+  omniObjRef::_marshal(obj->_PR_getobj(),s);
+}
+
+inline void
+P2P::cc::_marshalObjRef(::P2P::cc_ptr obj, cdrStream& s) {
   omniObjRef::_marshal(obj->_PR_getobj(),s);
 }
 

@@ -19,6 +19,9 @@ module P2P{
 		boolean deslogueo(in string correo, in sc aux);
 		boolean aceptarAmistad(in string correo);
 	};
+	interface cc{
+		void talk(in string mensaje);
+	};
 };
 
 #endif

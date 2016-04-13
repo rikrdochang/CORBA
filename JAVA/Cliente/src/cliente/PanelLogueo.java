@@ -4,6 +4,9 @@ import P2P.amigo;
 import P2P.cc;
 import P2P.cs;
 import P2P.sc;
+import P2P.scHelper;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JButton;
@@ -13,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import org.omg.CORBA.ORBPackage.InvalidName;
 
 /**
  *
@@ -23,13 +27,15 @@ public class PanelLogueo extends javax.swing.JFrame {
     private cs server;
     private sc servidorCliente;
     private cc cliente;
+    private org.omg.CORBA.ORB orb;
 
     /**
      * Creates new form PanelLogueo
      */
-    public PanelLogueo(cs aux) {
+    public PanelLogueo(cs aux, org.omg.CORBA.ORB orb2) {
         initComponents();
         server = aux;
+        orb = orb2;
     }
 
     public PanelLogueo() {
@@ -389,6 +395,20 @@ public class PanelLogueo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void actualizarServicioNombres(String correo) {
+        try {
+            org.omg.CORBA.Object ns_obj = orb.resolve_initial_references("NameService");
+            org.omg.CosNaming.NamingContext nc = org.omg.CosNaming.NamingContextHelper.narrow(ns_obj);
+            org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent(correo + "sc", "")};
+            org.omg.CosNaming.NameComponent[] path2 = {new org.omg.CosNaming.NameComponent(correo + "cc", "")};
+            // IMPLEMENTACI�N de obj y obj2 para SC y CC
+            //nc.bind(path, obj);
+            //nc.bind(path2, ob2);
+        } catch (InvalidName ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void accederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accederActionPerformed
 
         Pattern p = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -398,18 +418,19 @@ public class PanelLogueo extends javax.swing.JFrame {
 
         if (this.contrasena.getText().length() < 8 || this.contrasena.getText().length() > 20) {
             JOptionPane.showMessageDialog(this,
-                    "La contraseña introducida debe poseer entre 8 y 20 caracteres");
+                    "La contrase�a introducida debe poseer entre 8 y 20 caracteres");
         } else {
             if (!m.matches()) {
                 JOptionPane.showMessageDialog(this,
                         "El correo introducido no posee el formato adecuado");
             } else {
+                actualizarServicioNombres(this.getCorreo().getText());
                 amigo[] amigos = server.logueo(this.getCorreo().getText(), this.getContrasena().getText());
                 if (amigos[0].correo.equals("fallo@fallo.com")) {
                     JOptionPane.showMessageDialog(this,
-                            "El usuario o contraseña introducidos no son válidos");
+                            "El usuario o contrase�a introducidos no son validos");
                 } else {
-                    Principal pr = new Principal();
+                    Principal pr = new Principal(server, this.getCorreo().getText(), orb);
                     pr.setVisible(true);
                     this.setVisible(false);
                     this.dispose();
@@ -428,10 +449,10 @@ public class PanelLogueo extends javax.swing.JFrame {
 
         Matcher m = p.matcher(correo1.getText());
 
-        // CONTRASEÑA
+        // CONTRASENA
         if (this.contrasena.getText().length() < 8 || this.contrasena.getText().length() > 20) {
             JOptionPane.showMessageDialog(this,
-                    "La contraseña introducida debe poseer entre 8 y 20 caracteres");
+                    "La contrase�a introducida debe poseer entre 8 y 20 caracteres");
         } else {
             if (!m.matches()) {
                 JOptionPane.showMessageDialog(this,
@@ -441,8 +462,9 @@ public class PanelLogueo extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,
                             "El nombre introducido no posee el formato adecuado");
                 } else {
+                    actualizarServicioNombres(this.getCorreo().getText());
                     if (server.registro(this.getCorreo1().getText(), this.getContrasena1().getText(), this.getNombre().getText())) {
-                        Principal pr = new Principal();
+                        Principal pr = new Principal(server, this.getCorreo1().getText(), orb);
                         pr.setVisible(true);
                         this.setVisible(false);
                         this.dispose();

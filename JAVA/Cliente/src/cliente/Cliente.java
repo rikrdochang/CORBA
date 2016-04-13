@@ -16,20 +16,20 @@ public class Cliente {
             System.exit(-1);
         }
         try {
-// obtain service from naming server
+            // obtain service from naming server
             org.omg.CORBA.Object ns_obj = orb.resolve_initial_references("NameService");
             org.omg.CosNaming.NamingContext nc = org.omg.CosNaming.NamingContextHelper.narrow(ns_obj);
             org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent("Server", "")};
             org.omg.CORBA.Object obj = nc.resolve(path);
             cs clienteServidor = csHelper.narrow(obj);
-
-            PanelLogueo p = new PanelLogueo(clienteServidor);
+            
+            PanelLogueo p = new PanelLogueo(clienteServidor, orb);
 
             p.setVisible(true);
 
             Thread t = new Thread(new Runnable() {
                 public void run() {
-                    // ESPERA POR NUEVOS MENSAJES Y CREA VENTANAS SI NO EST√ÅN CREADAS PARA DICHOS MENSAJES
+                    // ESPERA POR NUEVOS MENSAJES Y CREA VENTANAS SI NO EST¡N CREADAS PARA DICHOS MENSAJES
                 }
             });
 

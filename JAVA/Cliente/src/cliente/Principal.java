@@ -1,21 +1,134 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cliente;
 
-/**
- *
- * @author brunis46
- */
+import P2P.cs;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+
 public class Principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Principal
-     */
+    private cs server;
+    private String correo;
+    private org.omg.CORBA.ORB orb;
+
+    public Principal(cs serv, String mail, org.omg.CORBA.ORB orb2) {
+        initComponents();
+        server = serv;
+        correo = mail;
+        orb = orb2;
+    }
+
     public Principal() {
         initComponents();
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public cs getServer() {
+        return server;
+    }
+
+    public void setServer(cs server) {
+        this.server = server;
+    }
+
+    public JList getAmigos() {
+        return amigos;
+    }
+
+    public void setAmigos(JList amigos) {
+        this.amigos = amigos;
+    }
+
+    public JButton getAnadirAmigos() {
+        return anadirAmigos;
+    }
+
+    public void setAnadirAmigos(JButton anadirAmigos) {
+        this.anadirAmigos = anadirAmigos;
+    }
+
+    public JMenuItem getBorrarCuenta() {
+        return borrarCuenta;
+    }
+
+    public void setBorrarCuenta(JMenuItem borrarCuenta) {
+        this.borrarCuenta = borrarCuenta;
+    }
+
+    public JMenuItem getCambiarContrasena() {
+        return cambiarContrasena;
+    }
+
+    public void setCambiarContrasena(JMenuItem cambiarContrasena) {
+        this.cambiarContrasena = cambiarContrasena;
+    }
+
+    public JButton getCerrarSesion() {
+        return cerrarSesion;
+    }
+
+    public void setCerrarSesion(JButton cerrarSesion) {
+        this.cerrarSesion = cerrarSesion;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JMenuBar getjMenuBar1() {
+        return jMenuBar1;
+    }
+
+    public void setjMenuBar1(JMenuBar jMenuBar1) {
+        this.jMenuBar1 = jMenuBar1;
+    }
+
+    public JMenuItem getjMenuItem1() {
+        return jMenuItem1;
+    }
+
+    public void setjMenuItem1(JMenuItem jMenuItem1) {
+        this.jMenuItem1 = jMenuItem1;
+    }
+
+    public JScrollPane getjScrollPane2() {
+        return jScrollPane2;
+    }
+
+    public void setjScrollPane2(JScrollPane jScrollPane2) {
+        this.jScrollPane2 = jScrollPane2;
+    }
+
+    public JMenu getOpciones() {
+        return opciones;
+    }
+
+    public void setOpciones(JMenu opciones) {
+        this.opciones = opciones;
     }
 
     /**
@@ -33,6 +146,7 @@ public class Principal extends javax.swing.JFrame {
         amigos = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
         cerrarSesion = new javax.swing.JButton();
+        anadirAmigos = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         opciones = new javax.swing.JMenu();
         borrarCuenta = new javax.swing.JMenuItem();
@@ -60,6 +174,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        anadirAmigos.setText("AÃ±adir amigos");
+        anadirAmigos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anadirAmigosActionPerformed(evt);
+            }
+        });
+
         opciones.setText("Opciones");
 
         borrarCuenta.setText("Borrar cuenta");
@@ -82,19 +203,24 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel1)
-                                .addGap(222, 222, 222)))
-                        .addComponent(cerrarSesion))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jLabel1)
+                                        .addGap(222, 222, 222)))
+                                .addComponent(cerrarSesion))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(anadirAmigos)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -111,7 +237,9 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(cerrarSesion)
                         .addGap(18, 18, 18)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(anadirAmigos)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -119,15 +247,34 @@ public class Principal extends javax.swing.JFrame {
 
     private void borrarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarCuentaActionPerformed
         // TODO add your handling code here:
+        if (server.desregistro(this.getCorreo())) {
+            JOptionPane.showMessageDialog(this,
+                    "Cuenta eliminada correctamente");
+            PanelLogueo pl = new PanelLogueo(server, orb);
+            this.setVisible(false);
+            pl.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Fallo al intentar eliminar la cuenta");
+        }
     }//GEN-LAST:event_borrarCuentaActionPerformed
 
     private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed
-        // INFORMAR AL SERVIDOR DE QUE ME DESCONECTO
-        PanelLogueo pl = new PanelLogueo();
-        this.setVisible(false);
-        pl.setVisible(true);
-        this.dispose();
+        if (server.deslogueo(this.getCorreo())) {
+            PanelLogueo pl = new PanelLogueo(server, orb);
+            this.setVisible(false);
+            pl.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Fallo al intentar cerrar sesión");
+        }
     }//GEN-LAST:event_cerrarSesionActionPerformed
+
+    private void anadirAmigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirAmigosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_anadirAmigosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,6 +313,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList amigos;
+    private javax.swing.JButton anadirAmigos;
     private javax.swing.JMenuItem borrarCuenta;
     private javax.swing.JMenuItem cambiarContrasena;
     private javax.swing.JButton cerrarSesion;

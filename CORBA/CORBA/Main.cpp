@@ -16,7 +16,8 @@ void main(int argc,char **argv){
 		PortableServer::POAManager_var manager = poa->the_POAManager();
 
 		//Crear servidor
-		Servidor *service = new Servidor;
+		Servidor *service = NULL;
+		service = new Servidor;
 
 		//Subir servidor a servicio de nombres
 		try {

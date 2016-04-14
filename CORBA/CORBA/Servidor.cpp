@@ -7,7 +7,7 @@ void Servidor::pedirAmistad(string correo1, string correo2){
 	preAmistad(this->conexion, correo1, correo2);
 }
 
-P2P::amigos* Servidor::logueo(string correo, string pass, P2P::sc interfaz) {
+P2P::amigos* Servidor::logueo(string correo, string pass) {
 	this->conexion = getConexion();
 	bool user;
 	user = getUser(this->conexion, correo, pass);
@@ -39,7 +39,7 @@ bool Servidor::desregistro(string correo) {
 	for (i = 0; i < this->conectados.length(); i++) {
 		if (this->conectados[i].correo == correo.c_str()) {
 			this->conectados[i] = this->conectados[(this->conectados.length() - 1)];
-			this->conectados[this->conectados.length() - 1] = NULL;
+			this->conectados[this->conectados.length() - 1].correo = "";
 		}
 		//Avisar
 	}
@@ -57,7 +57,7 @@ bool Servidor::deslogueo(string correo) {
 	for (i = 0; i < this->conectados.length(); i++) {
 		if (this->conectados[i].correo == correo.c_str()) {
 			this->conectados[i] = this->conectados[this->conectados.length()];
-			this->conectados[this->conectados.length()] = NULL;
+			this->conectados[this->conectados.length()].correo = "";
 			//Remover interfaz de servicio de nombres
 		}
 		else {

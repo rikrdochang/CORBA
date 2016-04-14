@@ -1,5 +1,4 @@
 #include "AccessDB.h"
-#include "interface.hh"
 
 sql::Connection* getConexion() {
 	sql::mysql::MySQL_Driver *driver;

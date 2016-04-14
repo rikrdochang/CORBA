@@ -13,6 +13,7 @@ public:
 	virtual bool registro(string correo, string pass, string nombre);
 	virtual bool desregistro(string correo);
 	virtual bool modPass(string correo, string pass1, string pass2);
-	virtual bool deslogueo(string correo, P2P::sc interfaz);
-	virtual bool aceptarAmistad(string correo);
+	virtual bool deslogueo(string correo);
+	virtual bool aceptarAmistad(string correo1, string correo2);
+	virtual P2P::buscar* buscaAmigos(string nombre);
 };

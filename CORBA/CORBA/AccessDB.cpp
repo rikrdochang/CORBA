@@ -96,26 +96,33 @@ bool chgPass(sql::Connection* conexion, std::string correo, std::string pass1, s
 P2P::amigos getAmigos(sql::Connection* conexion, std::string correo, P2P::amigos lista) {
 	sql::Statement *statement;
 	sql::ResultSet *resultset;
-
 	statement = conexion->createStatement();
 
 	std::string aux;
 	aux = "SELECT correo2 FROM amigos WHERE correo1='" + correo + "';";
 	resultset = statement->executeQuery(aux);
 
-	P2P::amigos amigos;
+	P2P::amigos *todos = new P2P::amigos(); //Amigos del correo del susodicho
+	CORBA::ULong tam = (*todos).length();
+	P2P::amigo tmp;
 	int i = 0, j = 0;
 	for (i = 0; resultset->next(); i++) {
-		amigos[i].correo = resultset->getString(1).c_str();
+		(*todos).length(tam + 1);
+		tmp.correo = resultset->getString(1).c_str();
 		for (j = 0; j < lista.length(); j++) {
-			if (amigos[i].correo == lista[j].correo) {
-				amigos[i].estado = true;
+			if (tmp.correo == lista[j].correo) {
+				tmp.estado = true;
 				j = lista.length();
 			}
 		}
+		(*todos)[tam] = tmp;
+		tam = (*todos).length();
 	}
-	amigos[i + 1].correo = "ready@ready.com";
-	return amigos;
+	(*todos).length(tam + 1);
+	tmp.correo = "ready@ready.com";
+	tmp.estado = false;
+	(*todos)[tam] = tmp;
+	return (*todos);
 }
 
 void preAmistad(sql::Connection* conexion, std::string correo1, std::string correo2) {

@@ -8,12 +8,12 @@ class Servidor : public POA_P2P::cs {
 public:
 	sql::Connection *conexion;
 	P2P::amigos conectados;
-	virtual void pedirAmistad(string correo1, string correo2);
-	virtual P2P::amigos* logueo(string correo, string pass);
-	virtual bool registro(string correo, string pass, string nombre);
-	virtual bool desregistro(string correo);
-	virtual bool modPass(string correo, string pass1, string pass2);
-	virtual bool deslogueo(string correo);
-	virtual bool aceptarAmistad(string correo1, string correo2);
-	virtual P2P::buscar* buscaAmigos(string nombre);
+	virtual void pedirAmistad(const char* correo1, const char* correo2);
+	virtual P2P::amigos* logueo(const char* correo, const char* pass);
+	virtual ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre);
+	virtual ::CORBA::Boolean desregistro(const char* correo);
+	virtual ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2);
+	virtual ::CORBA::Boolean deslogueo(const char* correo);
+	virtual ::CORBA::Boolean aceptarAmistad(const char* correo1, const char* correo2);
+	virtual P2P::buscar* buscaAmigos(const char* nombre);
 };

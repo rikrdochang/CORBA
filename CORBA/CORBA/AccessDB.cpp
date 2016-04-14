@@ -139,6 +139,7 @@ void preAmistad(sql::Connection* conexion, std::string correo1, std::string corr
 bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2) {
 	sql::Statement *statement;
 	sql::ResultSet *resultset;
+	statement = conexion->createStatement();
 
 	std::string aux;
 	aux = "SELECT * FROM pendiente WHERE correo1='" + correo1 + "' AND correo2='" + correo2 + "';";
@@ -165,9 +166,10 @@ bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2
 	}
 }
 
-P2P::buscar buscar(std::string nombre) {
+P2P::buscar buscar(sql::Connection* conexion, std::string nombre) {
 	sql::Statement *statement;
 	sql::ResultSet *resultset;
+	statement = conexion->createStatement();
 
 	std::string aux;
 	aux = "SELECT correo FROM usuarios WHERE nombre='" + nombre + "';";

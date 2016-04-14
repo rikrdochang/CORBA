@@ -15,4 +15,4 @@ bool chgPass(sql::Connection* conexion, std::string correo, std::string pass1, s
 P2P::amigos getAmigos(sql::Connection* conexion, std::string correo, P2P::amigos);
 void preAmistad(sql::Connection* conexion, std::string correo1, std::string correo2);
 bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2);
-P2P::buscar buscar(std::string nombre);
+P2P::buscar buscar(sql::Connection* conexion, std::string nombre);

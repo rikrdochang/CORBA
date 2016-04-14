@@ -17,7 +17,7 @@ void main(int argc,char **argv){
 
 		//Crear servidor
 		Servidor *service = NULL;
-		service = new Servidor;
+		service = new Servidor();
 
 		//Subir servidor a servicio de nombres
 		try {

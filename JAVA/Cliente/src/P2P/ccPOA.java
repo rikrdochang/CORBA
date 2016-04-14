@@ -1,5 +1,7 @@
 package P2P;
 
+import org.omg.CORBA.Object;
+
 
 /**
 * P2P/ccPOA.java .

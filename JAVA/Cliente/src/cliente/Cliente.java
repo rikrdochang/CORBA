@@ -22,26 +22,10 @@ public class Cliente {
             org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent("Server", "")};
             org.omg.CORBA.Object obj = nc.resolve(path);
             cs clienteServidor = csHelper.narrow(obj);
-            
+
             PanelLogueo p = new PanelLogueo(clienteServidor, orb);
 
             p.setVisible(true);
-
-            Thread t = new Thread(new Runnable() {
-                public void run() {
-                    // ESPERA POR NUEVOS MENSAJES Y CREA VENTANAS SI NO ESTÁN CREADAS PARA DICHOS MENSAJES
-                }
-            });
-
-            t.start();
-
-            Thread x = new Thread(new Runnable() {
-                public void run() {
-                    // PETICIONES DE AMISTAD
-                }
-            });
-
-            x.start();
 
 // destroy
             orb.destroy();

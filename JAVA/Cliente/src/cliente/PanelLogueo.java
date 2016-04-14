@@ -2,9 +2,13 @@ package cliente;
 
 import P2P.amigo;
 import P2P.cc;
+import P2P.ccHelper;
+import P2P.ccPOA;
+import P2P.ccServant;
 import P2P.cs;
 import P2P.sc;
 import P2P.scHelper;
+import P2P.scPOA;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -17,6 +21,17 @@ import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import org.omg.CORBA.ORBPackage.InvalidName;
+import org.omg.CosNaming.NameComponent;
+import org.omg.CosNaming.NamingContext;
+import org.omg.CosNaming.NamingContextHelper;
+import org.omg.CosNaming.NamingContextPackage.AlreadyBound;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
+import org.omg.PortableServer.POA;
+import org.omg.PortableServer.POAHelper;
+import org.omg.PortableServer.POAManagerPackage.AdapterInactive;
+import org.omg.PortableServer.POAPackage.ServantNotActive;
+import org.omg.PortableServer.POAPackage.WrongPolicy;
 
 /**
  *
@@ -397,14 +412,31 @@ public class PanelLogueo extends javax.swing.JFrame {
 
     private void actualizarServicioNombres(String correo) {
         try {
-            org.omg.CORBA.Object ns_obj = orb.resolve_initial_references("NameService");
-            org.omg.CosNaming.NamingContext nc = org.omg.CosNaming.NamingContextHelper.narrow(ns_obj);
-            org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent(correo + "sc", "")};
-            org.omg.CosNaming.NameComponent[] path2 = {new org.omg.CosNaming.NameComponent(correo + "cc", "")};
-            // IMPLEMENTACIÓN de obj y obj2 para SC y CC
-            //nc.bind(path, obj);
-            //nc.bind(path2, ob2);
+
+            POA rootPOA;
+            org.omg.CORBA.Object o = orb.resolve_initial_references(" RootPOA ");
+            rootPOA = POAHelper.narrow(o);
+            //rootPOA.the_POAManager().activate();
+
+            ccServant c = new ccServant();
+            o = rootPOA.servant_to_reference(c);
+            cc ref = ccHelper.narrow(o);
+
+            NamingContext nc = NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            NameComponent[] nco = {new NameComponent(correo + "cc", "")};
+            nc.rebind(nco, o);
+
         } catch (InvalidName ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ServantNotActive ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (WrongPolicy ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotFound ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CannotProceed ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
             Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

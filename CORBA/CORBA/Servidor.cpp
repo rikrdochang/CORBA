@@ -10,21 +10,28 @@ void Servidor::pedirAmistad(const char* correo1, const char* correo2){
 P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 	this->conexion = getConexion();
 	bool user;
+	cout << correo << endl;
+	cout << pass << endl;
 	user = getUser(this->conexion, correo, pass);
-	P2P::amigos lista;
-	if (user = true) {
-		lista = getAmigos(this->conexion, correo, this->conectados);
-		int tam = this->conectados.length();
-		this->conectados[tam].correo = correo;
-		this->conectados[tam].estado = true;
+	cout << user << endl;
+	P2P::amigos *lista = new P2P::amigos();
+	P2P::amigo aux;
+	CORBA::ULong tam = (*lista).length();
+	
+	if (user == true) {
+		cout << "Hola!" << endl;
+		(*lista) = getAmigos(this->conexion, correo, this->conectados);
 	}
 	else {
-		P2P::amigo aux;
+		cout << "Pa' ti mi cola!" << endl;
+		(*lista).length(tam + 1);
 		aux.correo = "fallo@fallo.com";
 		aux.estado = false;
-		lista[0] = aux;
+		(*lista)[tam] = aux;
+		cout << "Peta" << endl;
+		cout << (*lista)[tam].correo << endl;
 	}
-	return &lista;
+	return lista;
 }
 
 CORBA::Boolean Servidor::registro(const char* correo, const char* pass, const char* nombre) {

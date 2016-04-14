@@ -38,13 +38,15 @@ bool getUser(sql::Connection* conexion, std::string nombre, std::string pass) {
 	statement = conexion->createStatement();
 
 	std::string aux;
-	aux = "SELECT * FROM usuarios WHERE nombre='" + nombre + "' AND pass='" + pass + "';";
+	aux = "SELECT * FROM usuarios WHERE correo='" + nombre + "' AND pass='" + pass + "';";
 	resultset = statement->executeQuery(aux);
 
-	while (resultset->next()) {
+	if (resultset->next()) {
 		return true;
 	}
-	return false;
+	else {
+		return false;
+	}
 }
 
 bool delUser(sql::Connection* conexion, std::string correo) {

@@ -48,16 +48,27 @@ int getUser(sql::Connection* conexion, std::string nombre, std::string pass) {
 	return 0;
 }
 
-void modPass(sql::Connection* conexion, std::string nombre, std::string pass) {
+bool chgPass(sql::Connection* conexion, std::string correo, std::string pass1, std::string pass2) {
 	sql::Statement *statement;
 	statement = conexion->createStatement();
 
 	std::string aux;
-	aux = "UPDATE usuarios SET pass='" + pass + "' WHERE nombre='" + nombre + "';";
+	aux = "UPDATE usuarios SET pass='" + pass2 + "' WHERE correo='" + correo + "' AND pass='" + pass1 + "';";
 	try {
 		statement->executeQuery(aux);
 	}
 	catch (sql::SQLException &e) {}
+	
+	sql::ResultSet *resultset;
+	aux = "SELECT * FROM usuarios WHERE correo='" + correo + "' AND pass='" + pass2 + "';";
+	resultset = statement->executeQuery(aux);
+
+	if (resultset->next()) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 P2P::amigos getAmigos(sql::Connection* conexion, std::string correo, P2P::amigos lista) {
@@ -103,4 +114,49 @@ void preAmistad(sql::Connection* conexion, std::string correo1, std::string corr
 	catch (sql::SQLException &e) {}
 
 	delete statement;
+}
+
+bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2) {
+	sql::Statement *statement;
+	sql::ResultSet *resultset;
+
+	std::string aux;
+	aux = "SELECT * FROM pendiente WHERE correo1='" + correo1 + "' AND correo2='" + correo2 + "';";
+	resultset = statement->executeQuery(aux);
+
+	if (resultset->next()) {
+		aux = "INSERT INTO amigos VALUES('" + correo1 + "','" + correo2 + "');";
+		try {
+			statement->executeQuery(aux);
+		}
+		catch (sql::SQLException &e) {}
+
+		aux = "SELECT * FROM amigos WHERE correo1='" + correo1 + "' AND correo2='" + correo2 + "';";
+		resultset = statement->executeQuery(aux);
+		if (resultset->next()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
+P2P::buscar buscar(std::string nombre){
+	sql::Statement *statement;
+	sql::ResultSet *resultset;
+
+	std::string aux;
+	aux = "SELECT correo FROM usuarios WHERE nombre='" + nombre + "';";
+	resultset = statement->executeQuery(aux);
+
+	P2P::buscar lista;
+	int i;
+	for (i = 0; resultset->next(); i++) {
+		lista[i] = resultset->getString(1).c_str();
+	}
+	return lista;
 }

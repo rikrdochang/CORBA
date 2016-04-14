@@ -15,7 +15,7 @@ P2P::amigos* Servidor::logueo(string correo, string pass, P2P::sc interfaz) {
 	if (user = true) {
 		lista = getAmigos(this->conexion, correo, this->conectados);
 		int tam = this->conectados.length();
-		this->conectados[tam].correo = correo;
+		this->conectados[tam].correo = correo.c_str();
 		this->conectados[tam].estado = true;
 	}
 	else {
@@ -37,4 +37,46 @@ bool Servidor::registro(string correo, string pass, string nombre) {
 	else {
 		return false;
 	}
+}
+
+bool Servidor::modPass(string correo, string pass1, string pass2) {
+	this->conexion = getConexion();
+	bool a;
+	a=chgPass(conexion, correo, pass1, pass2);
+	return a;
+}
+
+bool Servidor::deslogueo(string correo, P2P::sc interfaz) {
+	int i = 0;
+	for (i = 0; i < this->conectados.length(); i++) {
+		if (this->conectados[i].correo == correo.c_str()) {
+			this->conectados[i] = this->conectados[this->conectados.length()];
+			this->conectados[this->conectados.length()] = NULL;
+			//Remover interfaz de servicio de nombres
+		}
+		else {
+			//Avisar
+		}
+	}
+}
+
+bool Servidor::aceptarAmistad(string correo1, string correo2) {
+	bool m, v;
+	this->conexion = getConexion();
+	m = amistad(conexion, correo1, correo2);
+	v = amistad(conexion, correo2, correo1);
+
+	if (m == true && v == true) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+P2P::buscar* Servidor::buscaAmigos(string nombre) {
+	this->conexion = getConexion();
+	P2P::buscar lista;
+	lista = buscar(nombre);
+	return &lista;
 }

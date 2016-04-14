@@ -1,4 +1,4 @@
-﻿  DB.cpp
+﻿  Main.cpp
 c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLString'
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2628): note: vea la declaración de 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLException'
@@ -13,11 +13,24 @@ C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.
   C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(181): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::MySQL_ConnectionData>'
 C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy': class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Driver'
   C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_driver.h(52): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>'
-     Creando biblioteca D:\Repos\MuertePorPresedo\CORBA\Release\CORBA.lib y objeto D:\Repos\MuertePorPresedo\CORBA\Release\CORBA.exp
-  Generando código
-  10 of 993 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
-    7 functions were new in current compilation
-    6 functions had inline decision re-evaluated but remain unchanged
-  Generación de código finalizada
-  CORBA.vcxproj -> D:\Repos\MuertePorPresedo\CORBA\Release\CORBA.exe
-  CORBA.vcxproj -> D:\Repos\MuertePorPresedo\CORBA\Release\CORBA.pdb (Full PDB)
+c:\users\josemanuel\repos\muerteporpresedo\corba\corba\AccessDB.h(14): error C2653: 'P2P': no es un nombre de clase o espacio de nombres
+c:\users\josemanuel\repos\muerteporpresedo\corba\corba\AccessDB.h(14): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+c:\users\josemanuel\repos\muerteporpresedo\corba\corba\AccessDB.h(14): error C2146: error de sintaxis: falta ';' delante del identificador 'getAmigos'
+Main.cpp(19): error C2259: 'Servidor': no se puede crear una instancia de una clase abstract
+  Main.cpp(19): note: debido a los siguientes miembros:
+  Main.cpp(19): note: 'void P2P::_impl_cs::pedirAmistad(const char *,const char *)': es abstracto
+  c:\users\josemanuel\repos\muerteporpresedo\corba\corba\interface.hh(643): note: vea la declaración de 'P2P::_impl_cs::pedirAmistad'
+  Main.cpp(19): note: 'P2P::amigos *P2P::_impl_cs::logueo(const char *,const char *)': es abstracto
+  c:\users\josemanuel\repos\muerteporpresedo\corba\corba\interface.hh(644): note: vea la declaración de 'P2P::_impl_cs::logueo'
+  Main.cpp(19): note: 'CORBA::Boolean P2P::_impl_cs::registro(const char *,const char *,const char *)': es abstracto
+  c:\users\josemanuel\repos\muerteporpresedo\corba\corba\interface.hh(645): note: vea la declaración de 'P2P::_impl_cs::registro'
+  Main.cpp(19): note: 'CORBA::Boolean P2P::_impl_cs::desregistro(const char *)': es abstracto
+  c:\users\josemanuel\repos\muerteporpresedo\corba\corba\interface.hh(646): note: vea la declaración de 'P2P::_impl_cs::desregistro'
+  Main.cpp(19): note: 'CORBA::Boolean P2P::_impl_cs::modPass(const char *,const char *,const char *)': es abstracto
+  c:\users\josemanuel\repos\muerteporpresedo\corba\corba\interface.hh(647): note: vea la declaración de 'P2P::_impl_cs::modPass'
+  Main.cpp(19): note: 'CORBA::Boolean P2P::_impl_cs::deslogueo(const char *)': es abstracto
+  c:\users\josemanuel\repos\muerteporpresedo\corba\corba\interface.hh(648): note: vea la declaración de 'P2P::_impl_cs::deslogueo'
+  Main.cpp(19): note: 'CORBA::Boolean P2P::_impl_cs::aceptarAmistad(const char *,const char *)': es abstracto
+  c:\users\josemanuel\repos\muerteporpresedo\corba\corba\interface.hh(649): note: vea la declaración de 'P2P::_impl_cs::aceptarAmistad'
+  Main.cpp(19): note: 'P2P::buscar *P2P::_impl_cs::buscaAmigos(const char *)': es abstracto
+  c:\users\josemanuel\repos\muerteporpresedo\corba\corba\interface.hh(650): note: vea la declaración de 'P2P::_impl_cs::buscaAmigos'

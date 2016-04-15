@@ -63,6 +63,30 @@ bool delUser(sql::Connection* conexion, std::string correo) {
 	}
 	catch (sql::SQLException &e) {}
 
+	aux = "DELETE FROM amigos WHERE correo1='" + correo + "';";
+	try {
+		statement->executeQuery(aux);
+	}
+	catch (sql::SQLException &e) {}
+
+	aux = "DELETE FROM amigos WHERE correo2='" + correo + "';";
+	try {
+		statement->executeQuery(aux);
+	}
+	catch (sql::SQLException &e) {}
+
+	aux = "DELETE FROM pendientes WHERE correo1='" + correo + "';";
+	try {
+		statement->executeQuery(aux);
+	}
+	catch (sql::SQLException &e) {}
+
+	aux = "DELETE FROM pendientes WHERE correo2='" + correo + "';";
+	try {
+		statement->executeQuery(aux);
+	}
+	catch (sql::SQLException &e) {}
+
 	aux = "SELECT * FROM usuarios WHERE correo'" + correo + "';";
 	resultset = statement->executeQuery(aux);
 

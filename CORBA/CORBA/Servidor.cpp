@@ -57,15 +57,12 @@ CORBA::Boolean Servidor::registro(const char* correo, const char* pass, const ch
 }
 
 CORBA::Boolean Servidor::desregistro(const char* correo) {
-	int i = 0;
-	for (i = 0; i < this->conectados.length(); i++) {
-		if (this->conectados[i].correo == correo) {
-			this->conectados[i] = this->conectados[(this->conectados.length() - 1)];
-			this->conectados[this->conectados.length() - 1].correo = "";
+	if (deslogueo(correo)) {
+		if (delUser(this->conexion, correo)) {
+			return true;
 		}
-		//Avisar
 	}
-	return true;
+	return false;
 }
 
 CORBA::Boolean Servidor::modPass(const char* correo, const char* pass1, const char* pass2) {
@@ -100,7 +97,14 @@ CORBA::Boolean Servidor::deslogueo(const char* correo) {
 			}
 		}
 	}
-	//Eliminar del servicio de nombres
+	CosNaming::Name name;
+	name.length(1);
+	string correoaux = "sc";
+	correoaux = correo + correoaux;
+	name[0].id = CORBA::string_dup(correoaux.c_str());
+	name[0].kind = CORBA::string_dup("");
+	CORBA::Object_ptr aux;
+	(*this->nc)->unbind(name);
 	return true;
 }
 

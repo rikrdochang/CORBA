@@ -125,6 +125,7 @@ _CORBA_MODULE_BEG
   public:
     // IDL operations
     void talk(const char* mensaje);
+    void init(const char* correo);
 
     // Constructors
     inline _objref_cc()  { _PR_setobj(0); }  // nil
@@ -160,6 +161,7 @@ _CORBA_MODULE_BEG
     virtual ~_impl_cc();
 
     virtual void talk(const char* mensaje) = 0;
+    virtual void init(const char* correo) = 0;
     
   public:  // Really protected, workaround for xlC
     virtual _CORBA_Boolean _dispatch(omniCallHandle&);

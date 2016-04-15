@@ -25,16 +25,25 @@ P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 	}
 
 	int i;
-	for (i = 0; i < (*lista).length(); i++) {
-		string atontado = (string) (*lista)[i].correo;
-
-		CosNaming::Name name;
-		name.length(1);
-		name[0].id = CORBA::string_dup(correo);
-		name[0].kind = CORBA::string_dup("");
-		CORBA::Object_ptr aux;
-		aux=(*this->nc)->resolve(name);
-		sc;
+	for (i = 0; i < (*lista).length()-1; i++) {
+		cout << "Pene0" << endl;
+		if ((*lista)[i].estado == true) {
+			string atontado = (string)(*lista)[i].correo;
+			cout << atontado << endl;
+			CosNaming::Name name;
+			name.length(1);
+			string correoaux = "sc";
+			correoaux= atontado+ correoaux;
+			name[0].id = CORBA::string_dup(correoaux.c_str());
+			name[0].kind = CORBA::string_dup("");
+			CORBA::Object_ptr aux;
+			cout << "Peta" << endl;
+			aux = (*this->nc)->resolve(name);
+			cout << "Peto?" << endl;
+			P2P::sc_var cliente = P2P::sc::_narrow(aux);
+			cout << "Vamos a notificar" << endl;
+			cliente->notificar(correo, true);
+		}
 	}
 
 	tam = (this->conectados).length();

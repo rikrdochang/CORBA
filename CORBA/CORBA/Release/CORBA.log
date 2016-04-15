@@ -1,4 +1,4 @@
-﻿  AccessDB.cpp
+﻿  Servidor.cpp
 c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLString'
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(2628): note: vea la declaración de 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLException'
@@ -13,18 +13,14 @@ C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.
   C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(181): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::MySQL_ConnectionData>'
 C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy': class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Driver'
   C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_driver.h(52): note: vea la declaración de 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>'
-AccessDB.cpp(31): warning C4101: 'e': variable local sin referencia
-AccessDB.cpp(64): warning C4101: 'e': variable local sin referencia
-AccessDB.cpp(84): warning C4101: 'e': variable local sin referencia
-AccessDB.cpp(116): warning C4018: '<': no coinciden signed/unsigned
-AccessDB.cpp(143): warning C4101: 'e': variable local sin referencia
-AccessDB.cpp(149): warning C4101: 'e': variable local sin referencia
-AccessDB.cpp(168): warning C4101: 'e': variable local sin referencia
+Servidor.cpp(28): warning C4018: '<': no coinciden signed/unsigned
+Servidor.cpp(66): warning C4018: '<': no coinciden signed/unsigned
+Servidor.cpp(85): warning C4018: '<': no coinciden signed/unsigned
      Creando biblioteca C:\Users\JoseManuel\Repos\MuertePorPresedo\CORBA\Release\CORBA.lib y objeto C:\Users\JoseManuel\Repos\MuertePorPresedo\CORBA\Release\CORBA.exp
   Generando código
-  2 of 1243 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    58 functions had inline decision re-evaluated but remain unchanged
+  2 of 1254 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    20 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   CORBA.vcxproj -> C:\Users\JoseManuel\Repos\MuertePorPresedo\CORBA\Release\CORBA.exe
   CORBA.vcxproj -> C:\Users\JoseManuel\Repos\MuertePorPresedo\CORBA\Release\CORBA.pdb (Full PDB)

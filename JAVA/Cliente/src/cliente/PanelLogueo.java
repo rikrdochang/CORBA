@@ -417,7 +417,7 @@ public class PanelLogueo extends javax.swing.JFrame {
             POA rootPOA;
             org.omg.CORBA.Object o = orb.resolve_initial_references("RootPOA");
             rootPOA = POAHelper.narrow(o);
-            //rootPOA.the_POAManager().activate();
+            rootPOA.the_POAManager().activate();
 
             ccServant c = new ccServant();
             o = rootPOA.servant_to_reference(c);
@@ -438,6 +438,8 @@ public class PanelLogueo extends javax.swing.JFrame {
         } catch (CannotProceed ex) {
             Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AdapterInactive ex) {
             Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

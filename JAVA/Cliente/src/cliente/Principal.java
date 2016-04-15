@@ -42,13 +42,18 @@ public class Principal extends javax.swing.JFrame {
             ventanasAbiertas = new ArrayList<>();
             if (amig != null) {
                 friends = amig;
-                int tam = amigos.getSize().width;
-                String[] lista = new String[tam];
+                int tam = 0;
+                String[] lista;
+
+                while (!amig[tam].correo.equals("ready@ready.com")) {
+                    tam++;
+                }
+                lista = new String[tam];
                 for (int i = 0; i < tam; i++) {
-                    if (amig[tam].estado) {
-                        lista[tam] = amig[tam].correo + " " + "CONECTADO";
+                    if (amig[i].estado) {
+                        lista[i] = amig[i].correo + " " + "CONECTADO";
                     } else {
-                        lista[tam] = amig[tam].correo;
+                        lista[i] = amig[i].correo;
                     }
                 }
                 this.getAmigos().setListData(lista);
@@ -374,13 +379,20 @@ public class Principal extends javax.swing.JFrame {
                 System.out.println((amigos.getSelectedValue().toString()));
                 System.out.println(amigos.getSelectedIndex());
                 String correoAmigo = amigos.getSelectedValue().toString().split(" ")[0];
+                if (ventanasAbiertas.isEmpty()) {
+                    ventanasAbiertas.add(null);
+                }
                 Chat ventana = ventanasAbiertas.get(amigos.getSelectedIndex());
                 if (ventana == null) {
                     org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent(correoAmigo + "cc", "")};
                     org.omg.CORBA.Object obj = nc.resolve(path);
                     cc cliente = ccHelper.narrow(obj);
-
-                    ventana = new Chat(cliente, correo);
+                    
+                     org.omg.CosNaming.NameComponent[] path2 = {new org.omg.CosNaming.NameComponent(correo + "cc", "")};
+                    org.omg.CORBA.Object obj2 = nc.resolve(path2);
+                    cc cliente2 = ccHelper.narrow(obj2);
+                   
+                    ventana = new Chat(cliente, correo, cliente2);
                     ventana.setVisible(true);
                 } else {
                     ventana.setVisible(true);

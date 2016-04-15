@@ -21,14 +21,16 @@ public class Chat extends javax.swing.JFrame {
     /**
      * Creates new form Chat
      */
-    public Chat(cc friend, String mail) {
+    public Chat(cc friend, String mail, cc cliente2) {
         amigo = friend;
         correo = mail;
+        amigo.inicializar(cliente2, mail);
         initComponents();
     }
 
     public Chat() {
         initComponents();
+
     }
 
     public JTextField getMensajeAMandar() {
@@ -165,7 +167,6 @@ public class Chat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
-        // TODO add your handling code here:
         amigo.talk(this.getMensajeAMandar().getText());
         Calendar calendario = new GregorianCalendar();
         this.getMensajes().setText(this.getMensajes().getText() + "\n" + this.getCorreo() + "("

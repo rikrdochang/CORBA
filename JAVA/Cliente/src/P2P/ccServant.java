@@ -18,14 +18,18 @@ import org.omg.PortableServer.POA;
 public class ccServant extends ccPOA {
 
     private Chat c;
-    private ORB orb;
 
-    public void setORB(ORB orb_val) {
-        orb = orb_val;
+    public void inicializar(cc amigo, String correo) {
+        c = new Chat();
+        c.setAmigo(amigo);
+        c.setCorreo(correo);
     }
 
     @Override
     public void talk(String mensaje) {
+        if (!c.isVisible()) {
+            c.setVisible(true);
+        }
         Calendar calendario = new GregorianCalendar();
         c.getMensajes().setText(c.getMensajes().getText() + "\n" + c.getCorreo() + "("
                 + calendario.get(Calendar.HOUR_OF_DAY)

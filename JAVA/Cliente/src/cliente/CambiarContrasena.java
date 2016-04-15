@@ -50,7 +50,7 @@ public class CambiarContrasena extends javax.swing.JFrame {
     public void setContrasenaVieja(JPasswordField contrasenaVieja) {
         this.contrasenaVieja = contrasenaVieja;
     }
-    
+
     public String getCorreo() {
         return correo;
     }
@@ -179,7 +179,10 @@ public class CambiarContrasena extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarContrasenaActionPerformed
-        if (server.modPass(correo, Arrays.toString(this.getContrasenaVieja().getPassword()), Arrays.toString(this.getContrasenaNueva().getPassword()))) {
+        String contrasenaV = new String(this.getContrasenaVieja().getPassword());
+        String contrasenaN = new String(this.getContrasenaNueva().getPassword());
+
+        if (server.modPass(correo, contrasenaV, contrasenaN)) {
             JOptionPane.showMessageDialog(this,
                     "Contraseña modificada correctamente :)");
         } else {

@@ -66,4 +66,9 @@ public class _ccStub extends org.omg.CORBA.portable.ObjectImpl implements P2P.cc
      orb.destroy() ;
    }
   }
+
+    @Override
+    public void inicializar(cc cliente2, String mail) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 } // class _ccStub

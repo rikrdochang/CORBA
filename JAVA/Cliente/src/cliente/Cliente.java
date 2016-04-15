@@ -28,7 +28,9 @@ public class Cliente {
             p.setVisible(true);
 
 // destroy
-         //   orb.destroy();
+         //   orb.destroy();    //ACORDARSE!!
+            
+            
         } catch (org.omg.CORBA.ORBPackage.InvalidName exception) {
             exception.printStackTrace(System.out);
         } catch (org.omg.CosNaming.NamingContextPackage.NotFound exception) {

@@ -8,6 +8,7 @@ import P2P.cs;
 import P2P.sc;
 import P2P.scHelper;
 import P2P.scServant;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -260,10 +261,10 @@ public class PanelLogueo extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
-        jLabel1.setText("Correo electrÃ³nico:");
+        jLabel1.setText("Correo electrónico:");
 
         jLabel2.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
-        jLabel2.setText("ContraseÃ±a:");
+        jLabel2.setText("Contraseña:");
 
         jLabel3.setFont(new java.awt.Font("Helvetica", 1, 13)); // NOI18N
         jLabel3.setText("Login");
@@ -332,10 +333,10 @@ public class PanelLogueo extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
-        jLabel4.setText("Correo electrÃ³nico:");
+        jLabel4.setText("Correo electrónico:");
 
         jLabel5.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
-        jLabel5.setText("ContraseÃ±a:");
+        jLabel5.setText("Contraseña:");
 
         jLabel6.setFont(new java.awt.Font("Helvetica", 1, 13)); // NOI18N
         jLabel6.setText("Registro");
@@ -407,37 +408,65 @@ public class PanelLogueo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private cc actualizarServicioNombresCC(String correo) {
+        cc yoMismo = null;
 
-    private void actualizarServicioNombres(String correo, Principal pr) {
         try {
-
             POA rootPOA;
             org.omg.CORBA.Object o = orb.resolve_initial_references("RootPOA");
             rootPOA = POAHelper.narrow(o);
             rootPOA.the_POAManager().activate();
 
-            ccServant c = new ccServant(orb);
+            HashMap<String, Chat> amig = new HashMap<>();
+
+            ccServant c = new ccServant(orb, correo, amig);
             o = rootPOA.servant_to_reference(c);
 
-            cc ref = ccHelper.narrow(o);
-
             String ruta1 = correo + "cc";
-            System.out.println("ruta1 = " + ruta1);
 
             NamingContext nc = NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
             NameComponent[] nco = {new NameComponent(ruta1, "")};
             nc.rebind(nco, o);
 
+            org.omg.CORBA.Object obj = nc.resolve(nco);
+            yoMismo = ccHelper.narrow(obj);
+
+        } catch (InvalidName ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ServantNotActive ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (WrongPolicy ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotFound ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CannotProceed ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AdapterInactive ex) {
+            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return yoMismo;
+    }
+
+    private void actualizarServicioNombresSC(String correo, Principal pr) {
+
+        try {
+            POA rootPOA;
+            org.omg.CORBA.Object o = orb.resolve_initial_references("RootPOA");
+            rootPOA = POAHelper.narrow(o);
+            rootPOA.the_POAManager().activate();
+
+            NamingContext nc = NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
+            String ruta = correo + "sc";
+            NameComponent[] nco = {new NameComponent(ruta, "")};
+            nc.rebind(nco, o);
+
             scServant s = new scServant(pr);
             o = rootPOA.servant_to_reference(s);
 
-            sc ref2 = scHelper.narrow(o);
-
-            String ruta2 = correo + "sc";
-            System.out.println("ruta2 = " + ruta2);
-
-            NameComponent[] nco2 = {new NameComponent(ruta2, "")};
-            nc.rebind(nco2, o);
+            nc.rebind(nco, o);
 
         } catch (InvalidName ex) {
             Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
@@ -467,7 +496,7 @@ public class PanelLogueo extends javax.swing.JFrame {
 
         if (contrasenaEnvio.length() < 8 || contrasenaEnvio.length() > 20) {
             JOptionPane.showMessageDialog(this,
-                    "La contraseña introducida debe poseer entre 6 y 20 caracteres");
+                    "La contrase?a introducida debe poseer entre 6 y 20 caracteres");
         } else {
             if (!m.matches()) {
                 JOptionPane.showMessageDialog(this,
@@ -477,10 +506,10 @@ public class PanelLogueo extends javax.swing.JFrame {
                 amigos = server.logueo(this.getCorreo().getText(), contrasenaEnvio);
                 if (amigos[0].correo.equals("fallo@fallo.com")) {
                     JOptionPane.showMessageDialog(this,
-                            "El usuario o contraseña introducidos no son validos o ya ha iniciado sesión");
+                            "El usuario o contrase?a introducidos no son validos o ya ha iniciado sesi?n");
                 } else {
-                    Principal pr = new Principal(server, this.getCorreo().getText(), orb, amigos);
-                    actualizarServicioNombres(this.getCorreo().getText(), pr);
+                    Principal pr = new Principal(server, this.getCorreo().getText(), orb, amigos, actualizarServicioNombresCC(this.getCorreo().getText()));
+                    actualizarServicioNombresSC(this.getCorreo().getText(), pr);
                     pr.setVisible(true);
                     this.setVisible(false);
                     this.dispose();
@@ -504,7 +533,7 @@ public class PanelLogueo extends javax.swing.JFrame {
         // CONTRASENA
         if (contrasenaEnvio.length() < 8 || contrasenaEnvio.length() > 20) {
             JOptionPane.showMessageDialog(this,
-                    "La contraseña introducida debe poseer entre 8 y 20 caracteres");
+                    "La contrase?a introducida debe poseer entre 8 y 20 caracteres");
         } else {
             if (!m.matches()) {
                 JOptionPane.showMessageDialog(this,
@@ -515,8 +544,8 @@ public class PanelLogueo extends javax.swing.JFrame {
                             "El nombre introducido no posee el formato adecuado");
                 } else {
                     if (server.registro(this.getCorreo1().getText(), contrasenaEnvio, this.getNombre().getText())) {
-                        Principal pr = new Principal(server, this.getCorreo1().getText(), orb, null);
-                        actualizarServicioNombres(this.getCorreo().getText(), pr);
+                        Principal pr = new Principal(server, this.getCorreo1().getText(), orb, null, actualizarServicioNombresCC(this.getCorreo1().getText()));
+                        actualizarServicioNombresSC(this.getCorreo1().getText(), pr);
                         pr.setVisible(true);
                         this.setVisible(false);
                         this.dispose();

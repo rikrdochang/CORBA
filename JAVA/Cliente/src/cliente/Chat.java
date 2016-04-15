@@ -21,18 +21,18 @@ public class Chat extends javax.swing.JFrame {
     /**
      * Creates new form Chat
      */
-    public Chat(cc friend, String mail, cc cliente2) {
+    public Chat(cc friend, String mail, String mailAmigo) {
         amigo = friend;
         correo = mail;
-        amigo.inicializar(cliente2, mail);
         initComponents();
+        this.getNombre().setText("Conversación de " + mail + " con " + mailAmigo);
     }
 
     public Chat() {
         initComponents();
 
     }
-
+    
     public JTextField getMensajeAMandar() {
         return mensajeAMandar;
     }
@@ -121,12 +121,13 @@ public class Chat extends javax.swing.JFrame {
             }
         });
 
+        mensajes.setEditable(false);
         mensajes.setColumns(20);
         mensajes.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
         mensajes.setRows(5);
         jScrollPane1.setViewportView(mensajes);
 
-        nombre.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
+        nombre.setFont(new java.awt.Font("Helvetica", 0, 18)); // NOI18N
         nombre.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,9 +138,6 @@ public class Chat extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(mensajeAMandar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,13 +146,17 @@ public class Chat extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(24, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(34, 34, 34)
                 .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -168,6 +170,7 @@ public class Chat extends javax.swing.JFrame {
 
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
         amigo.talk(this.getMensajeAMandar().getText());
+        
         Calendar calendario = new GregorianCalendar();
         this.getMensajes().setText(this.getMensajes().getText() + "\n" + this.getCorreo() + "("
                 + calendario.get(Calendar.HOUR_OF_DAY)

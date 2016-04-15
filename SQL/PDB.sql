@@ -38,8 +38,34 @@ CREATE TABLE `amigos` (
 
 LOCK TABLES `amigos` WRITE;
 /*!40000 ALTER TABLE `amigos` DISABLE KEYS */;
-INSERT INTO `amigos` VALUES ('primero@correo.com','segundo@correo.com'),('primero@correo.com','tercero@correo.com');
+INSERT INTO `amigos` VALUES ('primero@correo.com','segundo@correo.com'),('primero@correo.com','tercero@correo.com'),('presedo2@correo.com','cuarto@correo.com'),('cuarto@correo.com','presedo2@correo.com');
 /*!40000 ALTER TABLE `amigos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pendiente`
+--
+
+DROP TABLE IF EXISTS `pendiente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pendiente` (
+  `correo1` varchar(100) NOT NULL,
+  `correo2` varchar(100) NOT NULL,
+  PRIMARY KEY (`correo1`,`correo2`),
+  KEY `correo2` (`correo2`),
+  CONSTRAINT `pendiente_ibfk_1` FOREIGN KEY (`correo1`) REFERENCES `usuarios` (`correo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pendiente_ibfk_2` FOREIGN KEY (`correo2`) REFERENCES `usuarios` (`correo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pendiente`
+--
+
+LOCK TABLES `pendiente` WRITE;
+/*!40000 ALTER TABLE `pendiente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pendiente` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -63,7 +89,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES ('primero@correo.com','primero','primero'),('segundo@correo.com','segundo','segundo'),('tercero@correo.com','tercero','tercero');
+INSERT INTO `usuarios` VALUES ('carlos@correo.com','Carlos','carlos'),('cuarto@correo.com','cuarto','aaaaaaaa'),('pepe@correo.com','Pepe','pepepe'),('presedo2@correo.com','Presedo2','presedinho'),('presedo@correo.com','Presedo','presedo'),('primero@correo.com','primero','primero'),('segundo@correo.com','segundo','segundo'),('tercero@correo.com','tercero','tercero');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -76,4 +102,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-03 21:42:52
+-- Dump completed on 2016-04-16  0:28:23

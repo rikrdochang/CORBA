@@ -9,6 +9,7 @@ import P2P.cs;
 import P2P.sc;
 import P2P.scHelper;
 import P2P.scPOA;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -414,7 +415,7 @@ public class PanelLogueo extends javax.swing.JFrame {
         try {
 
             POA rootPOA;
-            org.omg.CORBA.Object o = orb.resolve_initial_references(" RootPOA ");
+            org.omg.CORBA.Object o = orb.resolve_initial_references("RootPOA");
             rootPOA = POAHelper.narrow(o);
             //rootPOA.the_POAManager().activate();
 
@@ -448,21 +449,24 @@ public class PanelLogueo extends javax.swing.JFrame {
 
         Matcher m = p.matcher(correo1.getText());
 
-        if (this.contrasena.getText().length() < 8 || this.contrasena.getText().length() > 20) {
+        String contrasenaEnvio = new String(this.getContrasena().getPassword());
+
+        if (contrasenaEnvio.length() < 8 || contrasenaEnvio.length() > 20) {
             JOptionPane.showMessageDialog(this,
-                    "La contraseña introducida debe poseer entre 8 y 20 caracteres");
+                    "La contraseña introducida debe poseer entre 6 y 20 caracteres");
         } else {
             if (!m.matches()) {
                 JOptionPane.showMessageDialog(this,
                         "El correo introducido no posee el formato adecuado");
             } else {
                 actualizarServicioNombres(this.getCorreo().getText());
-                amigo[] amigos = server.logueo(this.getCorreo().getText(), this.getContrasena().getText());
+                amigo[] amigos;
+                amigos = server.logueo(this.getCorreo().getText(), contrasenaEnvio);
                 if (amigos[0].correo.equals("fallo@fallo.com")) {
                     JOptionPane.showMessageDialog(this,
-                            "El usuario o contraseña introducidos no son validos");
+                            "El usuario o contraseña introducidos no son validos o ya ha iniciado sesión");
                 } else {
-                    Principal pr = new Principal(server, this.getCorreo().getText(), orb);
+                    Principal pr = new Principal(server, this.getCorreo().getText(), orb, amigos);
                     pr.setVisible(true);
                     this.setVisible(false);
                     this.dispose();
@@ -481,8 +485,10 @@ public class PanelLogueo extends javax.swing.JFrame {
 
         Matcher m = p.matcher(correo1.getText());
 
+        String contrasenaEnvio = new String(this.getContrasena1().getPassword());
+
         // CONTRASENA
-        if (this.contrasena.getText().length() < 8 || this.contrasena.getText().length() > 20) {
+        if (contrasenaEnvio.length() < 8 || contrasenaEnvio.length() > 20) {
             JOptionPane.showMessageDialog(this,
                     "La contraseña introducida debe poseer entre 8 y 20 caracteres");
         } else {
@@ -495,8 +501,8 @@ public class PanelLogueo extends javax.swing.JFrame {
                             "El nombre introducido no posee el formato adecuado");
                 } else {
                     actualizarServicioNombres(this.getCorreo().getText());
-                    if (server.registro(this.getCorreo1().getText(), this.getContrasena1().getText(), this.getNombre().getText())) {
-                        Principal pr = new Principal(server, this.getCorreo1().getText(), orb);
+                    if (server.registro(this.getCorreo1().getText(), contrasenaEnvio, this.getNombre().getText())) {
+                        Principal pr = new Principal(server, this.getCorreo1().getText(), orb, null);
                         pr.setVisible(true);
                         this.setVisible(false);
                         this.dispose();

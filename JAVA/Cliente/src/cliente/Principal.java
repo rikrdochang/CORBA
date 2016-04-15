@@ -1,5 +1,6 @@
 package cliente;
 
+import P2P.amigo;
 import P2P.cc;
 import P2P.ccHelper;
 import P2P.cs;
@@ -15,7 +16,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import org.omg.CORBA.ORB;
 import org.omg.CORBA.ORBPackage.InvalidName;
+import org.omg.CosNaming.NamingContext;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
@@ -26,8 +29,9 @@ public class Principal extends javax.swing.JFrame {
     private org.omg.CORBA.ORB orb;
     private org.omg.CosNaming.NamingContext nc;
     private ArrayList<Chat> ventanasAbiertas;
+    private amigo[] friends;
 
-    public Principal(cs serv, String mail, org.omg.CORBA.ORB orb2) {
+    public Principal(cs serv, String mail, org.omg.CORBA.ORB orb2, amigo[] amig) {
         try {
             initComponents();
             orb = orb2;
@@ -36,6 +40,19 @@ public class Principal extends javax.swing.JFrame {
             server = serv;
             correo = mail;
             ventanasAbiertas = new ArrayList<>();
+            if (amig != null) {
+                friends = amig;
+                int tam = amigos.getSize().width;
+                String[] lista = new String[tam];
+                for (int i = 0; i < tam; i++) {
+                    if (amig[tam].estado) {
+                        lista[tam] = amig[tam].correo + " " + "CONECTADO";
+                    } else {
+                        lista[tam] = amig[tam].correo;
+                    }
+                }
+                this.getAmigos().setListData(lista);
+            }
         } catch (InvalidName ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,6 +60,46 @@ public class Principal extends javax.swing.JFrame {
 
     public Principal() {
         initComponents();
+    }
+
+    public amigo[] getFriends() {
+        return friends;
+    }
+
+    public void setFriends(amigo[] friends) {
+        this.friends = friends;
+    }
+
+    public ORB getOrb() {
+        return orb;
+    }
+
+    public void setOrb(ORB orb) {
+        this.orb = orb;
+    }
+
+    public NamingContext getNc() {
+        return nc;
+    }
+
+    public void setNc(NamingContext nc) {
+        this.nc = nc;
+    }
+
+    public ArrayList<Chat> getVentanasAbiertas() {
+        return ventanasAbiertas;
+    }
+
+    public void setVentanasAbiertas(ArrayList<Chat> ventanasAbiertas) {
+        this.ventanasAbiertas = ventanasAbiertas;
+    }
+
+    public JButton getChatear() {
+        return chatear;
+    }
+
+    public void setChatear(JButton chatear) {
+        this.chatear = chatear;
     }
 
     public String getCorreo() {
@@ -219,6 +276,11 @@ public class Principal extends javax.swing.JFrame {
         opciones.add(borrarCuenta);
 
         cambiarContrasena.setText("Cambiar contrasena");
+        cambiarContrasena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambiarContrasenaActionPerformed(evt);
+            }
+        });
         opciones.add(cambiarContrasena);
 
         jMenuBar1.add(opciones);
@@ -307,7 +369,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_anadirAmigosActionPerformed
 
     private void chatearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatearActionPerformed
-        // TODO add your handling code here:
         if (amigos.getSelectedValue() != null) {
             try {
                 System.out.println((amigos.getSelectedValue().toString()));
@@ -335,6 +396,11 @@ public class Principal extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_chatearActionPerformed
+
+    private void cambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarContrasenaActionPerformed
+        CambiarContrasena cc = new CambiarContrasena(server, correo);
+        cc.setVisible(true);
+    }//GEN-LAST:event_cambiarContrasenaActionPerformed
 
     /**
      * @param args the command line arguments

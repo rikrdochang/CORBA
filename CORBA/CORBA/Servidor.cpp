@@ -26,10 +26,8 @@ P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 
 	int i;
 	for (i = 0; i < (*lista).length()-1; i++) {
-		cout << "Pene0" << endl;
 		if ((*lista)[i].estado == true) {
 			string atontado = (string)(*lista)[i].correo;
-			cout << atontado << endl;
 			CosNaming::Name name;
 			name.length(1);
 			string correoaux = "sc";
@@ -37,11 +35,8 @@ P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 			name[0].id = CORBA::string_dup(correoaux.c_str());
 			name[0].kind = CORBA::string_dup("");
 			CORBA::Object_ptr aux;
-			cout << "Peta" << endl;
 			aux = (*this->nc)->resolve(name);
-			cout << "Peto?" << endl;
 			P2P::sc_var cliente = P2P::sc::_narrow(aux);
-			cout << "Vamos a notificar" << endl;
 			cliente->notificar(correo, true);
 		}
 	}
@@ -81,17 +76,31 @@ CORBA::Boolean Servidor::modPass(const char* correo, const char* pass1, const ch
 }
 
 CORBA::Boolean Servidor::deslogueo(const char* correo) {
-	int i = 0;
+	int i, j;
 	for (i = 0; i < this->conectados.length(); i++) {
 		if (this->conectados[i].correo == correo) {
 			this->conectados[i] = this->conectados[this->conectados.length()];
-			this->conectados[this->conectados.length()].correo = "";
-			//Remover interfaz de servicio de nombres
-		}
-		else {
-			//Avisar
+			this->conectados.length((this->conectados.length() - 1));
+			this->conexion = getConexion();
+			P2P::amigos lista = getAmigos(this->conexion,correo,this->conectados);
+			for (j = 0; j < lista.length(); j++) {
+				if (lista[j].estado) {
+					CosNaming::Name name;
+					name.length(1);
+					string atontado = lista[j].correo;
+					string correoaux = "sc";
+					correoaux = atontado + correoaux;
+					name[0].id = CORBA::string_dup(correoaux.c_str());
+					name[0].kind = CORBA::string_dup("");
+					CORBA::Object_ptr aux;
+					aux = (*this->nc)->resolve(name);
+					P2P::sc_var cliente = P2P::sc::_narrow(aux);
+					cliente->notificar(correo, false);
+				}
+			}
 		}
 	}
+	//Eliminar del servicio de nombres
 	return true;
 }
 

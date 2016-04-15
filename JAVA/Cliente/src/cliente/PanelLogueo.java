@@ -461,11 +461,10 @@ private cc actualizarServicioNombresCC(String correo) {
             NamingContext nc = NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
             String ruta = correo + "sc";
             NameComponent[] nco = {new NameComponent(ruta, "")};
-            nc.rebind(nco, o);
-
+            
             scServant s = new scServant(pr);
             o = rootPOA.servant_to_reference(s);
-
+            
             nc.rebind(nco, o);
 
         } catch (InvalidName ex) {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package P2P;
 
 import cliente.Chat;
@@ -33,18 +28,7 @@ public class ccServant extends ccPOA {
     }
 
     @Override
-    public void talk(String mensaje) {
-        
-        Calendar calendario = new GregorianCalendar();
-        c.getMensajes().setText(c.getMensajes().getText() + "\n" + correo2 + "("
-                + calendario.get(Calendar.HOUR_OF_DAY)
-                + ":" + calendario.get(Calendar.MINUTE)
-                + "):      " + mensaje);
-    }
-
-    @Override
     public void init(String correo2) {
-
 
         Chat aux = chatsAmigos.get(correo2);
         try {
@@ -58,6 +42,8 @@ public class ccServant extends ccPOA {
 
                 aux = new Chat(amig, correo, correo2);
                 aux.getNombre().setText("Conversación de " + correo + " con " + correo2);
+                aux.setVisible(true);
+                chatsAmigos.put(correo2, aux);
             } else {
                 aux.setVisible(true);
             }
@@ -71,6 +57,41 @@ public class ccServant extends ccPOA {
         } catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
             Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void talk(String correo2, String mensaje) {
+
+        Chat tmp = chatsAmigos.get(correo2);
+
+        if (tmp == null) {
+            try {
+                String ruta = correo2 + "cc";
+                org.omg.CORBA.Object ns_obj = orb.resolve_initial_references("NameService");
+                org.omg.CosNaming.NamingContext nc = org.omg.CosNaming.NamingContextHelper.narrow(ns_obj);
+                org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent(ruta, "")};
+                org.omg.CORBA.Object obj = nc.resolve(path);
+                cc amig = ccHelper.narrow(obj);
+
+                tmp = new Chat(amig, correo, correo2);
+                tmp.setVisible(true);
+                chatsAmigos.put(correo2, tmp);
+            } catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
+                Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotFound ex) {
+                Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CannotProceed ex) {
+                Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidName ex) {
+                Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        Calendar calendario = new GregorianCalendar();
+        tmp.getMensajes().setText(tmp.getMensajes().getText() + "\n" + correo2 + "("
+                + calendario.get(Calendar.HOUR_OF_DAY)
+                + ":" + calendario.get(Calendar.MINUTE)
+                + "):      " + mensaje);
     }
 
 }

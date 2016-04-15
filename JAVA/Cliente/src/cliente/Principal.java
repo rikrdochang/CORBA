@@ -30,7 +30,6 @@ public class Principal extends javax.swing.JFrame {
     private org.omg.CORBA.ORB orb;
     private org.omg.CosNaming.NamingContext nc;
     private amigo[] friends;
-    private HashMap<String, cc> ccsAmigos;
 
     public Principal(cs serv, String mail, org.omg.CORBA.ORB orb2, amigo[] amig, cc me) {
         try {
@@ -41,7 +40,6 @@ public class Principal extends javax.swing.JFrame {
             server = serv;
             correo = mail;
             yo = me;
-            ccsAmigos = new HashMap<>();
 
             if (amig != null) {
                 friends = amig;
@@ -409,27 +407,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void chatearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatearActionPerformed
         if (amigos.getSelectedValue() != null) {
-            try {
-                String correoAmigo = amigos.getSelectedValue().toString().split(" ")[0];
-                cc amigoDeChat = ccsAmigos.get(correoAmigo);
-                
-                if (amigoDeChat == null) {
-                    org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent(correoAmigo + "cc", "")};
-                    org.omg.CORBA.Object obj = nc.resolve(path);
-                    cc cliente = ccHelper.narrow(obj);
-                    ccsAmigos.put(correoAmigo, cliente);
-                    amigoDeChat = cliente;
-                }
- 
-                yo.init(correoAmigo);
-                
-            } catch (NotFound ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (CannotProceed ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            String correoAmigo = amigos.getSelectedValue().toString().split(" ")[0];
+
+            yo.init(correoAmigo);
 
         }
     }//GEN-LAST:event_chatearActionPerformed

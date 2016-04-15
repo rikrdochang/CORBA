@@ -17,15 +17,12 @@ public class Chat extends javax.swing.JFrame {
 
     private cc amigo;
     private String correo;
-
-    /**
-     * Creates new form Chat
-     */
-    public Chat(cc friend, String mail, String mailAmigo) {
+  
+    public Chat(cc friend, String mail, String mail2) {
         amigo = friend;
         correo = mail;
         initComponents();
-        this.getNombre().setText("Conversación de " + mail + " con " + mailAmigo);
+        this.getNombre().setText("Conversación de " + mail + " con " + mail2);
     }
 
     public Chat() {
@@ -169,7 +166,7 @@ public class Chat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
-        amigo.talk(this.getMensajeAMandar().getText());
+        amigo.talk(this.correo, this.getMensajeAMandar().getText());
         
         Calendar calendario = new GregorianCalendar();
         this.getMensajes().setText(this.getMensajes().getText() + "\n" + this.getCorreo() + "("

@@ -8,7 +8,12 @@ package P2P;
 import cliente.Chat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.omg.CORBA.ORB;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.InvalidName;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.omg.PortableServer.POA;
 
 /**
@@ -18,11 +23,34 @@ import org.omg.PortableServer.POA;
 public class ccServant extends ccPOA {
 
     private Chat c;
+    private org.omg.CORBA.ORB orb;
 
-    public void inicializar(cc amigo, String correo) {
-        c = new Chat();
-        c.setAmigo(amigo);
-        c.setCorreo(correo);
+    public ccServant(ORB orb) {
+        this.orb = orb;
+    }
+
+    public void inicializar(String correo) {
+        try {
+            String ruta = correo + "cc";
+            org.omg.CORBA.Object ns_obj = orb.resolve_initial_references("NameService");
+            org.omg.CosNaming.NamingContext nc = org.omg.CosNaming.NamingContextHelper.narrow(ns_obj);
+            org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent(ruta, "")};
+            org.omg.CORBA.Object obj = nc.resolve(path);
+            cc amig = ccHelper.narrow(obj);
+
+            c = new Chat();
+            c.setAmigo(amig);
+            c.setCorreo(correo);
+            
+        } catch (NotFound ex) {
+            Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CannotProceed ex) {
+            Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidName ex) {
+            Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
+            Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

@@ -67,6 +67,28 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void refreshAmigos() {
+
+        if (friends != null) {
+            int tam = 0;
+            String[] lista;
+
+            while (!friends[tam].correo.equals("ready@ready.com")) {
+                tam++;
+            }
+            lista = new String[tam];
+            for (int i = 0; i < tam; i++) {
+                if (friends[i].estado) {
+                    lista[i] = friends[i].correo + " " + "CONECTADO";
+                } else {
+                    lista[i] = friends[i].correo;
+                }
+            }
+            this.getAmigos().setListData(lista);
+        }
+
+    }
+
     public amigo[] getFriends() {
         return friends;
     }
@@ -387,11 +409,11 @@ public class Principal extends javax.swing.JFrame {
                     org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent(correoAmigo + "cc", "")};
                     org.omg.CORBA.Object obj = nc.resolve(path);
                     cc cliente = ccHelper.narrow(obj);
-                    
-                     org.omg.CosNaming.NameComponent[] path2 = {new org.omg.CosNaming.NameComponent(correo + "cc", "")};
+
+                    org.omg.CosNaming.NameComponent[] path2 = {new org.omg.CosNaming.NameComponent(correo + "cc", "")};
                     org.omg.CORBA.Object obj2 = nc.resolve(path2);
                     cc cliente2 = ccHelper.narrow(obj2);
-                   
+
                     ventana = new Chat(cliente, correo, cliente2);
                     ventana.setVisible(true);
                 } else {

@@ -6,24 +6,28 @@ import cliente.Principal;
  *
  * @author brunis46
  */
-public class scServant extends scPOA{
-    
+public class scServant extends scPOA {
+
     private Principal p;
 
     public scServant(Principal p) {
         this.p = p;
     }
-    
+
     @Override
     public void sendAmistad(String correo) {
-        
+
     }
 
     @Override
     public void notificar(String correo, boolean estado) {
-        
+        for (amigo a : p.getFriends()) {
+            if (a.correo.equals(correo)) {
+                a.estado = estado;
+            }
+        }
+        p.refreshAmigos();
+
     }
-    
-    
-    
+
 }

@@ -3,13 +3,11 @@ package cliente;
 import P2P.amigo;
 import P2P.cc;
 import P2P.ccHelper;
-import P2P.ccPOA;
 import P2P.ccServant;
 import P2P.cs;
 import P2P.sc;
 import P2P.scHelper;
-import P2P.scPOA;
-import java.util.Arrays;
+import P2P.scServant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -25,7 +23,6 @@ import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NameComponent;
 import org.omg.CosNaming.NamingContext;
 import org.omg.CosNaming.NamingContextHelper;
-import org.omg.CosNaming.NamingContextPackage.AlreadyBound;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.omg.PortableServer.POA;
@@ -411,7 +408,7 @@ public class PanelLogueo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void actualizarServicioNombres(String correo) {
+    private void actualizarServicioNombres(String correo, Principal pr) {
         try {
 
             POA rootPOA;
@@ -419,13 +416,28 @@ public class PanelLogueo extends javax.swing.JFrame {
             rootPOA = POAHelper.narrow(o);
             rootPOA.the_POAManager().activate();
 
-            ccServant c = new ccServant();
+            ccServant c = new ccServant(orb);
             o = rootPOA.servant_to_reference(c);
+
             cc ref = ccHelper.narrow(o);
 
+            String ruta1 = correo + "cc";
+            System.out.println("ruta1 = " + ruta1);
+
             NamingContext nc = NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
-            NameComponent[] nco = {new NameComponent(correo + "cc", "")};
+            NameComponent[] nco = {new NameComponent(ruta1, "")};
             nc.rebind(nco, o);
+
+            scServant s = new scServant(pr);
+            o = rootPOA.servant_to_reference(s);
+
+            sc ref2 = scHelper.narrow(o);
+
+            String ruta2 = correo + "sc";
+            System.out.println("ruta2 = " + ruta2);
+
+            NameComponent[] nco2 = {new NameComponent(ruta2, "")};
+            nc.rebind(nco2, o);
 
         } catch (InvalidName ex) {
             Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
@@ -461,7 +473,6 @@ public class PanelLogueo extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,
                         "El correo introducido no posee el formato adecuado");
             } else {
-                actualizarServicioNombres(this.getCorreo().getText());
                 amigo[] amigos;
                 amigos = server.logueo(this.getCorreo().getText(), contrasenaEnvio);
                 if (amigos[0].correo.equals("fallo@fallo.com")) {
@@ -469,6 +480,7 @@ public class PanelLogueo extends javax.swing.JFrame {
                             "El usuario o contraseña introducidos no son validos o ya ha iniciado sesión");
                 } else {
                     Principal pr = new Principal(server, this.getCorreo().getText(), orb, amigos);
+                    actualizarServicioNombres(this.getCorreo().getText(), pr);
                     pr.setVisible(true);
                     this.setVisible(false);
                     this.dispose();
@@ -502,9 +514,9 @@ public class PanelLogueo extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,
                             "El nombre introducido no posee el formato adecuado");
                 } else {
-                    actualizarServicioNombres(this.getCorreo().getText());
                     if (server.registro(this.getCorreo1().getText(), contrasenaEnvio, this.getNombre().getText())) {
                         Principal pr = new Principal(server, this.getCorreo1().getText(), orb, null);
+                        actualizarServicioNombres(this.getCorreo().getText(), pr);
                         pr.setVisible(true);
                         this.setVisible(false);
                         this.dispose();

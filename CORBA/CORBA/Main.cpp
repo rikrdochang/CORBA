@@ -1,6 +1,3 @@
-#include <omniORB4\CORBA.h>
-#include <omniORB4\Naming.hh>
-#include <iostream>
 #include "Servidor.h"
 
 using namespace std;
@@ -18,12 +15,14 @@ void main(int argc,char **argv){
 		//Crear servidor
 		Servidor *service = NULL;
 		service = new Servidor();
+		service->orb = &orb;
 
 		//Subir servidor a servicio de nombres
 		try {
 			CORBA::Object_var ns_obj = orb->resolve_initial_references("NameService");
 			if (!CORBA::is_nil(ns_obj)) {
 				CosNaming::NamingContext_ptr nc = CosNaming::NamingContext::_narrow(ns_obj);
+				service->nc = &nc;
 				CosNaming::Name name;
 				name.length(1);
 				name[0].id = CORBA::string_dup("Server");

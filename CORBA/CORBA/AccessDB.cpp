@@ -1,5 +1,7 @@
 #include "AccessDB.h"
 
+using namespace std;
+
 sql::Connection* getConexion() {
 	sql::mysql::MySQL_Driver *driver;
 	sql::Connection *connection;
@@ -102,17 +104,17 @@ P2P::amigos getAmigos(sql::Connection* conexion, std::string correo, P2P::amigos
 	aux = "SELECT correo2 FROM amigos WHERE correo1='" + correo + "';";
 	resultset = statement->executeQuery(aux);
 
-	P2P::amigos *todos = new P2P::amigos(); //Amigos del correo del susodicho
+	P2P::amigos *todos = new P2P::amigos();
 	CORBA::ULong tam = (*todos).length();
 	P2P::amigo tmp;
 	int i = 0, j = 0;
 	for (i = 0; resultset->next(); i++) {
 		(*todos).length(tam + 1);
 		tmp.correo = resultset->getString(1).c_str();
-		for (j = 0; j < lista.length(); j++) {
-			if (tmp.correo == lista[j].correo) {
+		tmp.estado = false;
+		for (j = 0; j < lista.length(); j++){
+			if ((std::string)tmp.correo==(std::string)lista[j].correo) {
 				tmp.estado = true;
-				j = lista.length();
 			}
 		}
 		(*todos)[tam] = tmp;

@@ -7,6 +7,11 @@
 #include <cppconn/exception.h>
 #include <string.h>
 #include "interface.hh"
+#include <stdio.h>
+#include <iostream>
+#include <omniORB4\CORBA.h>
+#include <omniORB4\Naming.hh>
+#include <iostream>
 
 sql::Connection* getConexion();
 bool setUser(sql::Connection* conexion, std::string nombre, std::string correo, std::string pass);

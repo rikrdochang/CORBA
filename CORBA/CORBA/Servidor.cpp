@@ -1,6 +1,5 @@
 #include "Servidor.h"
 #include <C:\CORBA\include\omniORB4\CORBA.h>
-#include <stdio.h>
 
 void Servidor::pedirAmistad(const char* correo1, const char* correo2){
 	this->conexion = getConexion();
@@ -13,17 +12,36 @@ P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 	user = getUser(this->conexion, correo, pass);
 	P2P::amigos *lista = new P2P::amigos();
 	CORBA::ULong tam = (*lista).length();
+	P2P::amigo aux;
 	
 	if (user == true) {
 		(*lista) = getAmigos(this->conexion, correo, this->conectados);
 	}
 	else {
-		P2P::amigo aux;
 		(*lista).length(tam + 1);
 		aux.correo = "fallo@fallo.com";
 		aux.estado = false;
 		(*lista)[tam] = aux;
 	}
+
+	int i;
+	for (i = 0; i < (*lista).length(); i++) {
+		string atontado = (string) (*lista)[i].correo;
+
+		CosNaming::Name name;
+		name.length(1);
+		name[0].id = CORBA::string_dup(correo);
+		name[0].kind = CORBA::string_dup("");
+		CORBA::Object_ptr aux;
+		aux=(*this->nc)->resolve(name);
+		sc;
+	}
+
+	tam = (this->conectados).length();
+	this->conectados.length(tam + 1);
+	aux.correo = correo;
+	aux.estado = true;
+	this->conectados[tam] = aux;
 	return lista;
 }
 

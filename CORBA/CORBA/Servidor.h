@@ -6,6 +6,8 @@ using namespace std;
 
 class Servidor : public POA_P2P::cs {
 public:
+	CORBA::ORB_var *orb;
+	CosNaming::NamingContext_ptr *nc;
 	sql::Connection *conexion;
 	P2P::amigos conectados;
 	virtual void pedirAmistad(const char* correo1, const char* correo2);

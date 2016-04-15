@@ -122,7 +122,7 @@ P2P::_objref_cc::_ptrToObjRef(const char* id)
 // Code for P2P::cc::talk
 
 // Proxy call descriptor class. Mangled signature:
-//  void_i_cstring
+//  void_i_cstring_i_cstring
 class _0RL_cd_efe87cde4422e9bd_00000000
   : public omniCallDescriptor
 {
@@ -142,11 +142,14 @@ public:
 
   ::CORBA::String_var arg_0_;
   const char* arg_0;
+  ::CORBA::String_var arg_1_;
+  const char* arg_1;
 };
 
 void _0RL_cd_efe87cde4422e9bd_00000000::marshalArguments(cdrStream& _n)
 {
   _n.marshalString(arg_0,0);
+  _n.marshalString(arg_1,0);
 
 }
 
@@ -154,6 +157,8 @@ void _0RL_cd_efe87cde4422e9bd_00000000::unmarshalArguments(cdrStream& _n)
 {
   arg_0_ = _n.unmarshalString(0);
   arg_0 = arg_0_.in();
+  arg_1_ = _n.unmarshalString(0);
+  arg_1 = arg_1_.in();
 
 }
 
@@ -167,15 +172,16 @@ _0RL_lcfn_efe87cde4422e9bd_10000000(omniCallDescriptor* cd, omniServant* svnt)
 {
   _0RL_cd_efe87cde4422e9bd_00000000* tcd = (_0RL_cd_efe87cde4422e9bd_00000000*)cd;
   P2P::_impl_cc* impl = (P2P::_impl_cc*) svnt->_ptrToInterface(P2P::cc::_PD_repoId);
-  impl->talk(tcd->arg_0);
+  impl->talk(tcd->arg_0, tcd->arg_1);
 
 
 }
 
-void P2P::_objref_cc::talk(const char* mensaje)
+void P2P::_objref_cc::talk(const char* correo, const char* mensaje)
 {
   _0RL_cd_efe87cde4422e9bd_00000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_10000000, "talk", 5);
-  _call_desc.arg_0 = mensaje;
+  _call_desc.arg_0 = correo;
+  _call_desc.arg_1 = mensaje;
 
   _invoke(_call_desc);
 
@@ -187,11 +193,51 @@ void P2P::_objref_cc::talk(const char* mensaje)
 //
 // Code for P2P::cc::init
 
+// Proxy call descriptor class. Mangled signature:
+//  void_i_cstring
+class _0RL_cd_efe87cde4422e9bd_20000000
+  : public omniCallDescriptor
+{
+public:
+  inline _0RL_cd_efe87cde4422e9bd_20000000(LocalCallFn lcfn, const char* op_, size_t oplen, _CORBA_Boolean upcall=0)
+    : omniCallDescriptor(lcfn, op_, oplen, 0, _user_exns, 0, upcall)
+  {
+    
+  }
+  
+  void marshalArguments(cdrStream&);
+  void unmarshalArguments(cdrStream&);
+
+    
+  
+  static const char* const _user_exns[];
+
+  ::CORBA::String_var arg_0_;
+  const char* arg_0;
+};
+
+void _0RL_cd_efe87cde4422e9bd_20000000::marshalArguments(cdrStream& _n)
+{
+  _n.marshalString(arg_0,0);
+
+}
+
+void _0RL_cd_efe87cde4422e9bd_20000000::unmarshalArguments(cdrStream& _n)
+{
+  arg_0_ = _n.unmarshalString(0);
+  arg_0 = arg_0_.in();
+
+}
+
+const char* const _0RL_cd_efe87cde4422e9bd_20000000::_user_exns[] = {
+  0
+};
+
 // Local call call-back function.
 static void
-_0RL_lcfn_efe87cde4422e9bd_20000000(omniCallDescriptor* cd, omniServant* svnt)
+_0RL_lcfn_efe87cde4422e9bd_30000000(omniCallDescriptor* cd, omniServant* svnt)
 {
-  _0RL_cd_efe87cde4422e9bd_00000000* tcd = (_0RL_cd_efe87cde4422e9bd_00000000*)cd;
+  _0RL_cd_efe87cde4422e9bd_20000000* tcd = (_0RL_cd_efe87cde4422e9bd_20000000*)cd;
   P2P::_impl_cc* impl = (P2P::_impl_cc*) svnt->_ptrToInterface(P2P::cc::_PD_repoId);
   impl->init(tcd->arg_0);
 
@@ -200,7 +246,7 @@ _0RL_lcfn_efe87cde4422e9bd_20000000(omniCallDescriptor* cd, omniServant* svnt)
 
 void P2P::_objref_cc::init(const char* correo)
 {
-  _0RL_cd_efe87cde4422e9bd_00000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_20000000, "init", 5);
+  _0RL_cd_efe87cde4422e9bd_20000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_30000000, "init", 5);
   _call_desc.arg_0 = correo;
 
   _invoke(_call_desc);
@@ -248,7 +294,7 @@ P2P::_impl_cc::_dispatch(omniCallHandle& _handle)
 
   if (omni::strMatch(op, "init")) {
 
-    _0RL_cd_efe87cde4422e9bd_00000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_20000000, "init", 5, 1);
+    _0RL_cd_efe87cde4422e9bd_20000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_30000000, "init", 5, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;
@@ -406,9 +452,9 @@ P2P::_objref_sc::_ptrToObjRef(const char* id)
 
 // Local call call-back function.
 static void
-_0RL_lcfn_efe87cde4422e9bd_30000000(omniCallDescriptor* cd, omniServant* svnt)
+_0RL_lcfn_efe87cde4422e9bd_40000000(omniCallDescriptor* cd, omniServant* svnt)
 {
-  _0RL_cd_efe87cde4422e9bd_00000000* tcd = (_0RL_cd_efe87cde4422e9bd_00000000*)cd;
+  _0RL_cd_efe87cde4422e9bd_20000000* tcd = (_0RL_cd_efe87cde4422e9bd_20000000*)cd;
   P2P::_impl_sc* impl = (P2P::_impl_sc*) svnt->_ptrToInterface(P2P::sc::_PD_repoId);
   impl->sendAmistad(tcd->arg_0);
 
@@ -417,7 +463,7 @@ _0RL_lcfn_efe87cde4422e9bd_30000000(omniCallDescriptor* cd, omniServant* svnt)
 
 void P2P::_objref_sc::sendAmistad(const char* correo)
 {
-  _0RL_cd_efe87cde4422e9bd_00000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_30000000, "sendAmistad", 12);
+  _0RL_cd_efe87cde4422e9bd_20000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_40000000, "sendAmistad", 12);
   _call_desc.arg_0 = correo;
 
   _invoke(_call_desc);
@@ -432,11 +478,11 @@ void P2P::_objref_sc::sendAmistad(const char* correo)
 
 // Proxy call descriptor class. Mangled signature:
 //  void_i_cstring_i_cboolean
-class _0RL_cd_efe87cde4422e9bd_40000000
+class _0RL_cd_efe87cde4422e9bd_50000000
   : public omniCallDescriptor
 {
 public:
-  inline _0RL_cd_efe87cde4422e9bd_40000000(LocalCallFn lcfn, const char* op_, size_t oplen, _CORBA_Boolean upcall=0)
+  inline _0RL_cd_efe87cde4422e9bd_50000000(LocalCallFn lcfn, const char* op_, size_t oplen, _CORBA_Boolean upcall=0)
     : omniCallDescriptor(lcfn, op_, oplen, 0, _user_exns, 0, upcall)
   {
     
@@ -454,14 +500,14 @@ public:
   ::CORBA::Boolean arg_1;
 };
 
-void _0RL_cd_efe87cde4422e9bd_40000000::marshalArguments(cdrStream& _n)
+void _0RL_cd_efe87cde4422e9bd_50000000::marshalArguments(cdrStream& _n)
 {
   _n.marshalString(arg_0,0);
   _n.marshalBoolean(arg_1);
 
 }
 
-void _0RL_cd_efe87cde4422e9bd_40000000::unmarshalArguments(cdrStream& _n)
+void _0RL_cd_efe87cde4422e9bd_50000000::unmarshalArguments(cdrStream& _n)
 {
   arg_0_ = _n.unmarshalString(0);
   arg_0 = arg_0_.in();
@@ -469,15 +515,15 @@ void _0RL_cd_efe87cde4422e9bd_40000000::unmarshalArguments(cdrStream& _n)
 
 }
 
-const char* const _0RL_cd_efe87cde4422e9bd_40000000::_user_exns[] = {
+const char* const _0RL_cd_efe87cde4422e9bd_50000000::_user_exns[] = {
   0
 };
 
 // Local call call-back function.
 static void
-_0RL_lcfn_efe87cde4422e9bd_50000000(omniCallDescriptor* cd, omniServant* svnt)
+_0RL_lcfn_efe87cde4422e9bd_60000000(omniCallDescriptor* cd, omniServant* svnt)
 {
-  _0RL_cd_efe87cde4422e9bd_40000000* tcd = (_0RL_cd_efe87cde4422e9bd_40000000*)cd;
+  _0RL_cd_efe87cde4422e9bd_50000000* tcd = (_0RL_cd_efe87cde4422e9bd_50000000*)cd;
   P2P::_impl_sc* impl = (P2P::_impl_sc*) svnt->_ptrToInterface(P2P::sc::_PD_repoId);
   impl->notificar(tcd->arg_0, tcd->arg_1);
 
@@ -486,7 +532,7 @@ _0RL_lcfn_efe87cde4422e9bd_50000000(omniCallDescriptor* cd, omniServant* svnt)
 
 void P2P::_objref_sc::notificar(const char* correo, ::CORBA::Boolean estado)
 {
-  _0RL_cd_efe87cde4422e9bd_40000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_50000000, "notificar", 10);
+  _0RL_cd_efe87cde4422e9bd_50000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_60000000, "notificar", 10);
   _call_desc.arg_0 = correo;
   _call_desc.arg_1 = estado;
 
@@ -527,7 +573,7 @@ P2P::_impl_sc::_dispatch(omniCallHandle& _handle)
 
   if (omni::strMatch(op, "sendAmistad")) {
 
-    _0RL_cd_efe87cde4422e9bd_00000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_30000000, "sendAmistad", 12, 1);
+    _0RL_cd_efe87cde4422e9bd_20000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_40000000, "sendAmistad", 12, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;
@@ -535,7 +581,7 @@ P2P::_impl_sc::_dispatch(omniCallHandle& _handle)
 
   if (omni::strMatch(op, "notificar")) {
 
-    _0RL_cd_efe87cde4422e9bd_40000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_50000000, "notificar", 10, 1);
+    _0RL_cd_efe87cde4422e9bd_50000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_60000000, "notificar", 10, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;
@@ -675,56 +721,11 @@ P2P::_objref_cs::_ptrToObjRef(const char* id)
 //
 // Code for P2P::cs::pedirAmistad
 
-// Proxy call descriptor class. Mangled signature:
-//  void_i_cstring_i_cstring
-class _0RL_cd_efe87cde4422e9bd_60000000
-  : public omniCallDescriptor
-{
-public:
-  inline _0RL_cd_efe87cde4422e9bd_60000000(LocalCallFn lcfn, const char* op_, size_t oplen, _CORBA_Boolean upcall=0)
-    : omniCallDescriptor(lcfn, op_, oplen, 0, _user_exns, 0, upcall)
-  {
-    
-  }
-  
-  void marshalArguments(cdrStream&);
-  void unmarshalArguments(cdrStream&);
-
-    
-  
-  static const char* const _user_exns[];
-
-  ::CORBA::String_var arg_0_;
-  const char* arg_0;
-  ::CORBA::String_var arg_1_;
-  const char* arg_1;
-};
-
-void _0RL_cd_efe87cde4422e9bd_60000000::marshalArguments(cdrStream& _n)
-{
-  _n.marshalString(arg_0,0);
-  _n.marshalString(arg_1,0);
-
-}
-
-void _0RL_cd_efe87cde4422e9bd_60000000::unmarshalArguments(cdrStream& _n)
-{
-  arg_0_ = _n.unmarshalString(0);
-  arg_0 = arg_0_.in();
-  arg_1_ = _n.unmarshalString(0);
-  arg_1 = arg_1_.in();
-
-}
-
-const char* const _0RL_cd_efe87cde4422e9bd_60000000::_user_exns[] = {
-  0
-};
-
 // Local call call-back function.
 static void
 _0RL_lcfn_efe87cde4422e9bd_70000000(omniCallDescriptor* cd, omniServant* svnt)
 {
-  _0RL_cd_efe87cde4422e9bd_60000000* tcd = (_0RL_cd_efe87cde4422e9bd_60000000*)cd;
+  _0RL_cd_efe87cde4422e9bd_00000000* tcd = (_0RL_cd_efe87cde4422e9bd_00000000*)cd;
   P2P::_impl_cs* impl = (P2P::_impl_cs*) svnt->_ptrToInterface(P2P::cs::_PD_repoId);
   impl->pedirAmistad(tcd->arg_0, tcd->arg_1);
 
@@ -733,7 +734,7 @@ _0RL_lcfn_efe87cde4422e9bd_70000000(omniCallDescriptor* cd, omniServant* svnt)
 
 void P2P::_objref_cs::pedirAmistad(const char* correo1, const char* correo2)
 {
-  _0RL_cd_efe87cde4422e9bd_60000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_70000000, "pedirAmistad", 13);
+  _0RL_cd_efe87cde4422e9bd_00000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_70000000, "pedirAmistad", 13);
   _call_desc.arg_0 = correo1;
   _call_desc.arg_1 = correo2;
 
@@ -1259,7 +1260,7 @@ P2P::_impl_cs::_dispatch(omniCallHandle& _handle)
 
   if (omni::strMatch(op, "pedirAmistad")) {
 
-    _0RL_cd_efe87cde4422e9bd_60000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_70000000, "pedirAmistad", 13, 1);
+    _0RL_cd_efe87cde4422e9bd_00000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_70000000, "pedirAmistad", 13, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;

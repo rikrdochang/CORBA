@@ -20,7 +20,7 @@ public:
   virtual ~P2P_cc_i();
 
   // methods corresponding to defined IDL attributes and operations
-  void talk(const char* mensaje);
+  void talk(const char* correo, const char* mensaje);
   void init(const char* correo);
 };
 
@@ -35,10 +35,10 @@ P2P_cc_i::~P2P_cc_i(){
 }
 
 // Methods corresponding to IDL attributes and operations
-void P2P_cc_i::talk(const char* mensaje)
+void P2P_cc_i::talk(const char* correo, const char* mensaje)
 {
   // insert code here and remove the warning
-  #warning "Code missing in function <void P2P_cc_i::talk(const char* mensaje)>"
+  #warning "Code missing in function <void P2P_cc_i::talk(const char* correo, const char* mensaje)>"
 }
 
 void P2P_cc_i::init(const char* correo)

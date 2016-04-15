@@ -124,7 +124,7 @@ _CORBA_MODULE_BEG
   {
   public:
     // IDL operations
-    void talk(const char* mensaje);
+    void talk(const char* correo, const char* mensaje);
     void init(const char* correo);
 
     // Constructors
@@ -160,7 +160,7 @@ _CORBA_MODULE_BEG
   public:
     virtual ~_impl_cc();
 
-    virtual void talk(const char* mensaje) = 0;
+    virtual void talk(const char* correo, const char* mensaje) = 0;
     virtual void init(const char* correo) = 0;
     
   public:  // Really protected, workaround for xlC

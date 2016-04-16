@@ -487,7 +487,10 @@ private cc actualizarServicioNombresCC(String correo) {
                 amigos = server.logueo(this.getCorreo().getText(), contrasenaEnvio);
                 if (amigos[0].correo.equals("fallo@fallo.com")) {
                     JOptionPane.showMessageDialog(this,
-                            "El usuario o contrase?a introducidos no son validos o ya ha iniciado sesi?n");
+                            "El usuario o contrase?a introducidos no son validos");
+                } else if (amigos[0].correo.equals("relogueo@relogueo.com")) {
+                    JOptionPane.showMessageDialog(this,
+                            "El usuario ya ha iniciado sesi?n");
                 } else {
                     Principal pr = new Principal(server, this.getCorreo().getText(), orb, amigos, actualizarServicioNombresCC(this.getCorreo().getText()));
                     actualizarServicioNombresSC(this.getCorreo().getText(), pr);
@@ -502,7 +505,7 @@ private cc actualizarServicioNombresCC(String correo) {
     }//GEN-LAST:event_accederActionPerformed
 
     private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
-        
+
         Pattern p = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 

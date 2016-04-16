@@ -46,7 +46,6 @@ public class Principal extends javax.swing.JFrame {
                 friends = amig;
                 int tam = 0;
                 String[] lista;
-
                 while (!amig[tam].correo.equals("ready@ready.com")) {
                     tam++;
                 }
@@ -59,6 +58,8 @@ public class Principal extends javax.swing.JFrame {
                     }
                 }
                 this.getAmigos().setListData(lista);
+            } else {
+                this.getAmigos().setListData(new String[1]);
             }
         } catch (InvalidName ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);

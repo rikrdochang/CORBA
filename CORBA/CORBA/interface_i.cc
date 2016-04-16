@@ -119,7 +119,9 @@ public:
   ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2);
   ::CORBA::Boolean deslogueo(const char* correo);
   ::CORBA::Boolean aceptarAmistad(const char* correo1, const char* correo2);
-  P2P::buscar* buscaAmigos(const char* nombre);
+  P2P::buscar* buscaAmigos(const char* nombre, const char* correo);
+  ::CORBA::Boolean noAmistad(const char* correo1, const char* correo2);
+  void initAmistad(const char* correo1);
 };
 
 //
@@ -175,10 +177,22 @@ P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass)
   #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::aceptarAmistad(const char* correo1, const char* correo2)>"
 }
 
-P2P::buscar* P2P_cs_i::buscaAmigos(const char* nombre)
+P2P::buscar* P2P_cs_i::buscaAmigos(const char* nombre, const char* correo)
 {
   // insert code here and remove the warning
-  #warning "Code missing in function <P2P::buscar* P2P_cs_i::buscaAmigos(const char* nombre)>"
+  #warning "Code missing in function <P2P::buscar* P2P_cs_i::buscaAmigos(const char* nombre, const char* correo)>"
+}
+
+::CORBA::Boolean P2P_cs_i::noAmistad(const char* correo1, const char* correo2)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::noAmistad(const char* correo1, const char* correo2)>"
+}
+
+void P2P_cs_i::initAmistad(const char* correo1)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <void P2P_cs_i::initAmistad(const char* correo1)>"
 }
 
 

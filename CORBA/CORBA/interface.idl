@@ -24,7 +24,9 @@ module P2P{
 		boolean modPass(in string correo, in string pass1, in string pass2);
 		boolean deslogueo(in string correo);
 		boolean aceptarAmistad(in string correo1, in string correo2);
-		buscar buscaAmigos(in string nombre);
+		buscar buscaAmigos(in string nombre, in string correo);
+		boolean noAmistad(in string correo1, in string correo2);
+		void initAmistad(in string correo1);
 	};
 };
 

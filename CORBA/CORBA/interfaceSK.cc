@@ -1152,7 +1152,7 @@ _0RL_lcfn_efe87cde4422e9bd_11000000(omniCallDescriptor* cd, omniServant* svnt)
 // Code for P2P::cs::buscaAmigos
 
 // Proxy call descriptor class. Mangled signature:
-//  _cP2P_mbuscar_i_cstring
+//  _cP2P_mbuscar_i_cstring_i_cstring
 class _0RL_cd_efe87cde4422e9bd_21000000
   : public omniCallDescriptor
 {
@@ -1174,12 +1174,15 @@ public:
 
   ::CORBA::String_var arg_0_;
   const char* arg_0;
+  ::CORBA::String_var arg_1_;
+  const char* arg_1;
   P2P::buscar_var result;
 };
 
 void _0RL_cd_efe87cde4422e9bd_21000000::marshalArguments(cdrStream& _n)
 {
   _n.marshalString(arg_0,0);
+  _n.marshalString(arg_1,0);
 
 }
 
@@ -1187,6 +1190,8 @@ void _0RL_cd_efe87cde4422e9bd_21000000::unmarshalArguments(cdrStream& _n)
 {
   arg_0_ = _n.unmarshalString(0);
   arg_0 = arg_0_.in();
+  arg_1_ = _n.unmarshalString(0);
+  arg_1 = arg_1_.in();
 
 }
 
@@ -1213,18 +1218,72 @@ _0RL_lcfn_efe87cde4422e9bd_31000000(omniCallDescriptor* cd, omniServant* svnt)
 {
   _0RL_cd_efe87cde4422e9bd_21000000* tcd = (_0RL_cd_efe87cde4422e9bd_21000000*)cd;
   P2P::_impl_cs* impl = (P2P::_impl_cs*) svnt->_ptrToInterface(P2P::cs::_PD_repoId);
-  tcd->result = impl->buscaAmigos(tcd->arg_0);
+  tcd->result = impl->buscaAmigos(tcd->arg_0, tcd->arg_1);
 
 
 }
 
-P2P::buscar* P2P::_objref_cs::buscaAmigos(const char* nombre)
+P2P::buscar* P2P::_objref_cs::buscaAmigos(const char* nombre, const char* correo)
 {
   _0RL_cd_efe87cde4422e9bd_21000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_31000000, "buscaAmigos", 12);
   _call_desc.arg_0 = nombre;
+  _call_desc.arg_1 = correo;
 
   _invoke(_call_desc);
   return _call_desc.result._retn();
+
+
+}
+
+
+//
+// Code for P2P::cs::noAmistad
+
+// Local call call-back function.
+static void
+_0RL_lcfn_efe87cde4422e9bd_41000000(omniCallDescriptor* cd, omniServant* svnt)
+{
+  _0RL_cd_efe87cde4422e9bd_01000000* tcd = (_0RL_cd_efe87cde4422e9bd_01000000*)cd;
+  P2P::_impl_cs* impl = (P2P::_impl_cs*) svnt->_ptrToInterface(P2P::cs::_PD_repoId);
+  tcd->result = impl->noAmistad(tcd->arg_0, tcd->arg_1);
+
+
+}
+
+::CORBA::Boolean P2P::_objref_cs::noAmistad(const char* correo1, const char* correo2)
+{
+  _0RL_cd_efe87cde4422e9bd_01000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_41000000, "noAmistad", 10);
+  _call_desc.arg_0 = correo1;
+  _call_desc.arg_1 = correo2;
+
+  _invoke(_call_desc);
+  return _call_desc.result;
+
+
+}
+
+
+//
+// Code for P2P::cs::initAmistad
+
+// Local call call-back function.
+static void
+_0RL_lcfn_efe87cde4422e9bd_51000000(omniCallDescriptor* cd, omniServant* svnt)
+{
+  _0RL_cd_efe87cde4422e9bd_20000000* tcd = (_0RL_cd_efe87cde4422e9bd_20000000*)cd;
+  P2P::_impl_cs* impl = (P2P::_impl_cs*) svnt->_ptrToInterface(P2P::cs::_PD_repoId);
+  impl->initAmistad(tcd->arg_0);
+
+
+}
+
+void P2P::_objref_cs::initAmistad(const char* correo1)
+{
+  _0RL_cd_efe87cde4422e9bd_20000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_51000000, "initAmistad", 12);
+  _call_desc.arg_0 = correo1;
+
+  _invoke(_call_desc);
+
 
 
 }
@@ -1317,6 +1376,22 @@ P2P::_impl_cs::_dispatch(omniCallHandle& _handle)
   if (omni::strMatch(op, "buscaAmigos")) {
 
     _0RL_cd_efe87cde4422e9bd_21000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_31000000, "buscaAmigos", 12, 1);
+    
+    _handle.upcall(this,_call_desc);
+    return 1;
+  }
+
+  if (omni::strMatch(op, "noAmistad")) {
+
+    _0RL_cd_efe87cde4422e9bd_01000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_41000000, "noAmistad", 10, 1);
+    
+    _handle.upcall(this,_call_desc);
+    return 1;
+  }
+
+  if (omni::strMatch(op, "initAmistad")) {
+
+    _0RL_cd_efe87cde4422e9bd_20000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_51000000, "initAmistad", 12, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;

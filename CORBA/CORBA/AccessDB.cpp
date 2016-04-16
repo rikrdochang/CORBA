@@ -156,12 +156,6 @@ void preAmistad(sql::Connection* conexion, std::string correo1, std::string corr
 	statement = conexion->createStatement();
 
 	std::string aux;
-	aux = "INSERT INTO pendiente VALUES('" + correo1 + "','" + correo2 + "');";
-	try {
-		statement->executeQuery(aux);
-	}
-	catch (sql::SQLException &e) {}
-
 	aux = "INSERT INTO pendiente VALUES('" + correo2 + "','" + correo1 + "');";
 	try {
 		statement->executeQuery(aux);
@@ -216,4 +210,8 @@ P2P::buscar buscar(sql::Connection* conexion, std::string nombre) {
 		lista[i] = resultset->getString(1).c_str();
 	}
 	return lista;
+}
+
+void solPendientes() {
+
 }

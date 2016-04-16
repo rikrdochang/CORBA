@@ -607,7 +607,9 @@ _CORBA_MODULE_BEG
     ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2);
     ::CORBA::Boolean deslogueo(const char* correo);
     ::CORBA::Boolean aceptarAmistad(const char* correo1, const char* correo2);
-    buscar* buscaAmigos(const char* nombre);
+    buscar* buscaAmigos(const char* nombre, const char* correo);
+    ::CORBA::Boolean noAmistad(const char* correo1, const char* correo2);
+    void initAmistad(const char* correo1);
 
     // Constructors
     inline _objref_cs()  { _PR_setobj(0); }  // nil
@@ -649,7 +651,9 @@ _CORBA_MODULE_BEG
     virtual ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2) = 0;
     virtual ::CORBA::Boolean deslogueo(const char* correo) = 0;
     virtual ::CORBA::Boolean aceptarAmistad(const char* correo1, const char* correo2) = 0;
-    virtual buscar* buscaAmigos(const char* nombre) = 0;
+    virtual buscar* buscaAmigos(const char* nombre, const char* correo) = 0;
+    virtual ::CORBA::Boolean noAmistad(const char* correo1, const char* correo2) = 0;
+    virtual void initAmistad(const char* correo1) = 0;
     
   public:  // Really protected, workaround for xlC
     virtual _CORBA_Boolean _dispatch(omniCallHandle&);

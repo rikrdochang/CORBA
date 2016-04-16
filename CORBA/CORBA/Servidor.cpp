@@ -4,6 +4,21 @@
 void Servidor::pedirAmistad(const char* correo1, const char* correo2){
 	this->conexion = getConexion();
 	preAmistad(this->conexion, correo1, correo2);
+	int i = 0;
+	for (i = 0; i < this->conectados.length(); i++) {
+		if (strcmp(this->conectados[i].correo, correo1) == 0) {
+			CosNaming::Name name;
+			name.length(1);
+			string correoaux = "sc";
+			correoaux = correo2 + correoaux;
+			name[0].id = CORBA::string_dup(correoaux.c_str());
+			name[0].kind = CORBA::string_dup("");
+			CORBA::Object_ptr aux;
+			aux = (*this->nc)->resolve(name);
+			P2P::sc_var cliente = P2P::sc::_narrow(aux);
+			cliente->sendAmistad(correo1);
+		}
+	}
 }
 
 P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {

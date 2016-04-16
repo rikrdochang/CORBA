@@ -600,7 +600,7 @@ _CORBA_MODULE_BEG
   {
   public:
     // IDL operations
-    void pedirAmistad(const char* correo1, const char* correo2);
+    ::CORBA::Boolean pedirAmistad(const char* correo1, const char* correo2);
     amigos* logueo(const char* correo, const char* pass);
     ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre);
     ::CORBA::Boolean desregistro(const char* correo);
@@ -644,7 +644,7 @@ _CORBA_MODULE_BEG
   public:
     virtual ~_impl_cs();
 
-    virtual void pedirAmistad(const char* correo1, const char* correo2) = 0;
+    virtual ::CORBA::Boolean pedirAmistad(const char* correo1, const char* correo2) = 0;
     virtual amigos* logueo(const char* correo, const char* pass) = 0;
     virtual ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre) = 0;
     virtual ::CORBA::Boolean desregistro(const char* correo) = 0;

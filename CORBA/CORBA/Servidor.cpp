@@ -1,23 +1,29 @@
 #include "Servidor.h"
 #include <C:\CORBA\include\omniORB4\CORBA.h>
 
-void Servidor::pedirAmistad(const char* correo1, const char* correo2){
+CORBA::Boolean Servidor::pedirAmistad(const char* correo1, const char* correo2){
 	this->conexion = getConexion();
-	preAmistad(this->conexion, correo1, correo2);
-	int i = 0;
-	for (i = 0; i < this->conectados.length(); i++) {
-		if (strcmp(this->conectados[i].correo, correo1) == 0) {
-			CosNaming::Name name;
-			name.length(1);
-			string correoaux = "sc";
-			correoaux = correo2 + correoaux;
-			name[0].id = CORBA::string_dup(correoaux.c_str());
-			name[0].kind = CORBA::string_dup("");
-			CORBA::Object_ptr aux;
-			aux = (*this->nc)->resolve(name);
-			P2P::sc_var cliente = P2P::sc::_narrow(aux);
-			cliente->sendAmistad(correo1);
+	bool a=preAmistad(this->conexion, correo1, correo2);
+	if (a) {
+		int i = 0;
+		for (i = 0; i < this->conectados.length(); i++) {
+			if (strcmp(this->conectados[i].correo, correo2) == 0) {
+				CosNaming::Name name;
+				name.length(1);
+				string correoaux = "sc";
+				correoaux = correo2 + correoaux;
+				name[0].id = CORBA::string_dup(correoaux.c_str());
+				name[0].kind = CORBA::string_dup("");
+				CORBA::Object_ptr aux;
+				aux = (*this->nc)->resolve(name);
+				P2P::sc_var cliente = P2P::sc::_narrow(aux);
+				cliente->sendAmistad(correo1);
+			}
 		}
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
@@ -141,22 +147,56 @@ CORBA::Boolean Servidor::deslogueo(const char* correo) {
 }
 
 CORBA::Boolean Servidor::aceptarAmistad(const char* correo1, const char* correo2) {
-	bool m, v;
 	this->conexion = getConexion();
-	m = amistad(conexion, correo1, correo2);
-	v = amistad(conexion, correo2, correo1);
+	bool m = amistad(conexion, correo1, correo2);
 
-	if (m == true && v == true) {
-		return true;
+	CosNaming::Name name;
+	name.length(1);
+	string correoaux = "sc";
+	correoaux = correo1 + correoaux;
+	name[0].id = CORBA::string_dup(correoaux.c_str());
+	name[0].kind = CORBA::string_dup("");
+	CORBA::Object_ptr aux;
+	aux = (*this->nc)->resolve(name);
+	P2P::sc_var cliente = P2P::sc::_narrow(aux);
+
+	int i;
+	bool estado = false;
+	for (i = 0; this->conectados.length(); i++) {
+		if (strcmp(this->conectados[i].correo, correo2)==0) {
+			estado = false;
+		}
 	}
-	else {
-		return false;
-	}
+
+	cliente->notificar(correo2, estado);
+	return m;
 }
 
-P2P::buscar* Servidor::buscaAmigos(const char* nombre) {
+P2P::buscar* Servidor::buscaAmigos(const char* nombre, const char* correo1) {
 	this->conexion = getConexion();
 	P2P::buscar lista;
 	lista = buscar(this->conexion, nombre);
 	return &lista;
+}
+
+CORBA::Boolean Servidor::noAmistad(const char* correo1, const char* correo2) {
+	this->conexion = getConexion();
+	bool a = rechazarAmig(this->conexion,correo1,correo2);
+	return a;
+}
+
+void Servidor::initAmistad(const char* correo1) {
+	this->conexion = getConexion();
+
+	CosNaming::Name name;
+	name.length(1);
+	string correoaux = "sc";
+	correoaux = correo1 + correoaux;
+	name[0].id = CORBA::string_dup(correoaux.c_str());
+	name[0].kind = CORBA::string_dup("");
+	CORBA::Object_ptr aux;
+	aux = (*this->nc)->resolve(name);
+	P2P::sc_var cliente = P2P::sc::_narrow(aux);
+
+	avisoAmistad(this->conexion, correo1, cliente);
 }

@@ -75,13 +75,13 @@ bool delUser(sql::Connection* conexion, std::string correo) {
 	}
 	catch (sql::SQLException &e) {}
 
-	aux = "DELETE FROM pendientes WHERE correo1='" + correo + "';";
+	aux = "DELETE FROM pendiente WHERE correo1='" + correo + "';";
 	try {
 		statement->executeQuery(aux);
 	}
 	catch (sql::SQLException &e) {}
 
-	aux = "DELETE FROM pendientes WHERE correo2='" + correo + "';";
+	aux = "DELETE FROM pendiente WHERE correo2='" + correo + "';";
 	try {
 		statement->executeQuery(aux);
 	}
@@ -151,18 +151,25 @@ P2P::amigos getAmigos(sql::Connection* conexion, std::string correo, P2P::amigos
 	return (*todos);
 }
 
-void preAmistad(sql::Connection* conexion, std::string correo1, std::string correo2) {
+bool preAmistad(sql::Connection* conexion, std::string correo1, std::string correo2) {
 	sql::Statement *statement;
+	sql::ResultSet *resultset;
 	statement = conexion->createStatement();
 
 	std::string aux;
-	aux = "INSERT INTO pendiente VALUES('" + correo2 + "','" + correo1 + "');";
+	aux = "SELECT * FROM amigos WHERE correo1='" + correo1 + "' AND correo2='" + correo2 + "';";
+	resultset = statement->executeQuery(aux);
+	if (resultset->next()) {
+		return false;
+	}
+
+	aux = "INSERT INTO pendiente VALUES('" + correo1 + "','" + correo2 + "');";
 	try {
 		statement->executeQuery(aux);
 	}
 	catch (sql::SQLException &e) {}
 
-	delete statement;
+	return true;
 }
 
 bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2) {
@@ -171,7 +178,7 @@ bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2
 	statement = conexion->createStatement();
 
 	std::string aux;
-	aux = "SELECT * FROM pendiente WHERE correo1='" + correo1 + "' AND correo2='" + correo2 + "';";
+	aux = "SELECT * FROM pendiente WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
 	resultset = statement->executeQuery(aux);
 
 	if (resultset->next()) {
@@ -181,10 +188,30 @@ bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2
 		}
 		catch (sql::SQLException &e) {}
 
+		aux = "INSERT INTO amigos VALUES('" + correo2 + "','" + correo1 + "');";
+		try {
+			statement->executeQuery(aux);
+		}
+		catch (sql::SQLException &e) {}
+
 		aux = "SELECT * FROM amigos WHERE correo1='" + correo1 + "' AND correo2='" + correo2 + "';";
 		resultset = statement->executeQuery(aux);
 		if (resultset->next()) {
-			return true;
+			aux = "SELECT * FROM amigos WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
+			resultset = statement->executeQuery(aux);
+			if (resultset->next()) {
+				aux = "DELETE * FROM pendiente WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
+				try {
+					statement->executeQuery(aux);
+				}
+				catch (sql::SQLException &e) {}
+				
+				aux = "SELECT * FROM pendiente WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
+				resultset = statement->executeQuery(aux);
+				if (resultset->next()) {
+					return true;
+				}
+			}
 		}
 		else {
 			return false;
@@ -212,6 +239,37 @@ P2P::buscar buscar(sql::Connection* conexion, std::string nombre) {
 	return lista;
 }
 
-void solPendientes() {
+bool rechazarAmig(sql::Connection* conexion, std::string correo1, std::string correo2) {
+	sql::Statement *statement;
+	sql::ResultSet *resultset;
+	statement = conexion->createStatement();
+	
+	std::string aux;
+	aux = "DELETE FROM pendiente WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
+	try {
+		statement->executeQuery(aux);
+	}
+	catch (sql::SQLException &e) {}
 
+	aux = "SELECT FROM pendiente WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
+	resultset = statement->executeQuery(aux);
+
+	if (resultset->next()) {
+		return false;
+	}
+	return true;
+}
+
+void avisoAmistad(sql::Connection* conexion, std::string correo1, P2P::sc_var cliente) {
+	sql::Statement *statement;
+	sql::ResultSet *resultset;
+	statement = conexion->createStatement();
+
+	std::string aux;
+	aux = "SELECT * FROM pendiente WHERE correo2='" + correo1 + "';";
+	resultset = statement->executeQuery(aux);
+
+	while (resultset->next()) {
+		cliente->sendAmistad(resultset->getString(1).c_str());
+	}
 }

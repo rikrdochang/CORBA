@@ -17,7 +17,7 @@ module P2P{
 		void notificar(in string correo, in boolean estado);
 	};
 	interface cs{
-		void pedirAmistad(in string correo1, in string correo2);
+		boolean pedirAmistad(in string correo1, in string correo2);
 		amigos logueo(in string correo, in string pass);
 		boolean registro(in string correo, in string pass, in string nombre);
 		boolean desregistro(in string correo);

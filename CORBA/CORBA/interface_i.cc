@@ -112,7 +112,7 @@ public:
   virtual ~P2P_cs_i();
 
   // methods corresponding to defined IDL attributes and operations
-  void pedirAmistad(const char* correo1, const char* correo2);
+  ::CORBA::Boolean pedirAmistad(const char* correo1, const char* correo2);
   P2P::amigos* logueo(const char* correo, const char* pass);
   ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre);
   ::CORBA::Boolean desregistro(const char* correo);
@@ -135,10 +135,10 @@ P2P_cs_i::~P2P_cs_i(){
 }
 
 // Methods corresponding to IDL attributes and operations
-void P2P_cs_i::pedirAmistad(const char* correo1, const char* correo2)
+::CORBA::Boolean P2P_cs_i::pedirAmistad(const char* correo1, const char* correo2)
 {
   // insert code here and remove the warning
-  #warning "Code missing in function <void P2P_cs_i::pedirAmistad(const char* correo1, const char* correo2)>"
+  #warning "Code missing in function <::CORBA::Boolean P2P_cs_i::pedirAmistad(const char* correo1, const char* correo2)>"
 }
 
 P2P::amigos* P2P_cs_i::logueo(const char* correo, const char* pass)

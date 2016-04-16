@@ -411,7 +411,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cerrarSesionActionPerformed
 
     private void anadirAmigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirAmigosActionPerformed
-        // TODO add your handling code here:
+                
     }//GEN-LAST:event_anadirAmigosActionPerformed
 
     private void chatearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatearActionPerformed

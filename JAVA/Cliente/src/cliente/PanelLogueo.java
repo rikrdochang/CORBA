@@ -6,7 +6,6 @@ import P2P.ccHelper;
 import P2P.ccServant;
 import P2P.cs;
 import P2P.sc;
-import P2P.scHelper;
 import P2P.scServant;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -14,7 +13,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -496,6 +494,7 @@ private cc actualizarServicioNombresCC(String correo) {
                     actualizarServicioNombresSC(this.getCorreo().getText(), pr);
                     pr.setVisible(true);
                     this.setVisible(false);
+                    pr.recibirPeticionesAmistad();
                     this.dispose();
                 }
             }

@@ -2,9 +2,8 @@ package cliente;
 
 import P2P.amigo;
 import P2P.cc;
-import P2P.ccHelper;
 import P2P.cs;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,8 +19,6 @@ import javax.swing.JScrollPane;
 import org.omg.CORBA.ORB;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContext;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -31,6 +28,7 @@ public class Principal extends javax.swing.JFrame {
     private org.omg.CORBA.ORB orb;
     private org.omg.CosNaming.NamingContext nc;
     private amigo[] friends;
+    private ArrayList<String> peticionesAmistadPendientes;
 
     public Principal(cs serv, String mail, org.omg.CORBA.ORB orb2, amigo[] amig, cc me) {
         try {
@@ -41,6 +39,7 @@ public class Principal extends javax.swing.JFrame {
             server = serv;
             correo = mail;
             yo = me;
+            peticionesAmistadPendientes = new ArrayList<>();
 
             if (amig != null) {
                 friends = amig;
@@ -72,7 +71,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void refreshAmigos() {
-
         if (friends != null) {
             int tam = 0;
             String[] lista;
@@ -90,157 +88,127 @@ public class Principal extends javax.swing.JFrame {
             }
             this.getAmigos().setListData(lista);
         }
-
     }
-
+    public void recibirPeticionesAmistad() {
+        this.getServer().initAmistad(this.getCorreo());
+    }
+    public ArrayList<String> getPeticionesAmistadPendientes() {
+        return peticionesAmistadPendientes;
+    }
+    public void setPeticionesAmistadPendientes(ArrayList<String> peticionesAmistadPendientes) {
+        this.peticionesAmistadPendientes = peticionesAmistadPendientes;
+    }
     public cc getYo() {
         return yo;
     }
-
     public void setYo(cc yo) {
         this.yo = yo;
     }
-
     public JLabel getUser() {
         return user;
     }
-
     public void setUser(JLabel user) {
         this.user = user;
     }
-
     public amigo[] getFriends() {
         return friends;
     }
-
     public void setFriends(amigo[] friends) {
         this.friends = friends;
     }
-
     public ORB getOrb() {
         return orb;
     }
-
     public void setOrb(ORB orb) {
         this.orb = orb;
     }
-
     public NamingContext getNc() {
         return nc;
     }
-
     public void setNc(NamingContext nc) {
         this.nc = nc;
     }
-
     public JButton getChatear() {
         return chatear;
     }
-
     public void setChatear(JButton chatear) {
         this.chatear = chatear;
     }
-
     public String getCorreo() {
         return correo;
     }
-
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-
     public cs getServer() {
         return server;
     }
-
     public void setServer(cs server) {
         this.server = server;
     }
-
     public JList getAmigos() {
         return amigos;
     }
-
     public void setAmigos(JList amigos) {
         this.amigos = amigos;
     }
-
     public JButton getAnadirAmigos() {
         return anadirAmigos;
     }
-
     public void setAnadirAmigos(JButton anadirAmigos) {
         this.anadirAmigos = anadirAmigos;
     }
-
     public JMenuItem getBorrarCuenta() {
         return borrarCuenta;
     }
-
     public void setBorrarCuenta(JMenuItem borrarCuenta) {
         this.borrarCuenta = borrarCuenta;
     }
-
     public JMenuItem getCambiarContrasena() {
         return cambiarContrasena;
     }
-
     public void setCambiarContrasena(JMenuItem cambiarContrasena) {
         this.cambiarContrasena = cambiarContrasena;
     }
-
     public JButton getCerrarSesion() {
         return cerrarSesion;
     }
-
     public void setCerrarSesion(JButton cerrarSesion) {
         this.cerrarSesion = cerrarSesion;
     }
-
     public JLabel getjLabel1() {
         return user;
     }
-
     public void setjLabel1(JLabel jLabel1) {
         this.user = jLabel1;
     }
-
     public JLabel getjLabel2() {
         return jLabel2;
     }
-
     public void setjLabel2(JLabel jLabel2) {
         this.jLabel2 = jLabel2;
     }
-
     public JMenuBar getjMenuBar1() {
         return jMenuBar1;
     }
-
     public void setjMenuBar1(JMenuBar jMenuBar1) {
         this.jMenuBar1 = jMenuBar1;
     }
-
     public JMenuItem getjMenuItem1() {
         return jMenuItem1;
     }
-
     public void setjMenuItem1(JMenuItem jMenuItem1) {
         this.jMenuItem1 = jMenuItem1;
     }
-
     public JScrollPane getjScrollPane2() {
         return jScrollPane2;
     }
-
     public void setjScrollPane2(JScrollPane jScrollPane2) {
         this.jScrollPane2 = jScrollPane2;
     }
-
     public JMenu getOpciones() {
         return opciones;
     }
-
     public void setOpciones(JMenu opciones) {
         this.opciones = opciones;
     }
@@ -266,6 +234,7 @@ public class Principal extends javax.swing.JFrame {
         opciones = new javax.swing.JMenu();
         borrarCuenta = new javax.swing.JMenuItem();
         cambiarContrasena = new javax.swing.JMenuItem();
+        peticionesPendientes = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -327,6 +296,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         opciones.add(cambiarContrasena);
+
+        peticionesPendientes.setText("Peticiones de amistad pendientes");
+        peticionesPendientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                peticionesPendientesActionPerformed(evt);
+            }
+        });
+        opciones.add(peticionesPendientes);
 
         jMenuBar1.add(opciones);
 
@@ -411,7 +388,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cerrarSesionActionPerformed
 
     private void anadirAmigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirAmigosActionPerformed
-                
+        AnadirAmigo aa = new AnadirAmigo(server, correo);
+        aa.setVisible(true);
     }//GEN-LAST:event_anadirAmigosActionPerformed
 
     private void chatearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatearActionPerformed
@@ -438,7 +416,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cambiarContrasenaActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         if (server.deslogueo(this.getCorreo())) {
             PanelLogueo pl = new PanelLogueo(server, orb);
@@ -450,6 +427,37 @@ public class Principal extends javax.swing.JFrame {
                     "Fallo al intentar cerrar sesión");
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void peticionesPendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peticionesPendientesActionPerformed
+        ArrayList<String> aux = new ArrayList<>();
+
+        for (String c : peticionesAmistadPendientes) {
+            String pregunta = c + " le ha enviado una solicitud de amistad, ¿desea aceptarla?";
+            int op = JOptionPane.showConfirmDialog(this, pregunta, "¡ Petición de amistad de " + c + " !", JOptionPane.OK_CANCEL_OPTION);
+            if (op == 0) {
+                if (this.getServer().aceptarAmistad(this.getCorreo(), c)) {
+                    JOptionPane.showMessageDialog(this,
+                            "Solicitud de amistad aceptada con éxito");
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Ha ocurrido un error al aceptar la solicitud de amistad");
+                }
+                aux.add(c);
+            } else if (op == 2) {
+                if (this.getServer().noAmistad(this.getCorreo(), c)) {
+                    JOptionPane.showMessageDialog(this,
+                            "Solicitud de amistad denegada");
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Ha ocurrido un error al denegar la solicitud de amistad");
+                }
+                aux.add(c);
+            }
+        }
+        for (String c : aux) {
+            peticionesAmistadPendientes.remove(c);
+        }
+    }//GEN-LAST:event_peticionesPendientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -498,6 +506,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenu opciones;
+    private javax.swing.JMenuItem peticionesPendientes;
     private javax.swing.JLabel user;
     // End of variables declaration//GEN-END:variables
 }

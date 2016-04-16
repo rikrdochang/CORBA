@@ -3,6 +3,8 @@ package cliente;
 import P2P.cs;
 import P2P.csHelper;
 import java.util.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Cliente {
 
@@ -10,7 +12,7 @@ public class Cliente {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        
         org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(args, null);
         if (orb == null) {
             System.exit(-1);

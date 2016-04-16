@@ -87,7 +87,7 @@ bool delUser(sql::Connection* conexion, std::string correo) {
 	}
 	catch (sql::SQLException &e) {}
 
-	aux = "SELECT * FROM usuarios WHERE correo'" + correo + "';";
+	aux = "SELECT * FROM usuarios WHERE correo='" + correo + "';";
 	resultset = statement->executeQuery(aux);
 
 	while (resultset->next()) {

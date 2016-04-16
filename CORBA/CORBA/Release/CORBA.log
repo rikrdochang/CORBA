@@ -1,4 +1,4 @@
-﻿  Servidor.cpp
+﻿  AccessDB.cpp
 c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLString'
 c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLException'
 c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\exception.h(145): warning C4251: 'sql::SQLUnsupportedOptionException::option': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de struct 'sql::SQLUnsupportedOptionException'
@@ -6,15 +6,34 @@ C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.
 C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(179): warning C4251: 'sql::mysql::MySQL_Connection::service': class 'boost::scoped_ptr<sql::mysql::MySQL_Statement>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
 C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(181): warning C4251: 'sql::mysql::MySQL_Connection::intern': class 'boost::scoped_ptr<sql::mysql::MySQL_ConnectionData>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
 C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy': class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Driver'
-Servidor.cpp(22): warning C4018: '<': no coinciden signed/unsigned
-Servidor.cpp(42): warning C4018: '<': no coinciden signed/unsigned
-Servidor.cpp(99): warning C4018: '<': no coinciden signed/unsigned
-Servidor.cpp(109): warning C4018: '<': no coinciden signed/unsigned
+AccessDB.cpp(31): warning C4101: 'e': variable local sin referencia
+AccessDB.cpp(64): warning C4101: 'e': variable local sin referencia
+AccessDB.cpp(70): warning C4101: 'e': variable local sin referencia
+AccessDB.cpp(76): warning C4101: 'e': variable local sin referencia
+AccessDB.cpp(82): warning C4101: 'e': variable local sin referencia
+AccessDB.cpp(88): warning C4101: 'e': variable local sin referencia
+AccessDB.cpp(108): warning C4101: 'e': variable local sin referencia
+AccessDB.cpp(139): warning C4018: '<': no coinciden signed/unsigned
+AccessDB.cpp(163): warning C4101: 'e': variable local sin referencia
+AccessDB.cpp(169): warning C4101: 'e': variable local sin referencia
+AccessDB.cpp(188): warning C4101: 'e': variable local sin referencia
+  Servidor.cpp
+c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLString'
+c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::SQLException'
+c:\program files (x86)\mysql\mysql connector c++ 1.1.7\include\cppconn\exception.h(145): warning C4251: 'sql::SQLUnsupportedOptionException::option': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' necesita tener una interfaz DLL para que la utilicen los clientes de struct 'sql::SQLUnsupportedOptionException'
+C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(175): warning C4251: 'sql::mysql::MySQL_Connection::proxy': class 'boost::shared_ptr<sql::mysql::NativeAPI::NativeConnectionWrapper>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
+C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(179): warning C4251: 'sql::mysql::MySQL_Connection::service': class 'boost::scoped_ptr<sql::mysql::MySQL_Statement>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
+C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_connection.h(181): warning C4251: 'sql::mysql::MySQL_Connection::intern': class 'boost::scoped_ptr<sql::mysql::MySQL_ConnectionData>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Connection'
+C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.7\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy': class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'sql::mysql::MySQL_Driver'
+Servidor.cpp(18): warning C4018: '<': no coinciden signed/unsigned
+Servidor.cpp(36): warning C4018: '<': no coinciden signed/unsigned
+Servidor.cpp(91): warning C4018: '<': no coinciden signed/unsigned
+Servidor.cpp(98): warning C4018: '<': no coinciden signed/unsigned
      Creando biblioteca C:\Users\sinho\Repos\MuertePorPresedo\CORBA\Release\CORBA.lib y objeto C:\Users\sinho\Repos\MuertePorPresedo\CORBA\Release\CORBA.exp
   Generando código
-  1 of 1237 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+  3 of 1237 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    15 functions had inline decision re-evaluated but remain unchanged
+    10 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   CORBA.vcxproj -> C:\Users\sinho\Repos\MuertePorPresedo\CORBA\Release\CORBA.exe
   CORBA.vcxproj -> C:\Users\sinho\Repos\MuertePorPresedo\CORBA\Release\CORBA.pdb (Full PDB)

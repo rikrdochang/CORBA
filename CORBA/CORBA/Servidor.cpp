@@ -94,7 +94,6 @@ CORBA::Boolean Servidor::deslogueo(const char* correo) {
 			this->conectados.length((this->conectados.length() - 1));
 			this->conexion = getConexion();
 			P2P::amigos lista = getAmigos(this->conexion,correo,this->conectados);
-			cout << lista.length() << endl;
 			for (j = 0; j < lista.length(); j++) {
 				if (lista[j].estado) {
 					CosNaming::Name name;

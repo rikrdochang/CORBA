@@ -7,14 +7,23 @@ void Servidor::pedirAmistad(const char* correo1, const char* correo2){
 }
 
 P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
+	int i;
+	P2P::amigos *lista = new P2P::amigos();
+	P2P::amigo aux;
 	this->conexion = getConexion();
 	bool user;
 	user = getUser(this->conexion, correo, pass);
-	P2P::amigos *lista = new P2P::amigos();
 	CORBA::ULong tam = (*lista).length();
-	P2P::amigo aux;
-	
 	if (user == true) {
+		for (i = 0; i < this->conectados.length(); i++) {
+			if (strcmp(this->conectados[i].correo, correo) == 0) {
+				(*lista).length((*lista).length() + 1);
+				aux.correo = "relogueo@relogueo.com";
+				aux.estado = false;
+				(*lista)[0] = aux;
+				return lista;
+			}
+		}
 		(*lista) = getAmigos(this->conexion, correo, this->conectados);
 	}
 	else {
@@ -22,9 +31,8 @@ P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 		aux.correo = "fallo@fallo.com";
 		aux.estado = false;
 		(*lista)[tam] = aux;
+		return lista;
 	}
-
-	int i;
 	for (i = 0; i < (*lista).length()-1; i++) {
 		if ((*lista)[i].estado == true) {
 			string atontado = (string)(*lista)[i].correo;
@@ -52,7 +60,13 @@ P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 CORBA::Boolean Servidor::registro(const char* correo, const char* pass, const char* nombre) {
 	this->conexion = getConexion();
 	bool res;
+	P2P::amigo aux;
 	res=setUser(conexion, nombre, correo, pass);
+	CORBA::ULong tam = (this->conectados).length();
+	this->conectados.length(tam + 1);
+	aux.correo = correo;
+	aux.estado = true;
+	this->conectados[tam] = aux;
 	return res;
 }
 
@@ -75,11 +89,12 @@ CORBA::Boolean Servidor::modPass(const char* correo, const char* pass1, const ch
 CORBA::Boolean Servidor::deslogueo(const char* correo) {
 	int i, j;
 	for (i = 0; i < this->conectados.length(); i++) {
-		if (this->conectados[i].correo == correo) {
-			this->conectados[i] = this->conectados[this->conectados.length()];
+		if (strcmp(this->conectados[i].correo,correo)==0) {
+			this->conectados[i] = this->conectados[this->conectados.length()-1];
 			this->conectados.length((this->conectados.length() - 1));
 			this->conexion = getConexion();
 			P2P::amigos lista = getAmigos(this->conexion,correo,this->conectados);
+			cout << lista.length() << endl;
 			for (j = 0; j < lista.length(); j++) {
 				if (lista[j].estado) {
 					CosNaming::Name name;
@@ -103,7 +118,10 @@ CORBA::Boolean Servidor::deslogueo(const char* correo) {
 	correoaux = correo + correoaux;
 	name[0].id = CORBA::string_dup(correoaux.c_str());
 	name[0].kind = CORBA::string_dup("");
-	CORBA::Object_ptr aux;
+	(*this->nc)->unbind(name);
+	correoaux = "cc";
+	correoaux = correo + correoaux;
+	name[0].id = CORBA::string_dup(correoaux.c_str());
 	(*this->nc)->unbind(name);
 	return true;
 }

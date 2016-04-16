@@ -57,12 +57,6 @@ bool delUser(sql::Connection* conexion, std::string correo) {
 	statement = conexion->createStatement();
 
 	std::string aux;
-	aux = "DELETE FROM usuarios WHERE correo='"+correo+"';";
-	try {
-		statement->executeQuery(aux);
-	}
-	catch (sql::SQLException &e) {}
-
 	aux = "DELETE FROM amigos WHERE correo1='" + correo + "';";
 	try {
 		statement->executeQuery(aux);
@@ -87,10 +81,16 @@ bool delUser(sql::Connection* conexion, std::string correo) {
 	}
 	catch (sql::SQLException &e) {}
 
+	aux = "DELETE FROM usuarios WHERE correo='" + correo + "';";
+	try {
+		statement->executeQuery(aux);
+	}
+	catch (sql::SQLException &e) {}
+
 	aux = "SELECT * FROM usuarios WHERE correo='" + correo + "';";
 	resultset = statement->executeQuery(aux);
 
-	while (resultset->next()) {
+	if (resultset->next()) {
 		return false;
 	}
 	return true;
@@ -157,19 +157,28 @@ bool preAmistad(sql::Connection* conexion, std::string correo1, std::string corr
 	statement = conexion->createStatement();
 
 	std::string aux;
-	aux = "SELECT * FROM amigos WHERE correo1='" + correo1 + "' AND correo2='" + correo2 + "';";
+	aux = "SELECT * FROM usuarios WHERE correo='" + correo2 + "';";
 	resultset = statement->executeQuery(aux);
 	if (resultset->next()) {
-		return false;
-	}
+		aux = "SELECT * FROM pendiente WHERE correo1='" + correo1 + "' AND correo2='" + correo2 + "';";
+		resultset = statement->executeQuery(aux);
+		if (resultset->next()) {
+			return false;
+		}
+		aux = "SELECT * FROM amigos WHERE correo1='" + correo1 + "' AND correo2='" + correo2 + "';";
+		resultset = statement->executeQuery(aux);
+		if (resultset->next()) {
+			return false;
+		}
 
-	aux = "INSERT INTO pendiente VALUES('" + correo1 + "','" + correo2 + "');";
-	try {
-		statement->executeQuery(aux);
+		aux = "INSERT INTO pendiente VALUES('" + correo1 + "','" + correo2 + "');";
+		try {
+			statement->executeQuery(aux);
+		}
+		catch (sql::SQLException &e) {}
+		return true;
 	}
-	catch (sql::SQLException &e) {}
-
-	return true;
+	return false;
 }
 
 bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2) {
@@ -178,10 +187,10 @@ bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2
 	statement = conexion->createStatement();
 
 	std::string aux;
-	aux = "SELECT * FROM pendiente WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
-	resultset = statement->executeQuery(aux);
+	//aux = "SELECT * FROM pendiente WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
+	//resultset = statement->executeQuery(aux);
 
-	if (resultset->next()) {
+	//if (resultset->next()) {
 		aux = "INSERT INTO amigos VALUES('" + correo1 + "','" + correo2 + "');";
 		try {
 			statement->executeQuery(aux);
@@ -200,7 +209,7 @@ bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2
 			aux = "SELECT * FROM amigos WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
 			resultset = statement->executeQuery(aux);
 			if (resultset->next()) {
-				aux = "DELETE * FROM pendiente WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
+				aux = "DELETE FROM pendiente WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
 				try {
 					statement->executeQuery(aux);
 				}
@@ -209,6 +218,9 @@ bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2
 				aux = "SELECT * FROM pendiente WHERE correo1='" + correo2 + "' AND correo2='" + correo1 + "';";
 				resultset = statement->executeQuery(aux);
 				if (resultset->next()) {
+					return false;
+				}
+				else {
 					return true;
 				}
 			}
@@ -216,10 +228,10 @@ bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2
 		else {
 			return false;
 		}
-	}
-	else {
-		return false;
-	}
+	//}
+	//else {
+	//	return false;
+	//}
 }
 
 P2P::buscar buscar(sql::Connection* conexion, std::string nombre) {

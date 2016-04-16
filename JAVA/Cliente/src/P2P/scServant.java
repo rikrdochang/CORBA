@@ -22,8 +22,6 @@ public class scServant extends scPOA {
 
     @Override
     public void notificar(String correo, boolean estado) {
-        /* Qué pasa si algún amigo se desconecta pero tengo un chat abierto con el? Al desloguearse debería destruir su chat y
-         poner mi chat a setVisible(false), para forzar que se refresque la lista de amigos y así no me deje entrar al intentar dar en botón Chatear    */
         int tam = 0, tamViejo = 0, tmp = 0;
         amigo[] amigosAux;
         amigo[] amigos = p.getFriends();
@@ -41,10 +39,11 @@ public class scServant extends scPOA {
                 amigosAux[tmp] = a;
                 tmp++;
             }
-            amigosAux[tmp + 1] = amigosAux[tmp];
-            amigosAux[tmp] = new amigo(correo, estado);
+            amigosAux[tmp] = amigosAux[tmp-1];
+            amigosAux[tmp-1] = new amigo(correo, estado);
             p.setFriends(amigosAux);
         }
+
         p.refreshAmigos();
 
     }

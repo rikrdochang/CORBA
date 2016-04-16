@@ -218,11 +218,21 @@ public class AnadirAmigo extends javax.swing.JFrame {
 
         if (this.getCorreosBuscados().getSelectedValue() != null) {
             String correoaux = this.getCorreosBuscados().getSelectedValue().toString();
-            server.pedirAmistad(this.getCorreo(), correoaux);
-            JOptionPane.showMessageDialog(this,
-                    "Petición de amistad enviada correctamente a " + correoaux);
+            if (server.pedirAmistad(this.getCorreo(), correoaux)) {
+                JOptionPane.showMessageDialog(this,
+                        "Petición de amistad enviada correctamente a " + correoaux);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "No se puede realizar la petición de amistad");
+            }
         } else if (m != null && m.matches()) {
-            server.pedirAmistad(this.getCorreo(), this.getNombreOrCorreo().getText());
+            if (server.pedirAmistad(this.getCorreo(), this.getNombreOrCorreo().getText())) {
+                JOptionPane.showMessageDialog(this,
+                        "Petición de amistad enviada correctamente a " + this.getNombreOrCorreo().getText());
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "No se puede realizar la petición de amistad");
+            }
         } else {
             JOptionPane.showMessageDialog(this,
                     "Error");

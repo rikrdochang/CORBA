@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cliente;
 
 import P2P.cs;
-import java.util.Arrays;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 /**
  *
@@ -182,14 +176,28 @@ public class CambiarContrasena extends javax.swing.JFrame {
         String contrasenaV = new String(this.getContrasenaVieja().getPassword());
         String contrasenaN = new String(this.getContrasenaNueva().getPassword());
 
-        if (server.modPass(correo, contrasenaV, contrasenaN)) {
+        if (contrasenaV.length() < 8 || contrasenaV.length() > 20) {
             JOptionPane.showMessageDialog(this,
-                    "Contraseña modificada correctamente :)");
+                    "Su contraseña antigua debería de poseer entre 8 y 20 caracteres");
+        } else if (contrasenaN.length() < 8 || contrasenaN.length() > 20) {
+            JOptionPane.showMessageDialog(this,
+                    "Su nueva contraseña debe poseer entre 8 y 20 caracteres");
         } else {
-            JOptionPane.showMessageDialog(this,
-                    "Error en la modificación de contraseña :)");
+            if (server.modPass(correo, contrasenaV, contrasenaN)) {
+                JOptionPane.showMessageDialog(this,
+                        "Contraseña modificada correctamente");
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Error en la modificación de contraseña");
+            }
         }
     }//GEN-LAST:event_cambiarContrasenaActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        // TODO add your handling code here:
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.dispose();
+    }
 
     /**
      * @param args the command line arguments
@@ -205,16 +213,21 @@ public class CambiarContrasena extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CambiarContrasena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambiarContrasena.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CambiarContrasena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambiarContrasena.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CambiarContrasena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambiarContrasena.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CambiarContrasena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambiarContrasena.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

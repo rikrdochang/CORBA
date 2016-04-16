@@ -73,6 +73,10 @@
           <Font name="Helvetica" size="13" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="mensajeAMandarFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="mensajeAMandarFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="enviar">
       <Properties>

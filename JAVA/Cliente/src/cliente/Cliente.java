@@ -24,12 +24,8 @@ public class Cliente {
             cs clienteServidor = csHelper.narrow(obj);
 
             PanelLogueo p = new PanelLogueo(clienteServidor, orb);
-
             p.setVisible(true);
 
-// destroy
-         //   orb.destroy();    //ACORDARSE!!
-            
             
         } catch (org.omg.CORBA.ORBPackage.InvalidName exception) {
             exception.printStackTrace(System.out);

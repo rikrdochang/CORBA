@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -244,6 +245,11 @@ public class PanelLogueo extends javax.swing.JFrame {
         nombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(236, 251, 244));
 
@@ -431,19 +437,7 @@ private cc actualizarServicioNombresCC(String correo) {
             org.omg.CORBA.Object obj = nc.resolve(nco);
             yoMismo = ccHelper.narrow(obj);
 
-        } catch (InvalidName ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ServantNotActive ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WrongPolicy ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotFound ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CannotProceed ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AdapterInactive ex) {
+        } catch (InvalidName | ServantNotActive | WrongPolicy | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | AdapterInactive ex) {
             Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -461,25 +455,13 @@ private cc actualizarServicioNombresCC(String correo) {
             NamingContext nc = NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
             String ruta = correo + "sc";
             NameComponent[] nco = {new NameComponent(ruta, "")};
-            
+
             scServant s = new scServant(pr);
             o = rootPOA.servant_to_reference(s);
-            
+
             nc.rebind(nco, o);
 
-        } catch (InvalidName ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ServantNotActive ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WrongPolicy ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotFound ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CannotProceed ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (org.omg.CosNaming.NamingContextPackage.InvalidName ex) {
-            Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AdapterInactive ex) {
+        } catch (InvalidName | ServantNotActive | WrongPolicy | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | AdapterInactive ex) {
             Logger.getLogger(PanelLogueo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -520,8 +502,7 @@ private cc actualizarServicioNombresCC(String correo) {
     }//GEN-LAST:event_accederActionPerformed
 
     private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
-        // TODO add your handling code here:
-
+        
         Pattern p = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
@@ -529,7 +510,6 @@ private cc actualizarServicioNombresCC(String correo) {
 
         String contrasenaEnvio = new String(this.getContrasena1().getPassword());
 
-        // CONTRASENA
         if (contrasenaEnvio.length() < 8 || contrasenaEnvio.length() > 20) {
             JOptionPane.showMessageDialog(this,
                     "La contrase?a introducida debe poseer entre 8 y 20 caracteres");
@@ -557,6 +537,10 @@ private cc actualizarServicioNombresCC(String correo) {
         }
 
     }//GEN-LAST:event_registroActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        orb.destroy();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

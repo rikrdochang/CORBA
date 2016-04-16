@@ -4,6 +4,7 @@ import P2P.cc;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -17,7 +18,7 @@ public class Chat extends javax.swing.JFrame {
 
     private cc amigo;
     private String correo;
-  
+
     public Chat(cc friend, String mail, String mail2) {
         amigo = friend;
         correo = mail;
@@ -29,7 +30,7 @@ public class Chat extends javax.swing.JFrame {
         initComponents();
 
     }
-    
+
     public JTextField getMensajeAMandar() {
         return mensajeAMandar;
     }
@@ -109,6 +110,14 @@ public class Chat extends javax.swing.JFrame {
         });
 
         mensajeAMandar.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
+        mensajeAMandar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                mensajeAMandarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                mensajeAMandarFocusLost(evt);
+            }
+        });
 
         enviar.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
         enviar.setText("Enviar");
@@ -167,18 +176,29 @@ public class Chat extends javax.swing.JFrame {
 
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
         amigo.talk(this.correo, this.getMensajeAMandar().getText());
-        
+
         Calendar calendario = new GregorianCalendar();
-        this.getMensajes().setText(this.getMensajes().getText() + "\n" + this.getCorreo() + "("
+        this.getMensajes().setText(this.getMensajes().getText() + "\n\n" + this.getCorreo() + "("
                 + calendario.get(Calendar.HOUR_OF_DAY)
                 + ":" + calendario.get(Calendar.MINUTE)
                 + "):      " + this.getMensajeAMandar().getText());
+        this.getMensajes().setCaretPosition(this.getMensajes().getDocument().getLength());
     }//GEN-LAST:event_enviarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setVisible(false);
     }//GEN-LAST:event_formWindowClosing
+
+    private void mensajeAMandarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_mensajeAMandarFocusGained
+        // TODO add your handling code here:
+        this.getMensajeAMandar().setText("");
+    }//GEN-LAST:event_mensajeAMandarFocusGained
+
+    private void mensajeAMandarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_mensajeAMandarFocusLost
+
+    }//GEN-LAST:event_mensajeAMandarFocusLost
 
     /**
      * @param args the command line arguments

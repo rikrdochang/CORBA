@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -52,7 +53,7 @@ public class Principal extends javax.swing.JFrame {
                 lista = new String[tam];
                 for (int i = 0; i < tam; i++) {
                     if (amig[i].estado) {
-                        lista[i] = amig[i].correo + " " + "CONECTADO";
+                        lista[i] = amig[i].correo + "\t" + "CONECTADO";
                     } else {
                         lista[i] = amig[i].correo;
                     }
@@ -81,7 +82,7 @@ public class Principal extends javax.swing.JFrame {
             lista = new String[tam];
             for (int i = 0; i < tam; i++) {
                 if (friends[i].estado) {
-                    lista[i] = friends[i].correo + " " + "CONECTADO";
+                    lista[i] = friends[i].correo + "\t" + "CONECTADO";
                 } else {
                     lista[i] = friends[i].correo;
                 }
@@ -268,7 +269,13 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
+        user.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         user.setText("Usuario");
 
         amigos.setModel(new javax.swing.AbstractListModel() {
@@ -353,22 +360,23 @@ public class Principal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(user)
-                        .addGap(19, 19, 19)
+                        .addGap(40, 40, 40)
                         .addComponent(jLabel2)
                         .addGap(5, 5, 5))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(cerrarSesion)
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cerrarSesion)
+                            .addComponent(user))
                         .addGap(18, 18, 18)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(anadirAmigos)
                     .addComponent(chatear))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -407,9 +415,18 @@ public class Principal extends javax.swing.JFrame {
 
     private void chatearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatearActionPerformed
         if (amigos.getSelectedValue() != null) {
-            String correoAmigo = amigos.getSelectedValue().toString().split(" ")[0];
+            String correoEstado[] = amigos.getSelectedValue().toString().split("\t");
+            String correoAmigo = correoEstado[0];
 
-            yo.init(correoAmigo);
+            if (correoEstado.length == 1) {
+                JOptionPane.showMessageDialog(this,
+                        "El amigo con el que intenta hablar está desconectado");
+            } else {
+                yo.init(correoAmigo);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccione un amigo con el que hablar");
 
         }
     }//GEN-LAST:event_chatearActionPerformed
@@ -418,6 +435,20 @@ public class Principal extends javax.swing.JFrame {
         CambiarContrasena cc = new CambiarContrasena(server, correo);
         cc.setVisible(true);
     }//GEN-LAST:event_cambiarContrasenaActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        if (server.deslogueo(this.getCorreo())) {
+            PanelLogueo pl = new PanelLogueo(server, orb);
+            this.setVisible(false);
+            pl.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Fallo al intentar cerrar sesión");
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

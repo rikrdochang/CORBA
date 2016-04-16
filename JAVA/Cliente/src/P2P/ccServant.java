@@ -85,13 +85,17 @@ public class ccServant extends ccPOA {
             } catch (InvalidName ex) {
                 Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            if (!tmp.isVisible()) {
+                chatsAmigos.get(correo2).setVisible(true);
+            }
         }
-
         Calendar calendario = new GregorianCalendar();
-        tmp.getMensajes().setText(tmp.getMensajes().getText() + "\n" + correo2 + "("
+        tmp.getMensajes().setText(tmp.getMensajes().getText() + "\n\n" + correo2 + "("
                 + calendario.get(Calendar.HOUR_OF_DAY)
                 + ":" + calendario.get(Calendar.MINUTE)
                 + "):      " + mensaje);
+        tmp.getMensajes().setCaretPosition(tmp.getMensajes().getDocument().getLength());
     }
 
 }

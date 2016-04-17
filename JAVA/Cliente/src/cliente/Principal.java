@@ -361,7 +361,6 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void borrarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarCuentaActionPerformed
-        // TODO add your handling code here:
         if (server.desregistro(this.getCorreo())) {
             JOptionPane.showMessageDialog(this,
                     "Cuenta eliminada correctamente");

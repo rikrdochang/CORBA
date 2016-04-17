@@ -260,7 +260,7 @@ void P2P::_objref_cc::init(const char* correo)
 // Code for P2P::cc::enviarArchivo
 
 // Proxy call descriptor class. Mangled signature:
-//  void_i_cstring_i_cP2P_mbytes
+//  void_i_cstring_i_cstring_i_cP2P_mbytes
 class _0RL_cd_efe87cde4422e9bd_40000000
   : public omniCallDescriptor
 {
@@ -280,14 +280,17 @@ public:
 
   ::CORBA::String_var arg_0_;
   const char* arg_0;
-  P2P::bytes_var arg_1_;
-  const P2P::bytes* arg_1;
+  ::CORBA::String_var arg_1_;
+  const char* arg_1;
+  P2P::bytes_var arg_2_;
+  const P2P::bytes* arg_2;
 };
 
 void _0RL_cd_efe87cde4422e9bd_40000000::marshalArguments(cdrStream& _n)
 {
   _n.marshalString(arg_0,0);
-  (const P2P::bytes&) *arg_1 >>= _n;
+  _n.marshalString(arg_1,0);
+  (const P2P::bytes&) *arg_2 >>= _n;
 
 }
 
@@ -295,9 +298,11 @@ void _0RL_cd_efe87cde4422e9bd_40000000::unmarshalArguments(cdrStream& _n)
 {
   arg_0_ = _n.unmarshalString(0);
   arg_0 = arg_0_.in();
-  arg_1_ = new P2P::bytes;
-  (P2P::bytes&)arg_1_ <<= _n;
-  arg_1 = &arg_1_.in();
+  arg_1_ = _n.unmarshalString(0);
+  arg_1 = arg_1_.in();
+  arg_2_ = new P2P::bytes;
+  (P2P::bytes&)arg_2_ <<= _n;
+  arg_2 = &arg_2_.in();
 
 }
 
@@ -311,16 +316,17 @@ _0RL_lcfn_efe87cde4422e9bd_50000000(omniCallDescriptor* cd, omniServant* svnt)
 {
   _0RL_cd_efe87cde4422e9bd_40000000* tcd = (_0RL_cd_efe87cde4422e9bd_40000000*)cd;
   P2P::_impl_cc* impl = (P2P::_impl_cc*) svnt->_ptrToInterface(P2P::cc::_PD_repoId);
-  impl->enviarArchivo(tcd->arg_0, *tcd->arg_1);
+  impl->enviarArchivo(tcd->arg_0, tcd->arg_1, *tcd->arg_2);
 
 
 }
 
-void P2P::_objref_cc::enviarArchivo(const char* correo1, const ::P2P::bytes& archivo)
+void P2P::_objref_cc::enviarArchivo(const char* correo1, const char* nombreArchivo, const ::P2P::bytes& archivo)
 {
   _0RL_cd_efe87cde4422e9bd_40000000 _call_desc(_0RL_lcfn_efe87cde4422e9bd_50000000, "enviarArchivo", 14);
   _call_desc.arg_0 = correo1;
-  _call_desc.arg_1 = &(::P2P::bytes&) archivo;
+  _call_desc.arg_1 = nombreArchivo;
+  _call_desc.arg_2 = &(::P2P::bytes&) archivo;
 
   _invoke(_call_desc);
 

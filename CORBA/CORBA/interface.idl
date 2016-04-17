@@ -6,7 +6,7 @@ module P2P{
 	interface cc{
 		void talk(in string correo, in string mensaje);
 		void init(in string correo);
-		void enviarArchivo(in string correo1, in bytes archivo);
+		void enviarArchivo(in string correo1, in string nombreArchivo, in bytes archivo);
 	};
 	struct amigo{
 		string correo;

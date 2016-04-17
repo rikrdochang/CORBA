@@ -238,7 +238,7 @@ _CORBA_MODULE_BEG
     // IDL operations
     void talk(const char* correo, const char* mensaje);
     void init(const char* correo);
-    void enviarArchivo(const char* correo1, const ::P2P::bytes& archivo);
+    void enviarArchivo(const char* correo1, const char* nombreArchivo, const ::P2P::bytes& archivo);
 
     // Constructors
     inline _objref_cc()  { _PR_setobj(0); }  // nil
@@ -275,7 +275,7 @@ _CORBA_MODULE_BEG
 
     virtual void talk(const char* correo, const char* mensaje) = 0;
     virtual void init(const char* correo) = 0;
-    virtual void enviarArchivo(const char* correo1, const ::P2P::bytes& archivo) = 0;
+    virtual void enviarArchivo(const char* correo1, const char* nombreArchivo, const ::P2P::bytes& archivo) = 0;
     
   public:  // Really protected, workaround for xlC
     virtual _CORBA_Boolean _dispatch(omniCallHandle&);

@@ -13,20 +13,37 @@ sql::Connection* getConexion() {
 }
 
 bool setUser(sql::Connection* conexion, std::string nombre, std::string correo, std::string pass) {
-	sql::Statement *statement;
-	sql::ResultSet *resultset;
-	statement = conexion->createStatement();
+	sql::Statement *statement = NULL;
+	sql::ResultSet *resultset = NULL;
 
-	std::string aux;
-	aux = "SELECT * FROM usuarios WHERE correo='" + correo + "';";
-	resultset = statement->executeQuery(aux);
-	if (resultset->next()) {
-		return false;
-	}
-	else {
-		aux = "INSERT INTO usuarios VALUES('" + correo + "','" + nombre + "','" + pass + "');";
+	conexion->setAutoCommit(0);
+	try {
+		statement = conexion->createStatement();
+		std::string aux;
+		aux = "SELECT * FROM usuarios WHERE correo='" + correo + "';";
+		resultset = statement->executeQuery(aux);
+		if (resultset->next()) {
+			conexion->commit();
+			conexion->setAutoCommit(1);
+			delete statement;
+			delete resultset;
+			return false;
+		}
+		else {
+			aux = "INSERT INTO usuarios VALUES('" + correo + "','" + nombre + "','" + pass + "');";
 			statement->executeUpdate(aux);
-		return true;
+			conexion->commit();
+			conexion->setAutoCommit(1);
+			delete statement;
+			delete resultset;
+			return true;
+		}
+	}
+	catch (sql::SQLException &e) {
+		conexion->rollback();
+		delete statement;
+		delete resultset;
+		return false;
 	}
 }
 

@@ -56,6 +56,118 @@ _CORBA_MODULE P2P
 
 _CORBA_MODULE_BEG
 
+  class bytes_var;
+
+  class bytes : public _CORBA_Unbounded_Sequence_Octet {
+  public:
+    typedef bytes_var _var_type;
+    inline bytes() {}
+    inline bytes(const bytes& _s)
+      : _CORBA_Unbounded_Sequence_Octet(_s) {}
+
+    inline bytes(_CORBA_ULong _max)
+      : _CORBA_Unbounded_Sequence_Octet(_max) {}
+    inline bytes(_CORBA_ULong _max, _CORBA_ULong _len, ::CORBA::Octet* _val, _CORBA_Boolean _rel=0)
+      : _CORBA_Unbounded_Sequence_Octet(_max, _len, _val, _rel) {}
+
+  
+
+    inline bytes& operator = (const bytes& _s) {
+      _CORBA_Unbounded_Sequence_Octet::operator=(_s);
+      return *this;
+    }
+  };
+
+  class bytes_out;
+
+  class bytes_var {
+  public:
+    inline bytes_var() : _pd_seq(0) {}
+    inline bytes_var(bytes* _s) : _pd_seq(_s) {}
+    inline bytes_var(const bytes_var& _s) {
+      if (_s._pd_seq)  _pd_seq = new bytes(*_s._pd_seq);
+      else             _pd_seq = 0;
+    }
+    inline ~bytes_var() { if (_pd_seq)  delete _pd_seq; }
+      
+    inline bytes_var& operator = (bytes* _s) {
+      if (_pd_seq)  delete _pd_seq;
+      _pd_seq = _s;
+      return *this;
+    }
+    inline bytes_var& operator = (const bytes_var& _s) {
+      if (&_s != this) {
+        if (_s._pd_seq) {
+          if (!_pd_seq)  _pd_seq = new bytes;
+          *_pd_seq = *_s._pd_seq;
+        }
+        else if (_pd_seq) {
+          delete _pd_seq;
+          _pd_seq = 0;
+        }
+      }
+      return *this;
+    }
+    inline ::CORBA::Octet& operator [] (_CORBA_ULong _s) {
+      return (*_pd_seq)[_s];
+    }
+
+  
+
+    inline bytes* operator -> () { return _pd_seq; }
+    inline const bytes* operator -> () const { return _pd_seq; }
+#if defined(__GNUG__)
+    inline operator bytes& () const { return *_pd_seq; }
+#else
+    inline operator const bytes& () const { return *_pd_seq; }
+    inline operator bytes& () { return *_pd_seq; }
+#endif
+      
+    inline const bytes& in() const { return *_pd_seq; }
+    inline bytes&       inout()    { return *_pd_seq; }
+    inline bytes*&      out() {
+      if (_pd_seq) { delete _pd_seq; _pd_seq = 0; }
+      return _pd_seq;
+    }
+    inline bytes* _retn() { bytes* tmp = _pd_seq; _pd_seq = 0; return tmp; }
+      
+    friend class bytes_out;
+    
+  private:
+    bytes* _pd_seq;
+  };
+
+  class bytes_out {
+  public:
+    inline bytes_out(bytes*& _s) : _data(_s) { _data = 0; }
+    inline bytes_out(bytes_var& _s)
+      : _data(_s._pd_seq) { _s = (bytes*) 0; }
+    inline bytes_out(const bytes_out& _s) : _data(_s._data) {}
+    inline bytes_out& operator = (const bytes_out& _s) {
+      _data = _s._data;
+      return *this;
+    }
+    inline bytes_out& operator = (bytes* _s) {
+      _data = _s;
+      return *this;
+    }
+    inline operator bytes*&()  { return _data; }
+    inline bytes*& ptr()       { return _data; }
+    inline bytes* operator->() { return _data; }
+
+    inline ::CORBA::Octet& operator [] (_CORBA_ULong _i) {
+      return (*_data)[_i];
+    }
+
+  
+
+    bytes*& _data;
+
+  private:
+    bytes_out();
+    bytes_out& operator=(const bytes_var&);
+  };
+
 #ifndef __P2P_mcc__
 #define __P2P_mcc__
   class cc;
@@ -126,6 +238,7 @@ _CORBA_MODULE_BEG
     // IDL operations
     void talk(const char* correo, const char* mensaje);
     void init(const char* correo);
+    void enviarArchivo(const char* correo1, const ::P2P::bytes& archivo);
 
     // Constructors
     inline _objref_cc()  { _PR_setobj(0); }  // nil
@@ -162,6 +275,7 @@ _CORBA_MODULE_BEG
 
     virtual void talk(const char* correo, const char* mensaje) = 0;
     virtual void init(const char* correo) = 0;
+    virtual void enviarArchivo(const char* correo1, const ::P2P::bytes& archivo) = 0;
     
   public:  // Really protected, workaround for xlC
     virtual _CORBA_Boolean _dispatch(omniCallHandle&);

@@ -2,9 +2,11 @@
 #define __ECHO_CALLBACK_IDL__
 
 module P2P{
+	typedef sequence<octet> bytes;
 	interface cc{
 		void talk(in string correo, in string mensaje);
 		void init(in string correo);
+		void enviarArchivo(in string correo1, in bytes archivo);
 	};
 	struct amigo{
 		string correo;

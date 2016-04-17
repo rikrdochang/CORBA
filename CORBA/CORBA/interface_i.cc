@@ -22,6 +22,7 @@ public:
   // methods corresponding to defined IDL attributes and operations
   void talk(const char* correo, const char* mensaje);
   void init(const char* correo);
+  void enviarArchivo(const char* correo1, const P2P::bytes& archivo);
 };
 
 //
@@ -45,6 +46,12 @@ void P2P_cc_i::init(const char* correo)
 {
   // insert code here and remove the warning
   #warning "Code missing in function <void P2P_cc_i::init(const char* correo)>"
+}
+
+void P2P_cc_i::enviarArchivo(const char* correo1, const P2P::bytes& archivo)
+{
+  // insert code here and remove the warning
+  #warning "Code missing in function <void P2P_cc_i::enviarArchivo(const char* correo1, const P2P::bytes& archivo)>"
 }
 
 

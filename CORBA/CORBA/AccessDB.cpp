@@ -106,13 +106,23 @@ bool chgPass(sql::Connection* conexion, std::string correo, std::string pass1, s
 	conexion->setAutoCommit(0);
 	try {
 		statement = conexion->createStatement();
-		std::string aux = "UPDATE usuarios SET pass='" + pass2 + "' WHERE correo='" + correo + "' AND pass='" + pass1 + "';";
-		statement->executeUpdate(aux);
-		conexion->commit();
-		conexion->setAutoCommit(1);
-		delete statement;
-		delete resultset;
-		return true;
+		std::string aux = "SELECT pass FROM usuarios WHERE correo='" + correo + "';";
+		resultset = statement->executeQuery(aux);
+		resultset->next();
+		if (strcmp(resultset->getString(1).c_str(), pass1.c_str()) == 0) {
+			statement->executeUpdate(aux);
+			conexion->commit();
+			conexion->setAutoCommit(1);
+			delete statement;
+			delete resultset;
+			return true;
+		}
+		else {
+			conexion->setAutoCommit(1);
+			delete statement;
+			delete resultset;
+			return false;
+		}
 	}
 	catch (sql::SQLException &e) {
 		conexion->rollback();

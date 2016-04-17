@@ -105,8 +105,7 @@ CORBA::Boolean Servidor::desregistro(const char* correo) {
 
 CORBA::Boolean Servidor::modPass(const char* correo, const char* pass1, const char* pass2) {
 	this->conexion = getConexion();
-	bool a;
-	a = chgPass(conexion, correo, pass1, pass2);
+	bool a = chgPass(conexion, correo, pass1, pass2);
 	return a;
 }
 

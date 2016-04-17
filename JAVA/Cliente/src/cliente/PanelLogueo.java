@@ -412,7 +412,7 @@ public class PanelLogueo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private cc actualizarServicioNombresCC(String correo) {
+private cc actualizarServicioNombresCC(String correo, Principal paux) {
         cc yoMismo = null;
 
         try {
@@ -423,7 +423,7 @@ private cc actualizarServicioNombresCC(String correo) {
 
             HashMap<String, Chat> amig = new HashMap<>();
 
-            ccServant c = new ccServant(orb, correo, amig);
+            ccServant c = new ccServant(orb, correo, paux);
             o = rootPOA.servant_to_reference(c);
 
             String ruta1 = correo + "cc";
@@ -490,7 +490,8 @@ private cc actualizarServicioNombresCC(String correo) {
                     JOptionPane.showMessageDialog(this,
                             "El usuario ya ha iniciado sesi?n");
                 } else {
-                    Principal pr = new Principal(server, this.getCorreo().getText(), orb, amigos, actualizarServicioNombresCC(this.getCorreo().getText()));
+                    Principal pr = new Principal(server, this.getCorreo().getText(), orb, amigos);
+                    pr.setYo(actualizarServicioNombresCC(this.getCorreo().getText(), pr));
                     actualizarServicioNombresSC(this.getCorreo().getText(), pr);
                     pr.setVisible(true);
                     this.setVisible(false);
@@ -525,7 +526,8 @@ private cc actualizarServicioNombresCC(String correo) {
                             "El nombre introducido no posee el formato adecuado");
                 } else {
                     if (server.registro(this.getCorreo1().getText(), contrasenaEnvio, this.getNombre().getText())) {
-                        Principal pr = new Principal(server, this.getCorreo1().getText(), orb, null, actualizarServicioNombresCC(this.getCorreo1().getText()));
+                        Principal pr = new Principal(server, this.getCorreo1().getText(), orb, null);
+                        pr.setYo(actualizarServicioNombresCC(this.getCorreo().getText(), pr));
                         actualizarServicioNombresSC(this.getCorreo1().getText(), pr);
                         pr.setVisible(true);
                         this.setVisible(false);

@@ -265,7 +265,6 @@ public class Chat extends javax.swing.JFrame {
                 System.out.println("peta al hacer el mkdir");
             }
             route = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/CORBA/" + correo + "/" + fileName;
-            System.out.println("ruta guay:" + route);
             fileOuputStream = new FileOutputStream(route);
             fileOuputStream.write(byteArray);
         } catch (FileNotFoundException e) {

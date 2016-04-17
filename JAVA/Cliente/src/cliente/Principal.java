@@ -4,6 +4,7 @@ import P2P.amigo;
 import P2P.cc;
 import P2P.cs;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,8 +30,9 @@ public class Principal extends javax.swing.JFrame {
     private org.omg.CosNaming.NamingContext nc;
     private amigo[] friends;
     private ArrayList<String> peticionesAmistadPendientes;
+    private HashMap<String, Chat> chatsAmigos;
 
-    public Principal(cs serv, String mail, org.omg.CORBA.ORB orb2, amigo[] amig, cc me) {
+    public Principal(cs serv, String mail, org.omg.CORBA.ORB orb2, amigo[] amig) {
         try {
             initComponents();
             orb = orb2;
@@ -38,8 +40,8 @@ public class Principal extends javax.swing.JFrame {
             nc = org.omg.CosNaming.NamingContextHelper.narrow(ns_obj);
             server = serv;
             correo = mail;
-            yo = me;
             peticionesAmistadPendientes = new ArrayList<>();
+            chatsAmigos = new HashMap<>();
 
             if (amig != null) {
                 friends = amig;
@@ -84,131 +86,192 @@ public class Principal extends javax.swing.JFrame {
                     lista[i] = friends[i].correo + "\t" + "CONECTADO";
                 } else {
                     lista[i] = friends[i].correo;
+                    if (chatsAmigos.get(lista[i]) != null) {
+                        chatsAmigos.get(lista[i]).dispose();
+                        chatsAmigos.remove(lista[i]);
+                    }
                 }
             }
             this.getAmigos().setListData(lista);
         }
     }
+
     public void recibirPeticionesAmistad() {
         this.getServer().initAmistad(this.getCorreo());
     }
+
+    public HashMap<String, Chat> getChatsAmigos() {
+        return chatsAmigos;
+    }
+
+    public void setChatsAmigos(HashMap<String, Chat> chatsAmigos) {
+        this.chatsAmigos = chatsAmigos;
+    }
+
+    public JMenuItem getPeticionesPendientes() {
+        return peticionesPendientes;
+    }
+
+    public void setPeticionesPendientes(JMenuItem peticionesPendientes) {
+        this.peticionesPendientes = peticionesPendientes;
+    }
+
     public ArrayList<String> getPeticionesAmistadPendientes() {
         return peticionesAmistadPendientes;
     }
+
     public void setPeticionesAmistadPendientes(ArrayList<String> peticionesAmistadPendientes) {
         this.peticionesAmistadPendientes = peticionesAmistadPendientes;
     }
+
     public cc getYo() {
         return yo;
     }
+
     public void setYo(cc yo) {
         this.yo = yo;
     }
+
     public JLabel getUser() {
         return user;
     }
+
     public void setUser(JLabel user) {
         this.user = user;
     }
+
     public amigo[] getFriends() {
         return friends;
     }
+
     public void setFriends(amigo[] friends) {
         this.friends = friends;
     }
+
     public ORB getOrb() {
         return orb;
     }
+
     public void setOrb(ORB orb) {
         this.orb = orb;
     }
+
     public NamingContext getNc() {
         return nc;
     }
+
     public void setNc(NamingContext nc) {
         this.nc = nc;
     }
+
     public JButton getChatear() {
         return chatear;
     }
+
     public void setChatear(JButton chatear) {
         this.chatear = chatear;
     }
+
     public String getCorreo() {
         return correo;
     }
+
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
     public cs getServer() {
         return server;
     }
+
     public void setServer(cs server) {
         this.server = server;
     }
+
     public JList getAmigos() {
         return amigos;
     }
+
     public void setAmigos(JList amigos) {
         this.amigos = amigos;
     }
+
     public JButton getAnadirAmigos() {
         return anadirAmigos;
     }
+
     public void setAnadirAmigos(JButton anadirAmigos) {
         this.anadirAmigos = anadirAmigos;
     }
+
     public JMenuItem getBorrarCuenta() {
         return borrarCuenta;
     }
+
     public void setBorrarCuenta(JMenuItem borrarCuenta) {
         this.borrarCuenta = borrarCuenta;
     }
+
     public JMenuItem getCambiarContrasena() {
         return cambiarContrasena;
     }
+
     public void setCambiarContrasena(JMenuItem cambiarContrasena) {
         this.cambiarContrasena = cambiarContrasena;
     }
+
     public JButton getCerrarSesion() {
         return cerrarSesion;
     }
+
     public void setCerrarSesion(JButton cerrarSesion) {
         this.cerrarSesion = cerrarSesion;
     }
+
     public JLabel getjLabel1() {
         return user;
     }
+
     public void setjLabel1(JLabel jLabel1) {
         this.user = jLabel1;
     }
+
     public JLabel getjLabel2() {
         return jLabel2;
     }
+
     public void setjLabel2(JLabel jLabel2) {
         this.jLabel2 = jLabel2;
     }
+
     public JMenuBar getjMenuBar1() {
         return jMenuBar1;
     }
+
     public void setjMenuBar1(JMenuBar jMenuBar1) {
         this.jMenuBar1 = jMenuBar1;
     }
+
     public JMenuItem getjMenuItem1() {
         return jMenuItem1;
     }
+
     public void setjMenuItem1(JMenuItem jMenuItem1) {
         this.jMenuItem1 = jMenuItem1;
     }
+
     public JScrollPane getjScrollPane2() {
         return jScrollPane2;
     }
+
     public void setjScrollPane2(JScrollPane jScrollPane2) {
         this.jScrollPane2 = jScrollPane2;
     }
+
     public JMenu getOpciones() {
         return opciones;
     }
+
     public void setOpciones(JMenu opciones) {
         this.opciones = opciones;
     }

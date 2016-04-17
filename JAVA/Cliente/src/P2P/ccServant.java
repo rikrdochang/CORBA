@@ -1,6 +1,7 @@
 package P2P;
 
 import cliente.Chat;
+import cliente.Principal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -17,20 +18,20 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
  */
 public class ccServant extends ccPOA {
 
-    private HashMap<String, Chat> chatsAmigos;
+    private Principal p;
     private org.omg.CORBA.ORB orb;
     private String correo;
 
-    public ccServant(ORB orb, String mail, HashMap<String, Chat> camig) {
+    public ccServant(ORB orb, String mail, Principal paux) {
         this.orb = orb;
         this.correo = mail;
-        this.chatsAmigos = camig;
+        p = paux;
     }
 
     @Override
     public void init(String correo2) {
 
-        Chat aux = chatsAmigos.get(correo2);
+        Chat aux = p.getChatsAmigos().get(correo2);
         try {
             if (aux == null) {
                 String ruta = correo2 + "cc";
@@ -43,7 +44,7 @@ public class ccServant extends ccPOA {
                 aux = new Chat(amig, correo, correo2);
                 aux.getNombre().setText("Conversación de " + correo + " con " + correo2);
                 aux.setVisible(true);
-                chatsAmigos.put(correo2, aux);
+                p.getChatsAmigos().put(correo2, aux);
             } else {
                 aux.setVisible(true);
             }
@@ -62,7 +63,7 @@ public class ccServant extends ccPOA {
     @Override
     public void talk(String correo2, String mensaje) {
 
-        Chat tmp = chatsAmigos.get(correo2);
+        Chat tmp = p.getChatsAmigos().get(correo2);
 
         if (tmp == null) {
             try {
@@ -75,7 +76,7 @@ public class ccServant extends ccPOA {
 
                 tmp = new Chat(amig, correo, correo2);
                 tmp.setVisible(true);
-                chatsAmigos.put(correo2, tmp);
+                p.getChatsAmigos().put(correo2, tmp);
             } catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
                 Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NotFound ex) {
@@ -87,7 +88,7 @@ public class ccServant extends ccPOA {
             }
         } else {
             if (!tmp.isVisible()) {
-                chatsAmigos.get(correo2).setVisible(true);
+                p.getChatsAmigos().get(correo2).setVisible(true);
             }
         }
         Calendar calendario = new GregorianCalendar();
@@ -100,7 +101,7 @@ public class ccServant extends ccPOA {
 
     @Override
     public void enviarArchivo(String correo1, String nombreArchivo, byte[] archivo) {
-        Chat tmp = chatsAmigos.get(correo1);
+        Chat tmp = p.getChatsAmigos().get(correo1);
 
         if (tmp == null) {
             try {
@@ -113,7 +114,7 @@ public class ccServant extends ccPOA {
 
                 tmp = new Chat(amig, correo, correo1);
                 tmp.setVisible(true);
-                chatsAmigos.put(correo1, tmp);
+                p.getChatsAmigos().put(correo1, tmp);
             } catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
                 Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NotFound ex) {
@@ -125,13 +126,13 @@ public class ccServant extends ccPOA {
             }
         } else {
             if (!tmp.isVisible()) {
-                chatsAmigos.get(correo1).setVisible(true);
+                p.getChatsAmigos().get(correo1).setVisible(true);
             }
         }
-        
+
         // CAMBIAR
         tmp.createFile(nombreArchivo, archivo, correo);
-        
+
         Calendar calendario = new GregorianCalendar();
         tmp.getMensajes().setText(tmp.getMensajes().getText() + "\n\n" + correo1 + "("
                 + calendario.get(Calendar.HOUR_OF_DAY)

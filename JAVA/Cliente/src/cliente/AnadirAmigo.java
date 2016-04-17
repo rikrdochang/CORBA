@@ -251,12 +251,13 @@ public class AnadirAmigo extends javax.swing.JFrame {
         }
         if (this.getNombreOrCorreo().getText().length() > 2) {
             if (m != null && !m.matches()) { // Si no coincide significa que no es un correo, por lo tanto es un nombre
-                String correosBuscados[] = server.buscaAmigos(this.getNombreOrCorreo().getText(), this.getCorreo());
-                if (correosBuscados[0].equals("fallo@fallo.com")) {   // PUEDE CAMBIAR
+                String[] correosBuscadosAux = server.buscaAmigos(this.getNombreOrCorreo().getText(), this.getCorreo());
+                System.out.println("superé la llamada con éxito");
+                if (correosBuscadosAux[0].equals("fallo@fallo.com")) { 
                     JOptionPane.showMessageDialog(this,
                             "No existe ningún contacto con ese nombre");
                 } else {
-                    this.getCorreosBuscados().setListData(correosBuscados);
+                    this.getCorreosBuscados().setListData(correosBuscadosAux);
                 }
             } else {    // Es un correo
                 JOptionPane.showMessageDialog(this,

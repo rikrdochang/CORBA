@@ -194,7 +194,6 @@ public class CambiarContrasena extends javax.swing.JFrame {
     }//GEN-LAST:event_cambiarContrasenaActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
-        // TODO add your handling code here:
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.dispose();
     }

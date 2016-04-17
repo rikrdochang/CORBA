@@ -234,20 +234,61 @@ bool amistad(sql::Connection* conexion, std::string correo1, std::string correo2
 	//}
 }
 
-P2P::buscar buscar(sql::Connection* conexion, std::string nombre) {
+P2P::buscar buscar(sql::Connection* conexion, std::string nombre, std::string correo1) {
 	sql::Statement *statement;
 	sql::ResultSet *resultset;
 	statement = conexion->createStatement();
 
 	std::string aux;
+	int i = 0, j, flag = 0, k = 0;
+	P2P::buscar lista, listaaux;
+	aux = "SELECT correo2 FROM amigos WHERE correo1='" + correo1 + "';";
+	resultset = statement->executeQuery(aux);
+	CORBA::ULong tam = listaaux.length();
+	while (resultset->next()) {
+		listaaux.length(tam + 1);
+		listaaux[i] = resultset->getString(1).c_str();
+		tam++;
+		cout << "Amigo:" << resultset->getString(1) << endl;
+		i++;
+	}
+
 	aux = "SELECT correo FROM usuarios WHERE nombre='" + nombre + "';";
 	resultset = statement->executeQuery(aux);
-
-	P2P::buscar lista;
-	int i;
-	for (i = 0; resultset->next(); i++) {
-		lista[i] = resultset->getString(1).c_str();
+	cout << listaaux.length() << endl;
+	tam = lista.length();
+	while (resultset->next()) {
+		cout << "Entro en el bucle" << endl;
+		for (j = 0; j < listaaux.length(); j++) {
+			cout << resultset->getString(1) << endl;
+			cout << listaaux[j] << endl;
+			if (strcmp(resultset->getString(1).c_str(), listaaux[j]) == 0) {
+				flag = 1;
+				cout << "Amigo encontrado!" << endl;
+			}
+		}
+		if (flag == 0) {
+			cout << "Entro en la flag" << endl;
+			cout << correo1.c_str() << endl;
+			cout << resultset->getString(1).c_str() << endl;
+			if (strcmp(correo1.c_str(), resultset->getString(1).c_str()) != 0) {
+				lista.length(tam + 1);
+				lista[k] = resultset->getString(1).c_str();
+				tam++;
+				k++;
+				cout << "Ready0" << endl;
+			}
+		}
+		else {
+			flag = 0;
+			cout << "Ready1" << endl;
+		}
 	}
+	if (k == 0) {
+		lista.length(tam + 1);
+		lista[k] = "fallo@fallo.com";
+	}
+
 	return lista;
 }
 

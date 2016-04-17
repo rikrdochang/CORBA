@@ -290,7 +290,7 @@ P2P::buscar buscar(sql::Connection* conexion, std::string nombre, std::string co
 		lista.length(tam + 1);
 		lista[k] = "fallo@fallo.com";
 	}
-
+	
 	delete statement;
 	delete resultset;
 	return lista;

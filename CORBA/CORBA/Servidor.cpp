@@ -28,6 +28,7 @@ CORBA::Boolean Servidor::pedirAmistad(const char* correo1, const char* correo2){
 		return true;
 	}
 	else {
+		this->mtx.unlock();
 		return false;
 	}
 }
@@ -48,6 +49,7 @@ P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 				aux.correo = "relogueo@relogueo.com";
 				aux.estado = false;
 				(*lista)[0] = aux;
+				this->mtx.unlock();
 				return lista;
 			}
 		}
@@ -58,6 +60,7 @@ P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 		aux.correo = "fallo@fallo.com";
 		aux.estado = false;
 		(*lista)[tam] = aux;
+		this->mtx.unlock();
 		return lista;
 	}
 	for (i = 0; i < (*lista).length()-1; i++) {
@@ -228,5 +231,7 @@ void Servidor::initAmistad(const char* correo1) {
 	CORBA::Object_ptr aux;
 	aux = (*this->nc)->resolve(name);
 	P2P::sc_var cliente = P2P::sc::_narrow(aux);
+	this->mtx.lock();
 	avisoAmistad(this->conexion, correo1, cliente);
+	this->mtx.unlock();
 }

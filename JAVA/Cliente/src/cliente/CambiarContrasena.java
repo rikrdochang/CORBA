@@ -1,6 +1,8 @@
 package cliente;
 
 import P2P.cs;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -110,9 +112,16 @@ public class CambiarContrasena extends javax.swing.JFrame {
         contrasenaNueva = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
+        jLabel1.setFont(new java.awt.Font("Helvetica", 1, 13)); // NOI18N
         jLabel1.setText("Cambio de contraseña");
 
+        cambiarContrasena.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
         cambiarContrasena.setText("Cambiar");
         cambiarContrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,13 +129,11 @@ public class CambiarContrasena extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
         jLabel2.setText("Contraseña vieja:");
 
+        jLabel3.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
         jLabel3.setText("Contraseña nueva:");
-
-        contrasenaVieja.setText("jPasswordField1");
-
-        contrasenaNueva.setText("jPasswordField1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,7 +148,7 @@ public class CambiarContrasena extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
+                .addContainerGap(91, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -156,7 +163,7 @@ public class CambiarContrasena extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(contrasenaVieja, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -183,21 +190,32 @@ public class CambiarContrasena extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,
                     "Su nueva contraseña debe poseer entre 8 y 20 caracteres");
         } else {
-            if (server.modPass(correo, contrasenaV, contrasenaN)) {
+            if (contrasenaV.equals(contrasenaN)) {
                 JOptionPane.showMessageDialog(this,
-                        "Contraseña modificada correctamente");
+                        "No pueden coincidir las contraseñas");
             } else {
-                JOptionPane.showMessageDialog(this,
-                        "Error en la modificación de contraseña");
+                short tmp = server.modPass(correo, contrasenaV, contrasenaN);
+                if (tmp == 0) {
+                    JOptionPane.showMessageDialog(this,
+                            "Contraseña modificada correctamente");
+                    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    this.dispose();
+                    this.setVisible(false);
+                } else if (tmp == 1) {
+                    JOptionPane.showMessageDialog(this,
+                            "Esa no es su contraseña actual");
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Error en la modificación de contraseña");
+                }
             }
         }
     }//GEN-LAST:event_cambiarContrasenaActionPerformed
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //this.removeAll();
-        this.setVisible(false);
-    }
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

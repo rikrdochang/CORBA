@@ -525,13 +525,17 @@ private cc actualizarServicioNombresCC(String correo, Principal paux) {
                     JOptionPane.showMessageDialog(this,
                             "El nombre introducido no posee el formato adecuado");
                 } else {
-                    if (server.registro(this.getCorreo1().getText(), contrasenaEnvio, this.getNombre().getText())) {
+                    short tmp = server.registro(this.getCorreo1().getText(), contrasenaEnvio, this.getNombre().getText());
+                    if (tmp == 0) {
                         Principal pr = new Principal(server, this.getCorreo1().getText(), orb, null);
                         pr.setYo(actualizarServicioNombresCC(this.getCorreo().getText(), pr));
                         actualizarServicioNombresSC(this.getCorreo1().getText(), pr);
                         pr.setVisible(true);
                         this.setVisible(false);
                         this.dispose();
+                    } else if (tmp == 1) {
+                            JOptionPane.showMessageDialog(this,
+                                "Ya existe un usuario registrado con ese correo");
                     } else {
                         JOptionPane.showMessageDialog(this,
                                 "Fallo con el registro");

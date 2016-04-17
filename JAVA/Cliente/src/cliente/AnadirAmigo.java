@@ -218,26 +218,54 @@ public class AnadirAmigo extends javax.swing.JFrame {
 
         if (this.getCorreosBuscados().getSelectedValue() != null) {
             String correoaux = this.getCorreosBuscados().getSelectedValue().toString();
-            if (server.pedirAmistad(this.getCorreo(), correoaux)) {
+            short tmp = server.pedirAmistad(this.getCorreo(), correoaux);
+            if (tmp == 0) {
                 JOptionPane.showMessageDialog(this,
                         "Petición de amistad enviada correctamente a " + correoaux);
+            } else if (tmp == 1) {
+                JOptionPane.showMessageDialog(this,
+                        "Ese correo electrónico no corresponde a ningún usuario registrado");
+            } else if (tmp == 2) {
+                JOptionPane.showMessageDialog(this,
+                        "Ya has enviado una solicitud de amistad a ese usuario");
+            } else if (tmp == 3) {
+                JOptionPane.showMessageDialog(this,
+                        "Ya posee una petición de amistad pendiente por parte de ese usuario");
+            } else if (tmp == 4) {
+                JOptionPane.showMessageDialog(this,
+                        "Ya es amigo de ese usuario");
             } else {
                 JOptionPane.showMessageDialog(this,
-                        "No se puede realizar la petición de amistad");
+                        "Error al intentar realizar la petición de amistad");
             }
-        } else if (m != null && m.matches()) {
-            if (server.pedirAmistad(this.getCorreo(), this.getNombreOrCorreo().getText())) {
-                JOptionPane.showMessageDialog(this,
-                        "Petición de amistad enviada correctamente a " + this.getNombreOrCorreo().getText());
-            } else {
-                JOptionPane.showMessageDialog(this,
-                        "No se puede realizar la petición de amistad");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Error");
-        }
 
+        } else if (m != null && m.matches()) {
+            if (this.getNombreOrCorreo().getText().equals(correo)) {
+                JOptionPane.showMessageDialog(this,
+                        "No se puede agregar a sí mismo");
+            } else {
+                short tmp = server.pedirAmistad(this.getCorreo(), this.getNombreOrCorreo().getText());
+                if (tmp == 0) {
+                    JOptionPane.showMessageDialog(this,
+                            "Petición de amistad enviada correctamente a " + this.getNombreOrCorreo().getText());
+                } else if (tmp == 1) {
+                    JOptionPane.showMessageDialog(this,
+                            "Ese correo electrónico no corresponde a ningún usuario registrado");
+                } else if (tmp == 2) {
+                    JOptionPane.showMessageDialog(this,
+                            "Ya has enviado una solicitud de amistad a ese usuario");
+                } else if (tmp == 3) {
+                    JOptionPane.showMessageDialog(this,
+                            "Ya posee una petición de amistad pendiente por parte de ese usuario");
+                } else if (tmp == 4) {
+                    JOptionPane.showMessageDialog(this,
+                            "Ya es amigo de ese usuario");
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Error al intentar realizar la petición de amistad");
+                }
+            }
+        }
     }//GEN-LAST:event_agregarAmigoActionPerformed
 
     private void buscarAmigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarAmigoActionPerformed
@@ -252,7 +280,7 @@ public class AnadirAmigo extends javax.swing.JFrame {
         if (this.getNombreOrCorreo().getText().length() > 2) {
             if (m != null && !m.matches()) { // Si no coincide significa que no es un correo, por lo tanto es un nombre
                 String[] correosBuscadosAux = server.buscaAmigos(this.getNombreOrCorreo().getText(), this.getCorreo());
-                if (correosBuscadosAux[0].equals("fallo@fallo.com")) { 
+                if (correosBuscadosAux[0].equals("fallo@fallo.com")) {
                     JOptionPane.showMessageDialog(this,
                             "No existe ningún contacto con ese nombre");
                 } else {

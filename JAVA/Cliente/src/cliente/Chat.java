@@ -229,10 +229,18 @@ public class Chat extends javax.swing.JFrame {
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.showOpenDialog(this);
-        fileChooser.getSelectedFile();
+        byte[] archivoEnviar = fileToBytes(fileChooser.getSelectedFile());
+        amigo.enviarArchivo(correo, archivoEnviar);
+
+        Calendar calendario = new GregorianCalendar();
+        this.getMensajes().setText(this.getMensajes().getText() + "\n\n" + this.getCorreo() + "("
+                + calendario.get(Calendar.HOUR_OF_DAY)
+                + ":" + calendario.get(Calendar.MINUTE)
+                + ")  ha enviado un archivo");
+        this.getMensajes().setCaretPosition(this.getMensajes().getDocument().getLength());
     }//GEN-LAST:event_enviarArchivoActionPerformed
 
-    public byte[] fileToBytes(File file) {
+    private byte[] fileToBytes(File file) {
         try {
             byte buffer[] = new byte[(int) file.length()];
             BufferedInputStream input = new BufferedInputStream(new FileInputStream(file.getAbsoluteFile()));
@@ -246,13 +254,18 @@ public class Chat extends javax.swing.JFrame {
         }
     }
 
-    public void createFile(String fileName, byte[] byteArray) {
+    public void createFile(String fileName, byte[] byteArray, String correo) {
         FileOutputStream fileOuputStream = null;
         String route = null;
         try {
-            new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\fromChorba").mkdir();
-            route = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\fromChorba\\" + fileName;
-            System.out.println(route);
+            if (!new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/CORBA/").mkdir()) {
+                System.out.println("peta al hacer el mkdir");
+            }
+            if (!new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/CORBA/" + correo).mkdir()) {
+                System.out.println("peta al hacer el mkdir");
+            }
+            route = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/CORBA/" + correo + "/" + fileName;
+            System.out.println("ruta guay:" + route);
             fileOuputStream = new FileOutputStream(route);
             fileOuputStream.write(byteArray);
         } catch (FileNotFoundException e) {

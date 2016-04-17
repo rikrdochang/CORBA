@@ -98,4 +98,46 @@ public class ccServant extends ccPOA {
         tmp.getMensajes().setCaretPosition(tmp.getMensajes().getDocument().getLength());
     }
 
+    @Override
+    public void enviarArchivo(String correo1, byte[] archivo) {
+        Chat tmp = chatsAmigos.get(correo1);
+
+        if (tmp == null) {
+            try {
+                String ruta = correo1 + "cc";
+                org.omg.CORBA.Object ns_obj = orb.resolve_initial_references("NameService");
+                org.omg.CosNaming.NamingContext nc = org.omg.CosNaming.NamingContextHelper.narrow(ns_obj);
+                org.omg.CosNaming.NameComponent[] path = {new org.omg.CosNaming.NameComponent(ruta, "")};
+                org.omg.CORBA.Object obj = nc.resolve(path);
+                cc amig = ccHelper.narrow(obj);
+
+                tmp = new Chat(amig, correo, correo1);
+                tmp.setVisible(true);
+                chatsAmigos.put(correo1, tmp);
+            } catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
+                Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotFound ex) {
+                Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CannotProceed ex) {
+                Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidName ex) {
+                Logger.getLogger(ccServant.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            if (!tmp.isVisible()) {
+                chatsAmigos.get(correo1).setVisible(true);
+            }
+        }
+        
+        // CAMBIAR
+        tmp.createFile("archivo_01", archivo, correo);
+        
+        Calendar calendario = new GregorianCalendar();
+        tmp.getMensajes().setText(tmp.getMensajes().getText() + "\n\n" + correo1 + "("
+                + calendario.get(Calendar.HOUR_OF_DAY)
+                + ":" + calendario.get(Calendar.MINUTE)
+                + ")  ha enviado un archivo");
+        tmp.getMensajes().setCaretPosition(tmp.getMensajes().getDocument().getLength());
+    }
+
 }

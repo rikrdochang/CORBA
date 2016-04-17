@@ -195,7 +195,8 @@ public class CambiarContrasena extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.dispose();
+        //this.removeAll();
+        this.setVisible(false);
     }
 
     /**

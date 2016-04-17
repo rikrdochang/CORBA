@@ -12,6 +12,7 @@
 #include <omniORB4\CORBA.h>
 #include <omniORB4\Naming.hh>
 #include <iostream>
+#include <mutex>
 
 sql::Connection* getConexion();
 bool setUser(sql::Connection* conexion, std::string nombre, std::string correo, std::string pass);

@@ -10,6 +10,7 @@ public:
 	CosNaming::NamingContext_ptr *nc;
 	sql::Connection *conexion;
 	P2P::amigos conectados;
+	std::mutex mtx;
 	virtual ::CORBA::Boolean pedirAmistad(const char* correo1, const char* correo2);
 	virtual P2P::amigos* logueo(const char* correo, const char* pass);
 	virtual ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre);

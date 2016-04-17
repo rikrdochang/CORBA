@@ -12,7 +12,7 @@ sql::Connection* getConexion() {
 	return connection;
 }
 
-int setUser(sql::Connection* conexion, std::string nombre, std::string correo, std::string pass) {
+short setUser(sql::Connection* conexion, std::string nombre, std::string correo, std::string pass) {
 	sql::Statement *statement = NULL;
 	sql::ResultSet *resultset = NULL;
 
@@ -113,7 +113,7 @@ bool delUser(sql::Connection* conexion, std::string correo) {
 	}
 }
 
-int chgPass(sql::Connection* conexion, std::string correo, std::string pass1, std::string pass2) {
+short chgPass(sql::Connection* conexion, std::string correo, std::string pass1, std::string pass2) {
 	sql::Statement *statement = NULL;
 	sql::ResultSet *resultset = NULL;
 
@@ -184,7 +184,7 @@ P2P::amigos getAmigos(sql::Connection* conexion, std::string correo, P2P::amigos
 	return (*todos);
 }
 
-int preAmistad(sql::Connection* conexion, std::string correo1, std::string correo2) {
+short preAmistad(sql::Connection* conexion, std::string correo1, std::string correo2) {
 	sql::Statement *statement = NULL;
 	sql::ResultSet *resultset = NULL;
 	

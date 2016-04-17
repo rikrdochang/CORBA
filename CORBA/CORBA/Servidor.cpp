@@ -1,13 +1,13 @@
 #include "Servidor.h"
 #include <C:\CORBA\include\omniORB4\CORBA.h>
 
-CORBA::Boolean Servidor::pedirAmistad(const char* correo1, const char* correo2){
+CORBA::Short Servidor::pedirAmistad(const char* correo1, const char* correo2){
 	if (strcmp(correo1, correo2) == 0) {
 		return false;
 	}
 	this->conexion = getConexion();
 	this->mtx.lock();
-	int a=preAmistad(this->conexion, correo1, correo2);
+	short a=preAmistad(this->conexion, correo1, correo2);
 	if (a==0) {
 		int i = 0;
 		for (i = 0; i < this->conectados.length(); i++) {
@@ -88,9 +88,9 @@ P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 	return lista;
 }
 
-CORBA::Boolean Servidor::registro(const char* correo, const char* pass, const char* nombre) {
+CORBA::Short Servidor::registro(const char* correo, const char* pass, const char* nombre) {
 	this->conexion = getConexion();
-	int res;
+	short res;
 	P2P::amigo aux;
 	this->mtx.lock();
 	res=setUser(conexion, nombre, correo, pass);
@@ -115,10 +115,10 @@ CORBA::Boolean Servidor::desregistro(const char* correo) {
 	return false;
 }
 
-CORBA::Boolean Servidor::modPass(const char* correo, const char* pass1, const char* pass2) {
+CORBA::Short Servidor::modPass(const char* correo, const char* pass1, const char* pass2) {
 	this->conexion = getConexion();
 	this->mtx.lock();
-	int a = chgPass(conexion, correo, pass1, pass2);
+	short a = chgPass(conexion, correo, pass1, pass2);
 	this->mtx.unlock();
 	return a;
 }
@@ -167,7 +167,9 @@ CORBA::Boolean Servidor::deslogueo(const char* correo) {
 CORBA::Boolean Servidor::aceptarAmistad(const char* correo1, const char* correo2) {
 	this->conexion = getConexion();
 	this->mtx.lock();
+	cout << "Error" << endl;
 	bool m = amistad(conexion, correo1, correo2);
+	cout << "Error" << endl;
 	if (m) {
 		CosNaming::Name name;
 		name.length(1);
@@ -197,7 +199,9 @@ CORBA::Boolean Servidor::aceptarAmistad(const char* correo1, const char* correo2
 				estado = true;
 			}
 		}
+		cout << estado << endl;
 		cliente->notificar(correo1, estado);
+		cout << "Error" << endl;
 	}
 	this->mtx.unlock();
 	return m;

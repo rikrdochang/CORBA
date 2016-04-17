@@ -714,11 +714,11 @@ _CORBA_MODULE_BEG
   {
   public:
     // IDL operations
-    ::CORBA::Boolean pedirAmistad(const char* correo1, const char* correo2);
+    ::CORBA::Short pedirAmistad(const char* correo1, const char* correo2);
     amigos* logueo(const char* correo, const char* pass);
-    ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre);
+    ::CORBA::Short registro(const char* correo, const char* pass, const char* nombre);
     ::CORBA::Boolean desregistro(const char* correo);
-    ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2);
+    ::CORBA::Short modPass(const char* correo, const char* pass1, const char* pass2);
     ::CORBA::Boolean deslogueo(const char* correo);
     ::CORBA::Boolean aceptarAmistad(const char* correo1, const char* correo2);
     buscar* buscaAmigos(const char* nombre, const char* correo);
@@ -758,11 +758,11 @@ _CORBA_MODULE_BEG
   public:
     virtual ~_impl_cs();
 
-    virtual ::CORBA::Boolean pedirAmistad(const char* correo1, const char* correo2) = 0;
+    virtual ::CORBA::Short pedirAmistad(const char* correo1, const char* correo2) = 0;
     virtual amigos* logueo(const char* correo, const char* pass) = 0;
-    virtual ::CORBA::Boolean registro(const char* correo, const char* pass, const char* nombre) = 0;
+    virtual ::CORBA::Short registro(const char* correo, const char* pass, const char* nombre) = 0;
     virtual ::CORBA::Boolean desregistro(const char* correo) = 0;
-    virtual ::CORBA::Boolean modPass(const char* correo, const char* pass1, const char* pass2) = 0;
+    virtual ::CORBA::Short modPass(const char* correo, const char* pass1, const char* pass2) = 0;
     virtual ::CORBA::Boolean deslogueo(const char* correo) = 0;
     virtual ::CORBA::Boolean aceptarAmistad(const char* correo1, const char* correo2) = 0;
     virtual buscar* buscaAmigos(const char* nombre, const char* correo) = 0;

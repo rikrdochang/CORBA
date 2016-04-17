@@ -7,8 +7,8 @@ CORBA::Boolean Servidor::pedirAmistad(const char* correo1, const char* correo2){
 	}
 	this->conexion = getConexion();
 	this->mtx.lock();
-	bool a=preAmistad(this->conexion, correo1, correo2);
-	if (a) {
+	int a=preAmistad(this->conexion, correo1, correo2);
+	if (a==0) {
 		int i = 0;
 		for (i = 0; i < this->conectados.length(); i++) {
 			if (strcmp(this->conectados[i].correo, correo2) == 0) {
@@ -25,11 +25,11 @@ CORBA::Boolean Servidor::pedirAmistad(const char* correo1, const char* correo2){
 			}
 		}
 		this->mtx.unlock();
-		return true;
+		return 0;
 	}
 	else {
 		this->mtx.unlock();
-		return false;
+		return a;
 	}
 }
 
@@ -90,7 +90,7 @@ P2P::amigos* Servidor::logueo(const char* correo, const char* pass) {
 
 CORBA::Boolean Servidor::registro(const char* correo, const char* pass, const char* nombre) {
 	this->conexion = getConexion();
-	bool res;
+	int res;
 	P2P::amigo aux;
 	this->mtx.lock();
 	res=setUser(conexion, nombre, correo, pass);
@@ -104,21 +104,21 @@ CORBA::Boolean Servidor::registro(const char* correo, const char* pass, const ch
 }
 
 CORBA::Boolean Servidor::desregistro(const char* correo) {
-	this->mtx.lock();
 	if (deslogueo(correo)) {
+		this->mtx.lock();
 		if (delUser(this->conexion, correo)) {
 			this->mtx.unlock();
 			return true;
 		}
+		this->mtx.unlock();
 	}
-	this->mtx.unlock();
 	return false;
 }
 
 CORBA::Boolean Servidor::modPass(const char* correo, const char* pass1, const char* pass2) {
 	this->conexion = getConexion();
 	this->mtx.lock();
-	bool a = chgPass(conexion, correo, pass1, pass2);
+	int a = chgPass(conexion, correo, pass1, pass2);
 	this->mtx.unlock();
 	return a;
 }

@@ -53,7 +53,7 @@ public class Principal extends javax.swing.JFrame {
                 lista = new String[tam];
                 for (int i = 0; i < tam; i++) {
                     if (amig[i].estado) {
-                        lista[i] = amig[i].correo + "\t" + "CONECTADO";
+                        lista[i] = amig[i].correo + "   \t" + "CONECTADO";
                     } else {
                         lista[i] = amig[i].correo;
                     }
@@ -83,7 +83,7 @@ public class Principal extends javax.swing.JFrame {
             lista = new String[tam];
             for (int i = 0; i < tam; i++) {
                 if (friends[i].estado) {
-                    lista[i] = friends[i].correo + "\t" + "CONECTADO";
+                    lista[i] = friends[i].correo + "   \t" + "CONECTADO";
                 } else {
                     lista[i] = friends[i].correo;
                     if (chatsAmigos.get(lista[i]) != null) {
@@ -439,7 +439,17 @@ public class Principal extends javax.swing.JFrame {
 
     private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed
         if (server.deslogueo(this.getCorreo())) {
+            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             PanelLogueo pl = new PanelLogueo(server, orb);
+            int tam = 0;
+            while (!friends[tam].correo.equals("ready@ready.com")) {
+                if ((chatsAmigos.get(friends[tam].correo)) != null) {
+                    chatsAmigos.get(friends[tam].correo).dispose();
+                }
+                tam++;
+            }
+
+            chatsAmigos.clear();
             this.setVisible(false);
             pl.setVisible(true);
             this.dispose();
@@ -456,7 +466,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void chatearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatearActionPerformed
         if (amigos.getSelectedValue() != null) {
-            String correoEstado[] = amigos.getSelectedValue().toString().split("\t");
+            String correoEstado[] = amigos.getSelectedValue().toString().split("   \t");
             String correoAmigo = correoEstado[0];
 
             if (correoEstado.length == 1) {

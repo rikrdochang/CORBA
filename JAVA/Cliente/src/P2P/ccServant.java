@@ -99,7 +99,7 @@ public class ccServant extends ccPOA {
     }
 
     @Override
-    public void enviarArchivo(String correo1, byte[] archivo) {
+    public void enviarArchivo(String correo1, String nombreArchivo, byte[] archivo) {
         Chat tmp = chatsAmigos.get(correo1);
 
         if (tmp == null) {
@@ -130,7 +130,7 @@ public class ccServant extends ccPOA {
         }
         
         // CAMBIAR
-        tmp.createFile("archivo_01", archivo, correo);
+        tmp.createFile(nombreArchivo, archivo, correo);
         
         Calendar calendario = new GregorianCalendar();
         tmp.getMensajes().setText(tmp.getMensajes().getText() + "\n\n" + correo1 + "("

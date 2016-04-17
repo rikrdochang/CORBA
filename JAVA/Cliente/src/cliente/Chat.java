@@ -230,7 +230,7 @@ public class Chat extends javax.swing.JFrame {
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.showOpenDialog(this);
         byte[] archivoEnviar = fileToBytes(fileChooser.getSelectedFile());
-        amigo.enviarArchivo(correo, archivoEnviar);
+        amigo.enviarArchivo(correo, fileChooser.getName(fileChooser.getSelectedFile()) ,archivoEnviar);
 
         Calendar calendario = new GregorianCalendar();
         this.getMensajes().setText(this.getMensajes().getText() + "\n\n" + this.getCorreo() + "("

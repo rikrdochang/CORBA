@@ -192,9 +192,7 @@ CORBA::Boolean Servidor::aceptarAmistad(const char* correo1, const char* correo2
 P2P::buscar* Servidor::buscaAmigos(const char* nombre, const char* correo1) {
 	this->conexion = getConexion();
 	P2P::buscar *lista = new P2P::buscar;
-	cout << "Vamos a buscar" << endl;
 	(*lista) = buscar(this->conexion, nombre, correo1);
-	cout << "Ready" << endl;
 	return lista;
 }
 

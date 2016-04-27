@@ -528,7 +528,7 @@ private cc actualizarServicioNombresCC(String correo, Principal paux) {
                     short tmp = server.registro(this.getCorreo1().getText(), contrasenaEnvio, this.getNombre().getText());
                     if (tmp == 0) {
                         Principal pr = new Principal(server, this.getCorreo1().getText(), orb, null);
-                        pr.setYo(actualizarServicioNombresCC(this.getCorreo().getText(), pr));
+                        pr.setYo(actualizarServicioNombresCC(this.getCorreo1().getText(), pr));
                         actualizarServicioNombresSC(this.getCorreo1().getText(), pr);
                         pr.setVisible(true);
                         this.setVisible(false);

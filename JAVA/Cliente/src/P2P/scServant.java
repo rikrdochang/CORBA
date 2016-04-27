@@ -39,8 +39,8 @@ public class scServant extends scPOA {
                 amigosAux[tmp] = a;
                 tmp++;
             }
-            amigosAux[tmp] = amigosAux[tmp-1];
-            amigosAux[tmp-1] = new amigo(correo, estado);
+            amigosAux[tmp] = amigosAux[tmp - 1];
+            amigosAux[tmp - 1] = new amigo(correo, estado);
             p.setFriends(amigosAux);
         }
 

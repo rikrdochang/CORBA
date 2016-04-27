@@ -60,6 +60,8 @@ public class Principal extends javax.swing.JFrame {
                 }
                 this.getAmigos().setListData(lista);
             } else {
+                friends = new amigo[1];
+                friends[0] = new amigo("ready@ready.com", false);
                 this.getAmigos().setListData(new String[1]);
             }
         } catch (InvalidName ex) {
